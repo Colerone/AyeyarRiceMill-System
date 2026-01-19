@@ -9,12 +9,15 @@
       <TableView fx:id="purchaseTable" focusTraversable="false" layoutX="3.0" layoutY="12.0" prefHeight="591.0" prefWidth="1059.0">
         <columns>
           <TableColumn fx:id="colNo" prefWidth="55.999998807907104" text="No" />
+            <TableColumn fx:id="colVoucherNo" prefWidth="119.99999618530273" text="Voucher No" />
           <TableColumn fx:id="colDate" prefWidth="119.99999618530273" text="Date" />
             <TableColumn fx:id="colSupplier" prefWidth="237.3333282470703" text="Supplier Name" />
             <TableColumn fx:id="colVariety" prefWidth="175.99993896484375" text="Paddy Type" />
             <TableColumn fx:id="colNetWeight" prefWidth="164.66668701171875" text="Net Weight" />
             <TableColumn fx:id="colTotalAmount" prefWidth="189.33331298828125" text="Total Amount" />
+            <TableColumn fx:id="instock" prefWidth="119.99999618530273" text="inStock" />
             <TableColumn fx:id="colAction" prefWidth="114.00002034505201" text="Action" />
+
         </columns>
       </TableView>
    </children>

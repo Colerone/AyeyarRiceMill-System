@@ -1,0 +1,23 @@
+/* Table Header (ခေါင်းစဉ်) ကို အမြင့်မြှင့်ရန် */
+.table-view .column-header {
+    -fx-pref-height: 40px;
+    -fx-font-size: 15px;
+}
+
+/* Table Row (အထဲက အကွက်များ) ကို အမြင့်မြှင့်ရန် */
+.table-row-cell {
+    -fx-pref-height: 45px;
+    -fx-font-size: 15px;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+/* .table-view .column-header, .table-view .filler {
+    -fx-background-color: #f4f4f4; /* ခေါင်းစဉ်အရောင် (စိတ်ကြိုက်ပြင်နိုင်သည်)
+    -fx-border-color: transparent;
+}
+*/

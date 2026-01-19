@@ -275,7 +275,7 @@ public class PadPurchaseS1Controller {
             return;
         }
 
-        vBatchNo.setText("BT-" + (int) (Math.random() * 10000));
+        vBatchNo.setText("A-" + (int) (Math.random() * 10000));
         vVariety.setText(paddyVarietyCombo.getValue());
         vNetWeight.setText(String.format("%.2f", finalNetWeight) + " Tins");
         vUnitPrice.setText(qualityCutPrice + " MMK");
