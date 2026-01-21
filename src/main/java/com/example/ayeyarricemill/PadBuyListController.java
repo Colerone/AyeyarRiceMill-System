@@ -92,9 +92,9 @@ public class PadBuyListController {
                 } else {
                     setText(item);
                     if ("Stock".equalsIgnoreCase(item)) {
-                        setStyle("-fx-text-fill: #2a8d67; -fx-font-weight: bold;"); // Stock ဆိုရင် အစိမ်း
+                        setStyle("-fx-text-fill: #d47742; -fx-font-weight: bold;"); // Stock ဆိုရင် အစိမ်း
                     } else if ("Milled".equalsIgnoreCase(item)) {
-                        setStyle("-fx-text-fill: #d47742; -fx-font-weight: bold;"); // Milled ဆိုရင် လိမ္မော်ရောင်
+                        setStyle("-fx-text-fill: #2a8d67; -fx-font-weight: bold;"); // Milled ဆိုရင် လိမ္မော်ရောင်
                     }
                 }
             }

@@ -15,7 +15,7 @@
             <TableColumn fx:id="colVariety" prefWidth="161.99996948242188" text="Paddy Type" />
             <TableColumn fx:id="colNetWeight" prefWidth="102.0" text="Net Weight" />
             <TableColumn fx:id="colTotalAmount" prefWidth="148.6666259765625" text="Total Amount" />
-            <TableColumn fx:id="instock" prefWidth="116.66668701171875" text="inStock" />
+            <TableColumn fx:id="instock" prefWidth="116.66668701171875" text="Status" />
             <TableColumn fx:id="colAction" prefWidth="128.000020345052" text="Action" />
 
         </columns>

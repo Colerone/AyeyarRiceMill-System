@@ -231,9 +231,6 @@ public class sideBar1Controller {
             scene.setRoot(root);
             stage.setMaximized(true);
             stage.show();
-//            SceneController.switchCenter("/com/example/ayeyarricemill/Milling.fxml");
-//            // ဒီနေရာမှာ highlight ပြောင်းဖို့ manual ခေါ်ပေးရမယ်
-//            highlightActiveMenu();
         }catch(Exception e){
             System.err.println("Error loading to vital scene: " + e.getMessage());
             e.printStackTrace();

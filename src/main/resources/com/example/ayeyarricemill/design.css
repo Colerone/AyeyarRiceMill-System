@@ -120,3 +120,13 @@
 .active-menu .glyphIcon {
     -fx-fill: #03045e !important;
 }
+
+.MillButton:hover{
+    -fx-scale-x: 1.03; /* နည်းနည်းလေး ကြီးလာစေချင်ရင် */
+        -fx-scale-y: 1.03;
+}
+
+.MillButton:armed {
+    -fx-scale-x: 1; /* နည်းနည်းလေး ချိုင့်သွားတဲ့ပုံစံ */
+    -fx-scale-y: 1;
+}

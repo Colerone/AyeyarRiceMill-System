@@ -389,7 +389,7 @@ public class PadPurchaseS1Controller {
     private void handleConfirmPurchase() {
         InventoryAddController.Warehouse selectedWarehouse = warehouseCombo.getValue();
         if (selectedWarehouse == null) {
-            showAlert("သတိပေးချက်", "ဂိုဒေါင် အရင်ရွေးချယ်ပါ။");
+            showAlert("Warning", "First choose inventory");
             return;
         }
 
