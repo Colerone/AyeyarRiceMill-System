@@ -14,7 +14,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MillingRegisterController {
@@ -194,23 +196,53 @@ public class MillingRegisterController {
 
     private void handleConfirmProduction() {
         PaddyPurchase voucher = comboVoucherNo.getValue();
-        Warehouse warehouse = comboTargetWarehouse.getValue();
+        Warehouse targetWarehouse = comboTargetWarehouse.getValue();
 
-        if (voucher == null || warehouse == null) {
+        if (voucher == null || targetWarehouse == null) {
             showError("You need to choose warehouse");
             return;
         }
+
+        reduceRawStock(voucher.getWarehouseName(), voucher.getNetWeight().intValue());
         // ၁။ Voucher Status ကို "Milled" သို့ ပြောင်းခြင်း
         updateVoucherStatus(voucher.id, "Milled");
 
         // ၂။ ထွက်လာသည့် ဆန်အမျိုးအစားများကို Inventory ထဲ သိမ်းခြင်း
-        saveToInventory(warehouse.id, "Head Rice (" + voucher.getPaddyType() + ")", parse(txtHeadRice.getText()));
-        saveToInventory(warehouse.id, "Broken Rice (" + voucher.getPaddyType() + ")", parse(txtBrokenRice.getText()));
-        saveToInventory(warehouse.id, "Broken Rice + Bran", parse(txtBrokenBran.getText()));
-        saveToInventory(warehouse.id, "Bran", parse(txtBran.getText()));
+        saveToInventory(targetWarehouse.id, voucher.getPaddyType() + "( Head Rice )", parse(txtHeadRice.getText()));
+        saveToInventory(targetWarehouse.id, voucher.getPaddyType() + " (Broken Rice )", parse(txtBrokenRice.getText()));
+        saveToInventory(targetWarehouse.id, "Broken Rice + Bran", parse(txtBrokenBran.getText()));
+        saveToInventory(targetWarehouse.id, "Bran", parse(txtBran.getText()));
+
+        // ၄။ Good Warehouse ၏ လက်ရှိ Stock ကိုလည်း ပေါင်းထည့်ပေးရန် (Warehouse Table Update)
+        double totalNewBags = parse(lblTotalOutputs.getText());
+        updateWarehouseStock(targetWarehouse.getName(), (int) totalNewBags, "/add-stock");
 
         showSuccess("Successfully milling process and has also been added to the warehouse.");
         resetForm();
+    }
+
+    private void reduceRawStock(String warehouseName, int quantity) {
+        updateWarehouseStock(warehouseName, quantity, "/reduce-stock");
+    }
+
+    private void updateWarehouseStock(String warehouseName, int quantity, String endpoint) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("warehouseName", warehouseName);
+        data.put("quantity", quantity);
+
+        String json = gson.toJson(data);
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/warehouses" + endpoint))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        httpClient.sendAsync(req, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(res -> {
+                    if (res.statusCode() != 200) {
+                        System.err.println("Stock update failed for " + warehouseName + ": " + res.body());
+                    }
+                });
     }
 
     private void updateVoucherStatus(String id, String status) {
@@ -220,6 +252,7 @@ public class MillingRegisterController {
                 .build();
         httpClient.sendAsync(req, HttpResponse.BodyHandlers.ofString());
     }
+
 
     private void saveToInventory(String warehouseId, String itemName, double quantity) {
         if (quantity <= 0) return;
