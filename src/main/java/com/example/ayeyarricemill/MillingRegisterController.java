@@ -257,20 +257,32 @@ public class MillingRegisterController {
     private void saveToInventory(String warehouseId, String itemName, double quantity) {
         if (quantity <= 0) return;
 
-        InventoryItem item = new InventoryItem();
-        item.itemName = itemName;
-        item.quantity = (int) quantity;
-        item.unit = "Bag";
-        item.status = "Available";
+//        InventoryItem item = new InventoryItem();
+//        item.itemName = itemName;
+//        item.quantity = (int) quantity;
+//        item.unit = "Bag";
+//        item.status = "Available";
+
+        Map<String, Object> item = new HashMap<>();
+        item.put("warehouseId", warehouseId);
+        item.put("itemName", itemName);
+        item.put("quantity", (int) quantity);
+        item.put("unit", "Bag");
+        item.put("status", "Available");
 
         String json = gson.toJson(item);
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/inventory-add/" + warehouseId))
+                .uri(URI.create(BASE_URL + "/inventory-logic/add_or_update/" + warehouseId))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
-        httpClient.sendAsync(req, HttpResponse.BodyHandlers.ofString());
+        httpClient.sendAsync(req, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(res -> {
+                    if(res.statusCode() != 200) {
+                        System.err.println("Inventory Save Failed: " + res.body());
+                    }
+                });
     }
 
     private void loadInitialData() {
@@ -361,20 +373,36 @@ public class MillingRegisterController {
             double bb = parse(txtBrokenBran.getText());
             double b = parse(txtBran.getText());
 
-            if (hr == 0 && br == 0) {
+            if (hr == 0 && br == 0 && bb == 0 && b == 0) {
                 showError("Please write input");
                 return false;
             }
 
+            double qtyMilled = parse(lblQtyMilled.getText()); // ဥပမာ - 100 Tins
             double totalOutput = hr + br + bb + b;
-            lblTotalOutputs.setText(String.format("%.2f Bags", totalOutput));
+            // --- Logic: Tin 100 လျှင် အိတ် 35 ထက်မပိုရ ---
+            // Formula: Max Allowed Bag = (Qty Milled / 100) * 35
+            double maxAllowedBags = (qtyMilled / 100.0) * 35.0;
 
-            double input = parse(lblQtyMilled.getText());
-            if (input > 0) {
-                double yield = (totalOutput / input) * 100;
+            if (totalOutput > maxAllowedBags) {
+                showError(String.format("The input is invalid. The total number of bags for %.2f baskets must not exceed %.2f.", qtyMilled, maxAllowedBags));
+
+                // သတ်မှတ်ချက်ထက် ကျော်နေရင် အောက်က box တွေကို ပြန်ဖျောက်ထားမယ်
+                wareHouseGroup.setVisible(false);
+                TotalOutput.setVisible(false);
+                finalYield.setVisible(false);
+                btnConfirmProduction.setVisible(false);
+                return false;
+            }
+
+            // တွက်ချက်မှု မှန်ကန်လျှင် UI တွင် ပြသမည်
+            lblTotalOutputs.setText(String.format("%.2f Bags", totalOutput));
+            if (qtyMilled > 0) {
+                double yield = (hr / qtyMilled) * 100;
                 lblFinalYield.setText(String.format("%.2f%%", yield));
             }
             return true;
+
         } catch (Exception e) {
             showError("wrong calculation");
             return false;
