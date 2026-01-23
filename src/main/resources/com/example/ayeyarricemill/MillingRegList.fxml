@@ -4,13 +4,15 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.MillingRegListController">
+<AnchorPane prefHeight="603.0" prefWidth="1377.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.MillingRegListController">
    <children>
-      <TableView layoutX="68.0" layoutY="42.0" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableMilling" focusTraversable="false" layoutX="34.0" layoutY="80.0" prefHeight="400.0" prefWidth="989.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="colNo" prefWidth="75.0" text="No" />
+          <TableColumn fx:id="colDate" prefWidth="180.66666412353516" text="Date" />
+            <TableColumn fx:id="colPaddyType" prefWidth="400.6666564941406" text="Paddy Type" />
+            <TableColumn fx:id="colTotalMilled" prefWidth="192.0" text="Total Milled" />
+            <TableColumn fx:id="colAction" prefWidth="139.33333333333337" text="Action" />
         </columns>
       </TableView>
    </children>

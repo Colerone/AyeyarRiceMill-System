@@ -238,6 +238,24 @@ public class sideBar1Controller {
     }
 
     @FXML
+    private void millingRegList(javafx.scene.input.MouseEvent event){
+        activePage = "activeMillList";
+        try{
+            Node source =(Node) event.getSource();
+            Scene scene = source.getScene();
+            Stage stage = (Stage) scene.getWindow();
+
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/MillingListPage.fxml"));
+            scene.setRoot(root);
+            stage.setMaximized(true);
+            stage.show();
+        }catch(Exception e){
+            System.err.println("Error loading to vital scene: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void ricesaleregister(javafx.scene.input.MouseEvent event){
         activePage = "activeRiceReg";
         try{

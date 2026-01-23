@@ -1,0 +1,11 @@
+.table-view {
+    -fx-border-color: #dcdcdc transparent #dcdcdc transparent; /* အပေါ်နဲ့အောက်ပဲ အရောင်ပေးပြီး ဘေးနှစ်ဖက်ကို transparent လုပ်လိုက်တာပါ */
+    -fx-border-width: 1 0 1 0; /* top: 1px, right: 0px, bottom: 1px, left: 0px */
+    -fx-background-color: transparent;
+}
+
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+

@@ -17,6 +17,7 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MillingRegisterController {
@@ -88,14 +89,7 @@ public class MillingRegisterController {
 
         // --- 3. Finish Milling Button Logic ---
         btnFinishMilling.setOnAction(e -> {
-            lblStatus.setText("Completed");   // Status ပြောင်းမယ်
-            lblStatus.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold; -fx-font-size: 14px;"); // အစိမ်းရောင်ပြောင်းမယ်
-            step3Container.setVisible(true);  // ညာဘက်အကွက်ကြီးကို ဖော်မယ်
-
-            btnFinishMilling.setVisible(false);
-            wareHouseGroup.setVisible(false);
-            TotalOutput.setVisible(false);
-            finalYield.setVisible(false);
+            handleFinishConfirmation();
         });
 
         btnCalculate.setOnAction(e -> {
@@ -109,6 +103,31 @@ public class MillingRegisterController {
             }
         });
         btnConfirmProduction.setOnAction(e -> handleConfirmProduction());
+    }
+
+    private void handleFinishConfirmation(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Milling process confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure that milling process has been completed?");
+
+        // Button စာသားများကို ပြောင်းလဲခြင်း (Yes/No)
+        ButtonType buttonYes = new ButtonType("Yes");
+        ButtonType buttonNo = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == buttonYes) {
+            lblStatus.setText("Completed");   // Status ပြောင်းမယ်
+            lblStatus.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold; -fx-font-size: 14px;"); // အစိမ်းရောင်ပြောင်းမယ်
+            step3Container.setVisible(true);  // ညာဘက်အကွက်ကြီးကို ဖော်မယ်
+
+            btnFinishMilling.setVisible(false);
+            wareHouseGroup.setVisible(false);
+            TotalOutput.setVisible(false);
+            finalYield.setVisible(false);
+        }
     }
 
     private void populateVoucherInfo(PaddyPurchase selected) {
@@ -134,33 +153,31 @@ public class MillingRegisterController {
         step3Container.setVisible(false);
     }
 
-    private void handleOkAction() {
-        if (comboVoucherNo.getValue() != null) {
-            populateVoucherInfo();
-            // OK နှိပ်ရင် အဆင့် ၂ (အလယ်ကွက်) ကို ဖော်မယ်
-            step2Container.setVisible(true);
-        } else {
-            showError("Choose voucher");
-        }
-    }
+//    private void handleOkAction() {
+//        if (comboVoucherNo.getValue() != null) {
+//            populateVoucherInfo();
+//            // OK နှိပ်ရင် အဆင့် ၂ (အလယ်ကွက်) ကို ဖော်မယ်
+//            step2Container.setVisible(true);
+//        } else {
+//            showError("Choose voucher");
+//        }
+//    }
 
-    private void handleFinishMillingAction() {
-        // Finish Milling နှိပ်ရင် ညာဘက်က Stock အကွက်ကို ဖော်မယ်
-        step3Container.setVisible(true);
-
-        // Data သိမ်းမယ့် Function ကို ဒီမှာ ခေါ်နိုင်ပါတယ်
-        // saveMillingRecord();
-    }
+//    private void handleFinishMillingAction() {
+//        // Finish Milling နှိပ်ရင် ညာဘက်က Stock အကွက်ကို ဖော်မယ်
+//        step3Container.setVisible(true);
+//
+//        // Data သိမ်းမယ့် Function ကို ဒီမှာ ခေါ်နိုင်ပါတယ်
+//        // saveMillingRecord();
+//    }
 
     private void setupComboBoxes() {
         comboVoucherNo.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(PaddyPurchase object) {
-                return object == null ? "" : object.getBatchNo();
-            }
+            @Override public String toString(PaddyPurchase p)
+            { return p == null ? "" : p.getBatchNo(); }
 
             @Override
-            public PaddyPurchase fromString(String string) {
+            public PaddyPurchase fromString(String s) {
                 return null;
             }
         });
@@ -203,6 +220,9 @@ public class MillingRegisterController {
             return;
         }
 
+//        ကြိတ်ခွဲမှုမှတ်တမ်း သိမ်းဆည်းခြင်း (Milling Record)
+        saveMillingRecord(voucher, targetWarehouse);
+
         reduceRawStock(voucher.getWarehouseName(), voucher.getNetWeight().intValue());
         // ၁။ Voucher Status ကို "Milled" သို့ ပြောင်းခြင်း
         updateVoucherStatus(voucher.id, "Milled");
@@ -219,6 +239,42 @@ public class MillingRegisterController {
 
         showSuccess("Successfully milling process and has also been added to the warehouse.");
         resetForm();
+    }
+
+    private void saveMillingRecord(PaddyPurchase voucher, Warehouse targetWarehouse) {
+        Map<String, Object> record = new HashMap<>();
+        record.put("voucherId", voucher.id);
+        record.put("batchNo", voucher.getBatchNo());
+        record.put("paddyType", voucher.getPaddyType());
+        record.put("sourceWarehouse", voucher.getWarehouseName());
+        record.put("targetWarehouse", targetWarehouse.getName());
+        // ၁။ Date ကို စစ်ဆေးပြီး ထည့်သွင်းခြင်း
+        String mDate = (datePicker.getValue() != null) ? datePicker.getValue().toString() : java.time.LocalDate.now().toString();
+        record.put("millingDate", mDate);
+
+        record.put("inputQtyTins", parse(lblQtyMilled.getText()));
+
+        // Outputs
+        record.put("headRiceBags", parse(txtHeadRice.getText()));
+        record.put("brokenRiceBags", parse(txtBrokenRice.getText()));
+        record.put("brokenBranBags", parse(txtBrokenBran.getText()));
+        record.put("branBags", parse(txtBran.getText()));
+        record.put("totalOutputBags", parse(lblTotalOutputs.getText()));
+        record.put("yieldPercentage", parse(lblFinalYield.getText()));
+
+        String json = gson.toJson(record);
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/milling_records"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        httpClient.sendAsync(req, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(res -> {
+                    if (res.statusCode() != 200 && res.statusCode() != 201) {
+                        System.err.println("Milling Record Save Failed: " + res.body());
+                    }
+                });
     }
 
     private void reduceRawStock(String warehouseName, int quantity) {
@@ -385,7 +441,8 @@ public class MillingRegisterController {
             double maxAllowedBags = (qtyMilled / 100.0) * 35.0;
 
             if (totalOutput > maxAllowedBags) {
-                showError(String.format("The input is invalid. The total number of bags for %.2f baskets must not exceed %.2f.", qtyMilled, maxAllowedBags));
+                showError(String.format("The input is invalid. The total number of bags " +
+                        "for %.2f baskets must not exceed %.2f.", qtyMilled, maxAllowedBags));
 
                 // သတ်မှတ်ချက်ထက် ကျော်နေရင် အောက်က box တွေကို ပြန်ဖျောက်ထားမယ်
                 wareHouseGroup.setVisible(false);
@@ -434,6 +491,7 @@ public class MillingRegisterController {
     }
 
     private double parse(String s) {
+        if (s == null || s.isEmpty()) return 0;
         try {
             return Double.parseDouble(s.replaceAll("[^0-9.]", ""));
         } catch (Exception e) {
@@ -483,6 +541,7 @@ public class MillingRegisterController {
             return paddyType;
         }
 
+
         public String getWarehouseName() {
             return warehouseName;
         }
@@ -510,6 +569,7 @@ public class MillingRegisterController {
         public String getType() {
             return type;
         }
+
 
         // ဒီ Getter ၂ ခုကို ထပ်ဖြည့်ပေးပါ
         public Integer getCurrentStock() {

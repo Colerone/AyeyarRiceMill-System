@@ -120,7 +120,7 @@
                                         </Label>
                                     </children>
                                 </HBox>
-                                <HBox fx:id="activeMillList" prefHeight="35.0" prefWidth="222.0" styleClass="subMenuItem">
+                                <HBox fx:id="activeMillList" prefHeight="35.0" onMouseClicked="#millingRegList" prefWidth="222.0" styleClass="subMenuItem">
                                     <children>
                                         <FontAwesomeIconView glyphName="LIST" size="15" styleClass="glyphIcon">
                                             <HBox.margin>
