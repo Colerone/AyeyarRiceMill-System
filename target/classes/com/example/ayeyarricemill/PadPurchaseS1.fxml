@@ -12,23 +12,23 @@
     <children>
         <AnchorPane layoutX="23.0" layoutY="10.0" prefHeight="615.0" prefWidth="660.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
             <children>
-                <TextField fx:id="supplierNameField" focusTraversable="false" layoutX="34.0" layoutY="99.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 0.5;" />
-                <Label layoutX="34.0" layoutY="79.0" style="-fx-font-size: 13.5;" text="Supplier Name:" />
-                <ComboBox fx:id="paddyVarietyCombo" focusTraversable="false" layoutX="34.0" layoutY="215.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0 .5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-                <Label layoutX="34.0" layoutY="195.0" style="-fx-font-size: 13.5;" text="Paddy Variety" />
-                <TextField fx:id="totalWeightField" focusTraversable="false" layoutX="34.0" layoutY="280.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 0.5;" />
-                <Label layoutX="34.0" layoutY="260.0" style="-fx-font-size: 13.5;" text="Total weight" />
-                <TextField fx:id="moistureField" focusTraversable="false" layoutX="370.0" layoutY="158.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-                <Label layoutX="370.0" layoutY="138.0" prefHeight="17.0" prefWidth="254.0" style="-fx-font-size: 13.5;" text="Moisture Content (%) : ( Standard: 14% )" />
-                <Label layoutX="370.0" layoutY="195.0" prefHeight="17.0" prefWidth="254.0" style="-fx-font-size: 13.5;" text="Impurity/Waste (%) : ( Standard: 1% )" />
-                <TextField fx:id="impurityField" focusTraversable="false" layoutX="370.0" layoutY="215.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-                <Label layoutX="370.0" layoutY="260.0" prefHeight="20.0" prefWidth="246.0" style="-fx-font-size: 13.5;" text="Yellow/Damaged (%): ( Standard: 0.5% )" />
-                <TextField fx:id="yellowDamageField" focusTraversable="false" layoutX="370.0" layoutY="280.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-                <Label layoutX="30.0" layoutY="35.0" style="-fx-font-weight: bold; -fx-font-size: 16;" text="Contact &amp; Product Information" />
-                <TextField fx:id="phoneField" focusTraversable="false" layoutX="34.0" layoutY="158.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 0.5;" />
-                <Label layoutX="34.0" layoutY="138.0" style="-fx-font-size: 13.5;" text="Phone Number:" />
-                <Label layoutX="370.0" layoutY="79.0" style="-fx-font-size: 13.5;" text="Date:" />
-                <Button layoutX="30.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleCalculateDeduction" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #4478e5; -fx-font-size: 13; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Calculate Deduction" />
+                <TextField fx:id="supplierNameField" focusTraversable="false" layoutX="34.0" layoutY="75.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 0.5;" />
+                <Label layoutX="34.0" layoutY="55.0" style="-fx-font-size: 13.5;" text="Supplier Name:" />
+                <ComboBox fx:id="paddyVarietyCombo" focusTraversable="false" layoutX="34.0" layoutY="191.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0 .5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                <Label layoutX="34.0" layoutY="171.0" style="-fx-font-size: 13.5;" text="Paddy Variety" />
+                <TextField fx:id="totalWeightField" focusTraversable="false" layoutX="34.0" layoutY="249.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 0.5;" />
+                <Label layoutX="34.0" layoutY="229.0" style="-fx-font-size: 13.5;" text="Total weight" />
+                <TextField fx:id="moistureField" focusTraversable="false" layoutX="370.0" layoutY="134.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                <Label layoutX="370.0" layoutY="114.0" prefHeight="17.0" prefWidth="254.0" style="-fx-font-size: 13.5;" text="Moisture Content (%) : ( Standard: 14% )" />
+                <Label layoutX="370.0" layoutY="171.0" prefHeight="17.0" prefWidth="254.0" style="-fx-font-size: 13.5;" text="Impurity/Waste (%) : ( Standard: 1% )" />
+                <TextField fx:id="impurityField" focusTraversable="false" layoutX="370.0" layoutY="191.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                <Label layoutX="370.0" layoutY="229.0" prefHeight="20.0" prefWidth="246.0" style="-fx-font-size: 13.5;" text="Yellow/Damaged (%): ( Standard: 0.5% )" />
+                <TextField fx:id="yellowDamageField" focusTraversable="false" layoutX="370.0" layoutY="249.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                <Label layoutX="30.0" layoutY="17.0" style="-fx-font-weight: bold; -fx-font-size: 16;" text="Contact &amp; Product Information" />
+                <TextField fx:id="phoneField" focusTraversable="false" layoutX="34.0" layoutY="134.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 0.5;" />
+                <Label layoutX="34.0" layoutY="114.0" style="-fx-font-size: 13.5;" text="Phone Number:" />
+                <Label layoutX="370.0" layoutY="55.0" style="-fx-font-size: 13.5;" text="Date:" />
+                <Button layoutX="30.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleCalculateDeduction" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #4478e5; -fx-font-size: 13; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Calculate Deduction" />
                 <Line endX="553.4000244140625" layoutX="105.0" layoutY="537.0" startX="-105.00001525878906" style="-fx-stroke: #f8dcd9;" />
                 <AnchorPane fx:id="weightBox" layoutX="23.0" layoutY="370.0" prefHeight="142.0" prefWidth="190.0" style="-fx-border-color: #4aad8e; -fx-background-color: #ecfcf5; -fx-border-radius: 5;">
                     <children>
@@ -65,7 +65,9 @@
                     </children>
                 </AnchorPane>
                 <Button fx:id="calcTotalButton" layoutX="457.0" layoutY="553.0" mnemonicParsing="false" onAction="#handleCalculateTotal" prefHeight="27.0" prefWidth="168.0" style="-fx-background-color: #4478e5; -fx-font-size: 13; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Calculate Total Amount" />
-                <DatePicker fx:id="datePicker" focusTraversable="false" layoutX="370.0" layoutY="99.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                <DatePicker fx:id="datePicker" focusTraversable="false" layoutX="370.0" layoutY="75.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+            <Label layoutX="23.0" layoutY="322.0" prefHeight="19.0" prefWidth="536.0" style="-fx-text-fill: red; -fx-font-size: 13;" text="1% over standard: 0.02 tin deduction for moisture, 0.01 tin deduction for impurity," />
+            <Label layoutX="23.0" layoutY="341.0" prefHeight="19.0" prefWidth="536.0" style="-fx-text-fill: red; -fx-font-size: 13;" text="1% price reduction for yellow/damaged." />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="voucherBox" layoutX="701.0" layoutY="51.0" prefHeight="228.0" prefWidth="322.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">

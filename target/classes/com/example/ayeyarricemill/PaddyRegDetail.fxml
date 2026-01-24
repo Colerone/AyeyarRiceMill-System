@@ -18,7 +18,7 @@
         <Label layoutX="99.0" layoutY="203.0" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #153b90;" text="Net Weight:" />
         <Label fx:id="lblNetWeight" layoutX="343.0" layoutY="202.0" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #153b90;" text="975 Tins" />
         <Line endX="263.79998779296875" layoutX="197.0" layoutY="247.0" startX="-100.0" style="-fx-stroke: orange;" />
-        <AnchorPane layoutX="489.0" layoutY="64.0" prefHeight="366.0" prefWidth="403.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+        <AnchorPane layoutX="489.0" layoutY="54.0" prefHeight="366.0" prefWidth="403.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
             <children>
                 <Label layoutX="35.0" layoutY="105.0" style="-fx-font-size: 15;" text="Phone:" />
                 <Label layoutX="35.0" layoutY="14.0" style="-fx-font-size: 15;" text="Date:" />
@@ -33,13 +33,13 @@
                 <Label fx:id="lblNetWeightBox" layoutX="255.0" layoutY="182.0" style="-fx-font-size: 15;" text="975 Tins" />
                 <Label fx:id="lblNetPriceBox" layoutX="255.0" layoutY="212.0" style="-fx-font-size: 15;" text="9500 MMK" />
                 <Label layoutX="35.0" layoutY="212.0" style="-fx-font-size: 15;" text="Net Price:" />
-                <VBox alignment="CENTER" layoutX="35.0" layoutY="250.0" prefHeight="59.0" prefWidth="335.0" style="-fx-background-color: #f0fff8; -fx-border-color: #2a8d67; -fx-background-radius: 10; -fx-border-radius: 10;">
+                <VBox alignment="CENTER" layoutX="35.0" layoutY="239.0" prefHeight="59.0" prefWidth="335.0" style="-fx-background-color: #f0fff8; -fx-border-color: #2a8d67; -fx-background-radius: 10; -fx-border-radius: 10;">
                     <children>
                         <Label style="-fx-font-size: 15; -fx-text-fill: #2a8d67; -fx-font-weight: bold;" text="Grand Total" />
                         <Label fx:id="lblGrandTotal" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #2a8d67;" text="9262500 MMK" />
                     </children>
                 </VBox>
-                <VBox alignment="CENTER" layoutX="35.0" layoutY="316.0" prefHeight="36.0" prefWidth="335.0" style="-fx-background-color: #fef5ec; -fx-border-color: #d47742; -fx-background-radius: 10; -fx-border-radius: 10;">
+                <VBox alignment="CENTER" layoutX="35.0" layoutY="307.0" prefHeight="36.0" prefWidth="335.0" style="-fx-background-color: #fef5ec; -fx-border-color: #d47742; -fx-background-radius: 10; -fx-border-radius: 10;">
                     <children>
                         <Label style="-fx-font-size: 15; -fx-text-fill: #d47742; -fx-font-weight: bold;" text="Store in :" />
                   <Label fx:id="lblWarehouse" layoutX="97.0" layoutY="17.0" style="-fx-font-size: 15; -fx-text-fill: #d47742; -fx-font-weight: bold;" text="Warehouse A" />

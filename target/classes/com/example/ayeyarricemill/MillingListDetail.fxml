@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1070.0" style="-fx-background-color: #ebf1f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.MillingListDetailController">
+    <children>
+        <ImageView fitHeight="56.0" fitWidth="73.0" layoutX="41.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true" />
+        <AnchorPane layoutX="73.0" layoutY="97.0" prefHeight="455.0" prefWidth="878.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+            <children>
+                <Label layoutX="478.0" layoutY="53.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Output Materials" />
+                <Label layoutX="478.0" layoutY="111.0" style="-fx-font-size: 16;" text="1. Head Rice :" />
+                <Label layoutX="478.0" layoutY="158.0" style="-fx-font-size: 16;" text="2. Broken Rice :" />
+                <Label layoutX="478.0" layoutY="208.0" style="-fx-font-size: 16;" text="3. Broken Rice + Bran :" />
+                <Label layoutX="478.0" layoutY="256.0" style="-fx-font-size: 16;" text="4. Bran :" />
+                <AnchorPane layoutX="56.0" layoutY="44.0" prefHeight="246.0" prefWidth="366.0" style="-fx-background-color: #ebf1f5; -fx-background-radius: 5;">
+                    <children>
+                        <Label layoutX="34.0" layoutY="87.0" style="-fx-font-size: 16;" text="Source Warehouse:" />
+                        <Label fx:id="lblSourceWarehouse" layoutX="177.0" layoutY="87.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Main Warehouse" />
+                        <Label layoutX="34.0" layoutY="139.0" style="-fx-font-size: 16;" text="Paddy Type:" />
+                        <Label fx:id="lblPaddyType" layoutX="177.0" layoutY="139.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Paw San" />
+                        <Label layoutX="34.0" layoutY="190.0" style="-fx-font-size: 16;" text="Total Milled:" />
+                        <Label fx:id="lblTotalMilled" layoutX="177.0" layoutY="190.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="100" />
+                        <Label layoutX="34.0" layoutY="40.0" style="-fx-font-size: 16;" text="Voucher No:" />
+                        <Label fx:id="lblVoucherNo" layoutX="177.0" layoutY="40.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="A-001" />
+                    </children>
+                </AnchorPane>
+                <Label fx:id="lblHeadRice" layoutX="592.0" layoutY="111.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="450" />
+                <AnchorPane layoutX="56.0" layoutY="312.0" prefHeight="99.0" prefWidth="366.0" style="-fx-background-color: #fef5ec; -fx-background-radius: 10;">
+                    <children>
+                        <ImageView fitHeight="71.0" fitWidth="130.0" layoutX="1.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/MillingDetailYield.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="127.0" layoutY="24.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Final Yield:" />
+                        <Label fx:id="lblFinalYield" layoutX="244.0" layoutY="24.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: green;" text="70 " />
+                        <Label layoutX="128.0" layoutY="56.0" style="-fx-font-size: 17; -fx-text-fill: #000000;" text="Total Outputs:" />
+                        <Label fx:id="lblTotalOutputs" layoutX="242.0" layoutY="56.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #000000;" text="800" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane layoutX="455.0" layoutY="312.0" prefHeight="99.0" prefWidth="366.0" style="-fx-background-color: #fef5ec; -fx-background-radius: 10;">
+                    <children>
+                        <Label fx:id="lblTargetWarehouse" layoutX="136.0" layoutY="52.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Warehouse A" />
+                        <ImageView fitHeight="67.0" fitWidth="94.0" layoutX="30.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/MillingWarehouse.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="136.0" layoutY="20.0" style="-fx-font-size: 16;" text="Storage Warehouse" />
+                    </children>
+                </AnchorPane>
+                <Label fx:id="lblBrokenRice" layoutX="610.0" layoutY="158.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="450" />
+                <Label fx:id="lblBrokenBran" layoutX="658.0" layoutY="208.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="450" />
+                <Label fx:id="lblBran" layoutX="556.0" layoutY="256.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="450" />
+            </children>
+        </AnchorPane>
+        <Button fx:id="btnBack" layoutX="842.0" layoutY="563.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: #4478e5; -fx-text-fill: #ffffff; -fx-font-size: 14;" text="Back To List" />
+        <AnchorPane layoutX="73.0" layoutY="41.0" prefHeight="47.0" prefWidth="878.0" style="-fx-background-color: #b2dec3; -fx-background-radius: 8;">
+            <children>
+                <Label layoutX="221.0" layoutY="11.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Date Recorded:" />
+                <Label fx:id="lblDate" layoutX="345.0" layoutY="11.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="15/1/2026" />
+                <Label layoutX="432.0" layoutY="11.0" style="-fx-font-size: 16;" />
+                <Label fx:id="lblRecordedBy" layoutX="560.0" layoutY="11.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Hnin Thiri" />
+                <Label layoutX="439.0" layoutY="11.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="|  Recorded By:" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
