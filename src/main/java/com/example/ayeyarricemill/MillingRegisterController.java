@@ -51,6 +51,8 @@ public class MillingRegisterController {
     @FXML
     private Label lblTotalOutputs, lblFinalYield, lblCurrentStock, lblMaxCapacity, lblSpaceStatus;
 
+    public static String loggedInUsername;
+
     // --- Variables ---
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final Gson gson = new Gson();
@@ -251,7 +253,7 @@ public class MillingRegisterController {
         // ၁။ Date ကို စစ်ဆေးပြီး ထည့်သွင်းခြင်း
         String mDate = (datePicker.getValue() != null) ? datePicker.getValue().toString() : java.time.LocalDate.now().toString();
         record.put("millingDate", mDate);
-
+        record.put("recordedBy", loggedInUsername);
         record.put("inputQtyTins", parse(lblQtyMilled.getText()));
 
         // Outputs
@@ -438,7 +440,7 @@ public class MillingRegisterController {
             double totalOutput = hr + br + bb + b;
             // --- Logic: Tin 100 လျှင် အိတ် 35 ထက်မပိုရ ---
             // Formula: Max Allowed Bag = (Qty Milled / 100) * 35
-            double maxAllowedBags = (qtyMilled / 100.0) * 35.0;
+            double maxAllowedBags = (qtyMilled / 100.0) * 45.0;
 
             if (totalOutput > maxAllowedBags) {
                 showError(String.format("The input is invalid. The total number of bags " +

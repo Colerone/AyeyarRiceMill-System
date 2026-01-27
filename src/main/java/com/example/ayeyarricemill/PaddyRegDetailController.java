@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 
 public class PaddyRegDetailController {
 
-    // PadBuyListController ထဲက PaddyPurchase class အမျိုးအစားအတိုင်း ပြောင်းလဲသတ်မှတ်လိုက်သည်
-    // ဒါမှသာ "selectedPurchase = item" ဆိုပြီး ပို့လိုက်တဲ့အခါ error မတက်မှာပါ
+    // PadBuyListController ထဲက PaddyPurchase class အမျိုးအစားအတိုင်း
+    // ဒါမှသာ "selectedPurchase = item" ဆိုပြီး ပို့လိုက်တဲ့အခါ error မတက်မှာ
     public static PadBuyListController.PaddyPurchase selectedPurchase;
 
     // FXML Labels (ညာဘက် Information Box)

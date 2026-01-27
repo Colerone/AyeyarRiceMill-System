@@ -176,6 +176,7 @@ public class AniLSController implements Initializable {
                                 InventoryAddController.loggedInUserRole = role;
                                 PadPurchaseS1Controller.loggedInUsername = userName;
                                 sideBar1Controller.currentUserRole = role;
+                                MillingRegisterController.loggedInUsername = userName;
 
                                 navigateToDashboard(role);
                             }else{

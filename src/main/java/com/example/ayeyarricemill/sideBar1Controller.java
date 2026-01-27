@@ -24,7 +24,7 @@ public class sideBar1Controller {
     @FXML private HBox activeGoodPrice;
     @FXML private HBox activeRawPrice;
     @FXML private HBox activeInventory;
-    @FXML private HBox activeSettings, activeManagerList;
+    @FXML private HBox activeSettings, activeManagerList,activeFinance;
     @FXML private VBox millingSubMenu;  // Paddy Purchase Submenu
     @FXML private VBox millingSubMenu1; // Milling Submenu
     @FXML private VBox millingSubMenu2; // Rice Sales Submenu
@@ -69,6 +69,7 @@ public class sideBar1Controller {
         activeInventory.getStyleClass().remove("active-menu");
         activeSettings.getStyleClass().remove("active-menu");
         activeManagerList.getStyleClass().remove("active-menu");
+        activeFinance.getStyleClass().remove("active-menu");
 
         if (activePage.equals("Home")) hbHome.getStyleClass().add("active-menu");
         else if (activePage.equals("hdPaddyReg")) hdPaddyReg.getStyleClass().add("active-menu");
@@ -82,6 +83,8 @@ public class sideBar1Controller {
         else if (activePage.equals("activeInventory")) activeInventory.getStyleClass().add("active-menu");
         else if (activePage.equals("activeSettings")) activeSettings.getStyleClass().add("active-menu");
         else if (activePage.equals("activeManagerList")) activeManagerList.getStyleClass().add("active-menu");
+        else if (activePage.equals("activeFinance")) activeFinance.getStyleClass().add("active-menu");
+
     }
 
     // Paddy Purchase
@@ -267,9 +270,7 @@ public class sideBar1Controller {
             scene.setRoot(root);
             stage.setMaximized(true);
             stage.show();
-//            SceneController.switchCenter("/com/example/ayeyarricemill/saleRegister.fxml");
-//            // ဒီနေရာမှာ highlight ပြောင်းဖို့ manual ခေါ်ပေးရမယ်
-//            highlightActiveMenu();
+
         }catch(Exception e){
             System.err.println("Error loading to vital scene: " + e.getMessage());
             e.printStackTrace();
@@ -391,9 +392,24 @@ public class sideBar1Controller {
             scene.setRoot(root);
             stage.setMaximized(true);
             stage.show();
-//            SceneController.switchCenter("/com/example/ayeyarricemill/GoodPrice.fxml");
-//            // ဒီနေရာမှာ highlight ပြောင်းဖို့ manual ခေါ်ပေးရမယ်
-//            highlightActiveMenu();
+        }catch(Exception e){
+            System.err.println("Error loading to vital scene: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void activeFinanceClicked(javafx.scene.input.MouseEvent event){
+        activePage = "activeFinance";
+        try{
+            Node source =(Node) event.getSource();
+            Scene scene = source.getScene();
+            Stage stage = (Stage) scene.getWindow();
+
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/FinancePage.fxml"));
+            scene.setRoot(root);
+            stage.setMaximized(true);
+            stage.show();
         }catch(Exception e){
             System.err.println("Error loading to vital scene: " + e.getMessage());
             e.printStackTrace();

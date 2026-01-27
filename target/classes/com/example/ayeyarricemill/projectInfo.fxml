@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane fx:id="projectInfoSection" layoutX="10.0" layoutY="10.0" prefHeight="700.0" prefWidth="1070.0"
+            style="-fx-background-color: #ebf1f5;" xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.projectInfoController">
+    <children>
+        <Label layoutX="466.0" layoutY="24.0" style="-fx-font-size: 25; -fx-font-weight: bold; -fx-text-fill: #291b94;"
+               text="Project Info"/>
+        <Label layoutX="151.0" layoutY="100.0" style="-fx-font-size: 18; -fx-font-weight: bold;"
+               text="Project Objectives"/>
+        <Label layoutX="122.0" layoutY="140.0" style="-fx-font-size: 16;" text="=&gt;   Replace manual record-keeping"/>
+        <Label layoutX="122.0" layoutY="183.0" style="-fx-font-size: 16;"
+               text="=&gt;   Improve accuracy and efficiency"/>
+        <Label layoutX="122.0" layoutY="223.0" style="-fx-font-size: 16;" text="=&gt;   Provide easy access to data"/>
+        <Label layoutX="661.0" layoutY="102.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Key Features"/>
+        <Label layoutX="633.0" layoutY="140.0" style="-fx-font-size: 16;" text="=&gt;   Paddy purchasing management"/>
+        <Label layoutX="633.0" layoutY="183.0" style="-fx-font-size: 16;" text="=&gt;   Inventory and sales tracking"/>
+        <Label layoutX="633.0" layoutY="223.0" style="-fx-font-size: 16;" text="=&gt;   Report generation"/>
+        <Line endX="419.60003662109375" endY="6.9998779296875" layoutX="206.0" layoutY="62.0"
+              startX="234.80001831054688" startY="6.9998779296875" stroke="#24ab61"/>
+        <Label layoutX="151.0" layoutY="336.0" style="-fx-font-size: 18; -fx-font-weight: bold;"
+               text="Technologies Used"/>
+        <Label layoutX="122.0" layoutY="376.0" style="-fx-font-size: 16;" text="=&gt;   Developed in Java"/>
+        <Label layoutX="122.0" layoutY="419.0" style="-fx-font-size: 16;" text="=&gt;   Database management"/>
+        <Label layoutX="122.0" layoutY="459.0" style="-fx-font-size: 16;" text="=&gt;   User-friendly interface"/>
+        <Label layoutX="662.0" layoutY="337.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Our Mission"/>
+        <Label layoutX="633.0" layoutY="376.0" style="-fx-font-size: 16;" text="=&gt;   Gain practical experience"/>
+        <Label layoutX="633.0" layoutY="419.0" style="-fx-font-size: 16;" text="=&gt;   Solve real-world problems"/>
+        <Label layoutX="633.0" layoutY="459.0" style="-fx-font-size: 16;" text="=&gt;   Learn software development"/>
+        <Line endX="767.5999755859375" endY="6.9998779296875" layoutX="186.0" layoutY="526.0"
+              startX="-65.19998931884766" startY="6.9998779296875" stroke="#24ab61"/>
+        <Line endX="25.4000244140625" endY="143.800048828125" layoutX="504.0" layoutY="129.0" startX="25.4000244140625"
+              startY="-33.79998779296875"/>
+        <Line endX="25.40008544921875" endY="139.800048828125" layoutX="504.0" layoutY="378.0"
+              startX="25.40008544921875" startY="-47.60009765625"/>
+        <Line endX="761.5999755859375" endY="6.9998779296875" layoutX="192.0" layoutY="289.0"
+              startX="-68.79999542236328" startY="6.9998779296875" stroke="#24ab61"/>
+        <ImageView fitHeight="36.0" fitWidth="42.0" layoutX="110.0" layoutY="96.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@images/objective.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="36.0" fitWidth="42.0" layoutX="110.0" layoutY="331.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@images/techUsed.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="36.0" fitWidth="42.0" layoutX="619.0" layoutY="96.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@images/keyfeature.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="36.0" fitWidth="42.0" layoutX="621.0" layoutY="329.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@images/Rmission.png"/>
+            </image>
+        </ImageView>
+        <Button layoutX="79.0" layoutY="553.0" mnemonicParsing="false" onAction="#backAction" prefHeight="25.0"
+                prefWidth="61.0"
+                style="-fx-background-color: blue; -fx-cursor: hand; -fx-font-weight: bold; -fx-text-fill: white;"
+                text="back"/>
+    </children>
+</AnchorPane>

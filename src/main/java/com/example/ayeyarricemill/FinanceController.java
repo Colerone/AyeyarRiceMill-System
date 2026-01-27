@@ -1,4 +1,4 @@
 package com.example.ayeyarricemill;
 
-public class VocherController {
+public class FinanceController {
 }

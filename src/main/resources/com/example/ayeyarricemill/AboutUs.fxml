@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane fx:id="aboutUsSection" prefHeight="700.0" prefWidth="1070.0" style="-fx-background-color: #ebf1f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.AboutUsController">
+    <children>
+        <Label layoutX="480.0" layoutY="6.0" style="-fx-font-size: 25; -fx-font-weight: bold; -fx-text-fill: #291b94;" text="About Us" textAlignment="CENTER" textFill="WHITE" />
+        <VBox alignment="CENTER" layoutX="396.0" layoutY="68.0" prefHeight="200.0" prefWidth="570.0">
+            <children>
+                <Label style="-fx-font-size: 16;" text="We are a team of four members working under the guidance" />
+                <Label layoutX="126.0" layoutY="101.0" style="-fx-font-size: 16;" text="of one supervisor to develop the Rice Mill Management System. " />
+                <Label layoutX="116.0" layoutY="110.0" style="-fx-font-size: 16;" text="This project is designed to simplify and automate rice mill operations " />
+                <Label layoutX="103.0" layoutY="119.0" style="-fx-font-size: 16;" text="such as paddy purchasing, stock management, and sales recording. " />
+                <Label layoutX="108.0" layoutY="128.0" style="-fx-font-size: 16;" text="Our goal is to reduce manual work, improve accuracy, and provide an efficient " />
+                <Label layoutX="79.0" layoutY="136.0" style="-fx-font-size: 16;" text="and user-friendly system for better management and decision-making." />
+            </children>
+        </VBox>
+        <AnchorPane layoutX="104.0" layoutY="321.0" prefHeight="210.0" prefWidth="176.0" style="-fx-background-color: pink;">
+            <children>
+                <ImageView fitHeight="176.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/htetehindralwin.jpg" />
+                    </image>
+                </ImageView>
+                <Label layoutX="13.0" layoutY="182.0" style="-fx-font-size: 16;" text="Ma Htet Ehindra Lwin" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="571.0" layoutY="321.0" prefHeight="210.0" prefWidth="182.0" style="-fx-background-color: pink;">
+            <children>
+                <ImageView fitHeight="184.0" fitWidth="178.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/James Bond.jpg" />
+                    </image>
+                </ImageView>
+                <Label layoutX="20.0" layoutY="182.0" style="-fx-font-size: 16;" text="Mg Min Thant Kyaw" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="341.0" layoutY="321.0" prefHeight="210.0" prefWidth="180.0" style="-fx-background-color: pink;">
+            <children>
+                <ImageView fitHeight="189.0" fitWidth="177.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/thallayhsuhtarlay.jpg" />
+                    </image>
+                </ImageView>
+                <Label layoutX="30.0" layoutY="183.0" style="-fx-font-size: 16;" text="Ma Hsu Wai Htar" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="807.0" layoutY="321.0" prefHeight="210.0" prefWidth="182.0" style="-fx-background-color: pink;">
+            <children>
+                <ImageView fitHeight="181.0" fitWidth="186.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/hninthiri.jpg" />
+                    </image>
+                </ImageView>
+                <Label layoutX="43.0" layoutY="184.0" style="-fx-font-size: 16;" text="Ma Hnin Thiri" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="162.0" layoutY="50.0" prefHeight="242.0" prefWidth="186.0" style="-fx-background-color: pink;">
+            <children>
+                <ImageView fitHeight="190.0" fitWidth="192.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/TeachelMyo.jpg" />
+                    </image>
+                </ImageView>
+                <Label layoutX="14.0" layoutY="192.0" prefHeight="26.0" prefWidth="166.0" style="-fx-font-size: 16;" text="Daw Myo Ohnmar Nyo" />
+                <Label layoutX="42.0" layoutY="217.0" prefHeight="26.0" prefWidth="110.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Our Supervisor" />
+            </children>
+        </AnchorPane>
+        <Line endX="491.0" layoutX="489.0" layoutY="553.0" startX="-384.1999816894531" stroke="#3342c3" />
+        <Label layoutX="162.0" layoutY="565.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Developed as a student project to gain practical experience in software development" textAlignment="CENTER" textFill="#2e1083" />
+      <Button layoutX="42.0" layoutY="566.0" mnemonicParsing="false" onAction="#backAction" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: blue; -fx-cursor: hand;-fx-font-weight: bold; -fx-text-fill: white;" text="back" />
+    </children>
+</AnchorPane>

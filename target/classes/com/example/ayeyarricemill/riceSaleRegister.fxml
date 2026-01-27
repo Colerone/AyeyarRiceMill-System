@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1049.0" style="-fx-background-color: #ebf1f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.riceSaleRegisterController">
+    <children>
+        <TableView fx:id="tableSale" focusTraversable="false" layoutX="329.0" layoutY="62.0" prefHeight="325.0" prefWidth="696.0">
+            <columns>
+                <TableColumn fx:id="colNo" prefWidth="45.333343505859375" text="No" />
+                <TableColumn fx:id="colItemName" prefWidth="132.0" text="Item Name" />
+                <TableColumn fx:id="colWarehouse" prefWidth="111.99990844726562" text="Warehouse" />
+                <TableColumn fx:id="colQty" prefWidth="71.33331298828125" text="Qty" />
+                <TableColumn fx:id="colPrice" minWidth="9.60003662109375" prefWidth="114.0" text="Price(MMK)" />
+                <TableColumn fx:id="colSubTotal" prefWidth="128.66668701171875" text="SubTotal(MMK)" />
+                <TableColumn fx:id="colAction" prefWidth="90.66668701171875" text="Action" />
+            </columns>
+        </TableView>
+        <AnchorPane layoutX="25.0" layoutY="19.0" prefHeight="198.0" prefWidth="287.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+            <children>
+                <Label layoutX="30.0" layoutY="14.0" style="-fx-font-size: 16;" text="Date:" />
+                <Label layoutX="30.0" layoutY="72.0" style="-fx-font-size: 16;" text="Customer Name:" />
+                <Label layoutX="30.0" layoutY="128.0" style="-fx-font-size: 16;" text="Phone Number:" />
+                <TextField fx:id="txtCustomerName" focusTraversable="false" layoutX="30.0" layoutY="97.0" prefHeight="28.0" prefWidth="230.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;" />
+                <TextField fx:id="txtPhone" focusTraversable="false" layoutX="30.0" layoutY="153.0" prefHeight="28.0" prefWidth="230.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;" />
+                <DatePicker fx:id="datePicker" focusTraversable="false" layoutX="30.0" layoutY="40.0" prefHeight="28.0" prefWidth="230.0" style="-fx-cursor: hand;" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="25.0" layoutY="239.0" prefHeight="345.0" prefWidth="287.0" style="-fx-border-radius: 5; -fx-background-color: #ffffff; -fx-background-radius: 5;">
+            <children>
+                <ComboBox fx:id="comboItem" focusTraversable="false" layoutX="31.0" layoutY="43.0" prefHeight="28.0" prefWidth="230.0" style="-fx-cursor: hand;" />
+                <Label layoutX="30.0" layoutY="15.0" style="-fx-font-size: 16;" text="Select Item:" />
+                <ComboBox fx:id="comboWarehouse" focusTraversable="false" layoutX="31.0" layoutY="110.0" prefHeight="28.0" prefWidth="230.0" style="-fx-cursor: hand;" />
+                <Label layoutX="30.0" layoutY="83.0" style="-fx-font-size: 16;" text="Select Warehouse:" />
+                <Label layoutX="31.0" layoutY="165.0" style="-fx-font-size: 16;" text="Price per bag :" />
+                <Label fx:id="lblPricePerBag" layoutX="138.0" layoutY="166.0" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+                <Label layoutX="28.0" layoutY="207.0" style="-fx-font-size: 16;" text="Available:" />
+                <Label fx:id="lblAvailableStock" layoutX="102.0" layoutY="208.0" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+                <Label layoutX="28.0" layoutY="246.0" style="-fx-font-size: 16;" text="Qualtity(Bags) :" />
+                <Button fx:id="btnAddSale" layoutX="30.0" layoutY="289.0" mnemonicParsing="false" onAction="#handleAddToSale" prefHeight="31.0" prefWidth="230.0" style="-fx-background-color: #0064f2; -fx-cursor: hand; -fx-text-fill: #ffffff; -fx-font-size: 15;" text="➕ Add to Sale Table" />
+                <TextField fx:id="txtQty" focusTraversable="false" layoutX="142.0" layoutY="247.0" prefHeight="28.0" prefWidth="118.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-cursor: hand; -fx-border-radius: 5; -fx-border-width: 0.5;" />
+                <Label layoutX="206.0" layoutY="182.0" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+                <Label layoutX="142.0" layoutY="225.0" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+            </children>
+        </AnchorPane>
+        <Button fx:id="btnVoucher" layoutX="333.0" layoutY="544.0" mnemonicParsing="false" onAction="#handleVoucher" prefHeight="37.0" prefWidth="702.0" style="-fx-background-color: #0064f2; -fx-cursor: hand; -fx-text-fill: #ffffff; -fx-font-size: 17; -fx-font-weight: bold;" text="Open Voucher" />
+        <Label fx:id="lblLabelSale" layoutX="333.0" layoutY="18.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="Sale Table" />
+        <Button fx:id="btnCalculate" layoutX="800.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleAmount" prefHeight="31.0" prefWidth="224.0" style="-fx-background-color: #0064f2; -fx-cursor: hand; -fx-text-fill: #ffffff; -fx-font-size: 15;" text="Calculate Total Amount" />
+        <AnchorPane fx:id="totalAmountPane" layoutX="332.0" layoutY="438.0" prefHeight="95.0" prefWidth="696.0" style="-fx-border-color: #f2812f; -fx-border-radius: 5; -fx-background-color: fef5ec;">
+            <children>
+                <ImageView fitHeight="94.0" fitWidth="95.0" layoutX="55.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/RiceSales1.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="183.0" layoutY="33.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="Total Ammount   =" />
+                <Label fx:id="lblTotalAmount" layoutX="428.0" layoutY="33.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="100000000" />
+                <Label layoutX="558.0" layoutY="33.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="MMK" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

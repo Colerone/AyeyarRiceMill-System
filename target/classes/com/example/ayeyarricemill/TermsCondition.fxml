@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="ruleSection" prefHeight="700.0" prefWidth="1070.0" style="-fx-background-color: #ebf1f5;"
+            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ayeyarricemill.TermsConditionController">
+    <children>
+        <Label layoutX="405.0" layoutY="14.0" style="-fx-font-size: 25; -fx-font-weight: bold; -fx-text-fill: #291b94;"
+               text="Terms &amp; Conditions"/>
+        <Label layoutX="236.0" layoutY="104.0" style="-fx-font-size: 16;"
+               text="This system is intended solely for rice mill management purposes"/>
+        <Label layoutX="214.0" layoutY="97.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="• "/>
+        <Label layoutX="236.0" layoutY="137.0" style="-fx-font-size: 16;"
+               text="Users are responsible for the accuracy of the data they enter into the system"/>
+        <Label layoutX="214.0" layoutY="130.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="236.0" layoutY="169.0" style="-fx-font-size: 16;"
+               text="The system must not be used for any illegal or unauthorized activities"/>
+        <Label layoutX="214.0" layoutY="162.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="236.0" layoutY="201.0" style="-fx-font-size: 16;"
+               text="Any misuse of the system may result in restricted or suspended access."/>
+        <Label layoutX="214.0" layoutY="194.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="236.0" layoutY="234.0" style="-fx-font-size: 16;"
+               text="Users must follow all system instructions and operational guidelines"/>
+        <Label layoutX="214.0" layoutY="227.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="236.0" layoutY="266.0" style="-fx-font-size: 16;"
+               text="System data should not be altered or deleted without proper authorization"/>
+        <Label layoutX="214.0" layoutY="259.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="215.0" layoutY="300.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="System Rules"/>
+        <Label layoutX="236.0" layoutY="336.0" style="-fx-font-size: 16;"
+               text="All data must be entered accurately and completely."/>
+        <Label layoutX="214.0" layoutY="329.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="236.0" layoutY="369.0" style="-fx-font-size: 16;"
+               text="Duplicate or invalid records are not allowed."/>
+        <Label layoutX="214.0" layoutY="362.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="236.0" layoutY="401.0" style="-fx-font-size: 16;"
+               text="System reports are generated based on stored records only."/>
+        <Label layoutX="214.0" layoutY="394.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="215.0" layoutY="434.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Security Rules"/>
+        <Label layoutX="238.0" layoutY="471.0" style="-fx-font-size: 16;"
+               text="Only the Owner and Manager are allowed to access the system."/>
+        <Label layoutX="216.0" layoutY="464.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="238.0" layoutY="504.0" style="-fx-font-size: 16;"
+               text="Login credentials of the Owner and Manager must not be shared."/>
+        <Label layoutX="216.0" layoutY="497.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="238.0" layoutY="536.0" style="-fx-font-size: 16;"
+               text="The system will restrict access after multiple invalid login attempts."/>
+        <Label layoutX="216.0" layoutY="529.0" prefHeight="17.0" prefWidth="11.0"
+               style="-fx-font-weight: bold; -fx-font-size: 25;" text="•"/>
+        <Label layoutX="214.0" layoutY="65.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="General Rules"/>
+        <Button layoutX="122.0" layoutY="565.0" mnemonicParsing="false" onAction="#backAction" prefHeight="25.0"
+                prefWidth="61.0"
+                style="-fx-background-color: blue; -fx-cursor: hand;-fx-font-weight: bold; -fx-text-fill: white;"
+                text="back"/>
+    </children>
+</AnchorPane>

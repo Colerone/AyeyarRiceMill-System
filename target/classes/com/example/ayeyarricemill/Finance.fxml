@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1070.0" style="-fx-background-color: #ebf1f5;"
+            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ayeyarricemill.FinanceController">
+    <children>
+        <AnchorPane layoutX="70.0" layoutY="50.0" prefHeight="118.0" prefWidth="199.0"
+                    style="-fx-background-color: #becddd; -fx-background-radius: 5;">
+            <children>
+                <Label layoutX="33.0" layoutY="14.0" style="-fx-font-size: 17;" text="Openting Balance"/>
+                <Label layoutX="21.0" layoutY="59.0" style="-fx-font-size: 22; -fx-font-weight: bold;" text="15000000"/>
+                <Label layoutX="128.0" layoutY="59.0" style="-fx-font-size: 22; -fx-font-weight: bold;" text="MMK"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="558.0" layoutY="50.0" prefHeight="118.0" prefWidth="199.0"
+                    style="-fx-background-color: #e9cbcb; -fx-background-radius: 5;">
+            <children>
+                <Label layoutX="48.0" layoutY="14.0" style="-fx-font-size: 17;" text="Total Expense"/>
+                <Label layoutX="26.0" layoutY="62.0" style="-fx-font-size: 22; -fx-font-weight: bold;" text="3000000"/>
+                <Label layoutX="122.0" layoutY="62.0" style="-fx-font-size: 22; -fx-font-weight: bold;" text="MMK"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="799.0" layoutY="50.0" prefHeight="118.0" prefWidth="199.0"
+                    style="-fx-background-color: #add3b0; -fx-background-radius: 5;">
+            <children>
+                <Label layoutX="40.0" layoutY="14.0" style="-fx-font-size: 17;" text="Closing Balance"/>
+                <Label layoutX="17.0" layoutY="59.0" style="-fx-font-size: 22; -fx-font-weight: bold;" text="20000000"/>
+                <Label layoutX="124.0" layoutY="59.0" style="-fx-font-size: 22; -fx-font-weight: bold;" text="MMK"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="313.0" layoutY="50.0" prefHeight="118.0" prefWidth="199.0"
+                    style="-fx-background-color: #bcb98b; -fx-background-radius: 5;">
+            <children>
+                <Label layoutX="51.0" layoutY="14.0" style="-fx-font-size: 17;" text="Total Income"/>
+                <Label layoutX="29.0" layoutY="59.0" style="-fx-font-size: 22; -fx-font-weight: bold;" text="8000000"/>
+                <Label layoutX="120.0" layoutY="59.0" style="-fx-font-size: 22; -fx-font-weight: bold;" text="MMK"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="70.0" layoutY="193.0" prefHeight="100.0" prefWidth="926.0"
+                    style="-fx-background-color: white; -fx-background-radius: 5;">
+            <children>
+                <Label layoutX="20.0" layoutY="14.0" style="-fx-font-size: 17;" text="Type:"/>
+                <ComboBox focusTraversable="false" layoutX="20.0" layoutY="44.0" prefHeight="32.0" prefWidth="199.0"/>
+                <Label layoutX="246.0" layoutY="14.0" style="-fx-font-size: 17;" text="Category:"/>
+                <ComboBox focusTraversable="false" layoutX="246.0" layoutY="44.0" prefHeight="32.0" prefWidth="199.0"/>
+                <TextField focusTraversable="false" layoutX="474.0" layoutY="44.0" prefHeight="32.0" prefWidth="199.0"/>
+                <Label layoutX="474.0" layoutY="14.0" style="-fx-font-size: 17;" text="Ammount:"/>
+                <TextField focusTraversable="false" layoutX="702.0" layoutY="44.0" prefHeight="32.0" prefWidth="199.0"/>
+                <Label layoutX="702.0" layoutY="14.0" style="-fx-font-size: 17;" text="Note:"/>
+            </children>
+        </AnchorPane>
+        <Button layoutX="844.0" layoutY="299.0" mnemonicParsing="false"
+                style="-fx-background-color: blue; -fx-text-fill: #ffffff; -fx-font-size: 14;"
+                text="+Add New Transition"/>
+        <TableView layoutX="70.0" layoutY="370.0" prefHeight="215.0" prefWidth="926.0">
+            <columns>
+                <TableColumn prefWidth="43.199981689453125" text="No"/>
+                <TableColumn prefWidth="107.20001220703125" text="Time"/>
+                <TableColumn prefWidth="229.59999084472656" text="Category"/>
+                <TableColumn prefWidth="139.20001220703125" text="Type"/>
+                <TableColumn prefWidth="155.199951171875" text="Ammount"/>
+                <TableColumn prefWidth="252.800048828125" text="Note"/>
+            </columns>
+        </TableView>
+        <Label layoutX="70.0" layoutY="334.0" style="-fx-font-size: 17;" text="Filter:"/>
+        <DatePicker layoutX="115.0" layoutY="329.0" prefHeight="32.0" prefWidth="189.0"/>
+    </children>
+</AnchorPane>

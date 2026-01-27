@@ -35,7 +35,7 @@ public class MillingListDetailController {
     public void setMillingData(MillingRegListController.MillingRecord record) {
         // ထိပ်ပိုင်း Header အချက်အလက်
         lblDate.setText(record.getMillingDate());
-        lblRecordedBy.setText("Hnin Thiri"); // Default ပြထားခြင်း (သို့မဟုတ် login user)
+        lblRecordedBy.setText(record.getRecordedBy()); // Default ပြထားခြင်း (သို့မဟုတ် login user)
 
         // ဘယ်ဘက်ခြမ်း - စပါးအချက်အလက် (Paddy Info)
         lblVoucherNo.setText(record.getBatchNo());

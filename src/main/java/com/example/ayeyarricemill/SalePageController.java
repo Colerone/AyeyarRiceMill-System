@@ -19,7 +19,7 @@ public class SalePageController implements Initializable {
         try{
             Parent sideBar = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/sideBar1.fxml"));
             Parent naviBar = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/naviBar.fxml"));
-            Parent contentArea = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/saleRegister.fxml"));
+            Parent contentArea = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/riceSaleRegister.fxml"));
 
             BorderPane innerPane = new BorderPane();
 //            innerPane.setTop(naviBar);

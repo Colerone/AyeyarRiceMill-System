@@ -19,15 +19,15 @@ public class SettingPageController implements Initializable {
         try{
             Parent sideBar = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/sideBar1.fxml"));
             Parent naviBar = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/naviBar.fxml"));
-            Parent contentArea = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/Setting.fxml"));
+            Parent contentArea = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/setting.fxml"));
 
             BorderPane innerPane = new BorderPane();
-//            innerPane.setTop(naviBar);
-//            innerPane.setCenter(contentArea);
+            innerPane.setTop(naviBar);
+            innerPane.setCenter(contentArea);
             borderPane.setTop(naviBar);
             borderPane.setLeft(sideBar);
-//            borderPane.setCenter(innerPane);
-            borderPane.setCenter(contentArea);
+            borderPane.setCenter(innerPane);
+//            borderPane.setCenter(contentArea);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

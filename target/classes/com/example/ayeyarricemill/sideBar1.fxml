@@ -273,7 +273,7 @@
                 <!--                    </children>-->
                 <!--                </HBox>-->
 
-                <HBox prefHeight="40.0" prefWidth="222.0" styleClass="sideBarItem">
+                <HBox fx:id="activeFinance" onMouseClicked="#activeFinanceClicked" prefHeight="40.0" prefWidth="222.0" styleClass="sideBarItem">
                     <children>
                         <FontAwesomeIconView glyphName="LIST_ALT" size="20" styleClass="glyphIcon">
                             <HBox.margin>

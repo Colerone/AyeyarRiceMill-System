@@ -9,6 +9,7 @@ module com.example.ayeyarricemill {
     requires java.net.http;
     requires com.google.gson;
     requires mysql.connector.j;
+    requires java.desktop;
 
 
     opens com.example.ayeyarricemill to javafx.fxml, com.google.gson;

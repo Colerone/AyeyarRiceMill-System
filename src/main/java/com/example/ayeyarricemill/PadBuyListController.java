@@ -3,9 +3,12 @@ package com.example.ayeyarricemill;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,6 +23,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.List;
 
 public class PadBuyListController {
@@ -44,19 +48,38 @@ public class PadBuyListController {
     @FXML
     private TableColumn<PaddyPurchase, Void> colAction;
 
+    // Filter အတွက် အသစ်ထည့်ထားသော Component
+    @FXML private DatePicker filterDatePicker;
+    @FXML private Button btnResetFilter;
+
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final Gson gson = new Gson();
     private final String API_URL = "http://localhost:9090/api/paddy_purchases";
 
+    // Data တွေကို သိမ်းထားရန် // အသစ်
+    private ObservableList<PaddyPurchase> masterData = FXCollections.observableArrayList();
+    private FilteredList<PaddyPurchase> filteredData;
+
     @FXML
     public void initialize() {
+        // ၁။ FilteredList ကို initialize လုပ်ပြီး Table ကို ချိတ်မယ် // အသစ်
+        filteredData = new FilteredList<>(masterData, p -> true);
+        purchaseTable.setItems(filteredData);
+
         setupTable();
+        setupFilterLogic();
         loadData();
     }
 
     private void setupTable() {
         // အမှတ်စဉ် (No)
-        colNo.setCellValueFactory(data -> new SimpleIntegerProperty(purchaseTable.getItems().indexOf(data.getValue()) + 1));
+//        colNo.setCellValueFactory(data -> new SimpleIntegerProperty(purchaseTable.getItems().indexOf(data.getValue()) + 1));
+        // No Column (Index ပြန်တွက်ရန် filteredData ကို သုံးထားသည်)
+        colNo.setCellValueFactory(column -> {
+            int index = purchaseTable.getItems().indexOf(column.getValue());
+            return new ReadOnlyObjectWrapper<>(index + 1);
+        });
+
 
         colVoucherNo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getBatchNo()));
 
@@ -92,9 +115,9 @@ public class PadBuyListController {
                 } else {
                     setText(item);
                     if ("Stock".equalsIgnoreCase(item)) {
-                        setStyle("-fx-text-fill: #d47742; -fx-font-weight: bold;"); // Stock ဆိုရင် အစိမ်း
+                        setStyle("-fx-text-fill: #d47742; -fx-font-weight: bold;");
                     } else if ("Milled".equalsIgnoreCase(item)) {
-                        setStyle("-fx-text-fill: #2a8d67; -fx-font-weight: bold;"); // Milled ဆိုရင် လိမ္မော်ရောင်
+                        setStyle("-fx-text-fill: #2a8d67; -fx-font-weight: bold;");
                     }
                 }
             }
@@ -121,6 +144,49 @@ public class PadBuyListController {
         });
     }
 
+    private void setupFilterLogic() {
+        // Master Data ကို FilteredList ထဲ ထည့်ထားသည်
+//        filteredData = new FilteredList<>(masterData, p -> true);
+
+        // DatePicker တန်ဖိုး ပြောင်းလဲမှုအား နားထောင်ခြင်း
+        filterDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            applyFilter(newValue);
+        });
+
+        // Reset Button နှိပ်လျှင် Filter ဖျက်ရန်
+        if (btnResetFilter != null) {
+            btnResetFilter.setOnAction(e -> {
+                filterDatePicker.setValue(null);
+                applyFilter(null);
+            });
+        }
+    }
+
+    private void applyFilter(LocalDate selectedDate) {
+        filteredData.setPredicate(record -> {
+            // ရက်စွဲ မရွေးထားလျှင် အကုန်ပြမည်
+            if (selectedDate == null) {
+                return true;
+            }
+
+            try {
+                String recordDateStr = record.getPurchaseDate();
+//                LocalDate recordDate = LocalDate.parse(recordDateStr);
+//                return recordDate.equals(selectedDate);
+                LocalDate recordDate = LocalDate.parse(recordDateStr.split("T")[0]);
+                return recordDate.equals(selectedDate);
+            } catch (Exception e) {
+                // Parse လုပ်လို့မရရင် console မှာ ပြပေးထားမယ် (Debug လုပ်ဖို့)
+                System.err.println("Date format error for: " + record.getPurchaseDate());
+                return false;
+            }
+        });
+
+        // Table ကို Update လုပ်သည်
+//        tableMilling.setItems(filteredData);
+        purchaseTable.refresh();
+    }
+
     private void loadData() {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(API_URL))
@@ -132,7 +198,12 @@ public class PadBuyListController {
                     if (response.statusCode() == 200) {
                         List<PaddyPurchase> items = gson.fromJson(response.body(), new TypeToken<List<PaddyPurchase>>() {
                         }.getType());
-                        Platform.runLater(() -> purchaseTable.setItems(FXCollections.observableArrayList(items)));
+                        Platform.runLater(() ->
+//                                purchaseTable.setItems(FXCollections.observableArrayList(items)));
+                                // အဓိက အချက်- table ဆီ တိုက်ရိုက်မထည့်ဘဲ masterData ထဲကို ထည့်ရပါမယ်
+                                masterData.setAll(items));
+                        // Filter ကိုလည်း ပြန်စစ်ပေးဖို့ လိုပါတယ် (အရင် ရွေးထားတာ ရှိနေရင်)
+                        applyFilter(filterDatePicker.getValue());
                     } else {
                         System.err.println("Failed to load data. Status: " + response.statusCode());
                     }
