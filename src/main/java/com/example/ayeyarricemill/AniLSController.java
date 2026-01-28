@@ -177,7 +177,7 @@ public class AniLSController implements Initializable {
                                 PadPurchaseS1Controller.loggedInUsername = userName;
                                 sideBar1Controller.currentUserRole = role;
                                 MillingRegisterController.loggedInUsername = userName;
-
+                                riceSaleRegisterController.loggedInUsername = userName;
                                 navigateToDashboard(role);
                             }else{
                                 // Registration ဆိုလျှင် Alert ပြပြီး Login သို့ပြောင်းရန် တိုက်တွန်းမည်

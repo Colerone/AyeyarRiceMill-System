@@ -7,11 +7,16 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -55,6 +60,8 @@ public class riceSaleRegisterController {
     private AnchorPane totalAmountPane;
     @FXML
     private Button btnAddSale, btnSubmit, btnVoucher, btnCalculate;
+
+    public static String loggedInUsername;
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final Gson gson = new Gson();
@@ -327,6 +334,7 @@ public class riceSaleRegisterController {
                 selectedItem.getName(),
                 warehouse.getName(),
                 warehouse.getId(),
+
                 qty,
                 selectedItem.getPrice(),
                 subTotal
@@ -351,6 +359,8 @@ public class riceSaleRegisterController {
             return;
         }
 
+        String custName = txtCustomerName.getText().isEmpty() ? "Unknown Customer" : txtCustomerName.getText();
+        String phone = txtPhone.getText().isEmpty() ? "-" : txtPhone.getText();
         // Voucher ထုတ်တဲ့အခါ Inventory ထဲက Stock နှုတ်မယ့် List
         List<CompletableFuture<Void>> futures = new ArrayList<>();
 
@@ -376,6 +386,7 @@ public class riceSaleRegisterController {
                             String errorMsg = res.body();
                             Platform.runLater(() -> showError("Failed to deduct stock for " + item.getItemName() + ": " + res.body()));
                             throw new RuntimeException("API Error");
+
                         }
                     }));
         }
@@ -383,6 +394,7 @@ public class riceSaleRegisterController {
         // အားလုံးပြီးစီးသွားမှ လုပ်ဆောင်မည့် အပိုင်း
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                 .thenRun(() -> Platform.runLater(() -> {
+                    switchToVoucherScene(custName, phone, new ArrayList<>(saleDataList));
                     showInfo("Sale registered and stock updated!");
                     saleDataList.clear();
                     calculateTotal();
@@ -390,6 +402,8 @@ public class riceSaleRegisterController {
                     totalAmountPane.setVisible(false);
                     btnVoucher.setVisible(false);
                     btnCalculate.setVisible(false);
+                    txtCustomerName.clear();
+                    txtPhone.clear();
                 }))
                 .exceptionally(ex -> {
                     // တစ်ခုခုမှားယွင်းခဲ့ရင် console မှာ ကြည့်နိုင်အောင်
@@ -397,6 +411,28 @@ public class riceSaleRegisterController {
                     return null;
                 });
     }
+
+    private void switchToVoucherScene(String customerName, String phone, List<SaleItem> items) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("riceSaleVocher.fxml"));
+            Parent root = loader.load();
+
+            // Voucher Controller ကို ရယူပြီး data ပို့ပေးခြင်း
+            riceSaleVoucherController controller = loader.getController();
+            controller.setData(customerName, phone, items, loggedInUsername);
+
+            // လက်ရှိ Window (Stage) ကို ယူပြီး Scene အသစ် ပြောင်းခြင်း
+            Stage stage = (Stage) btnVoucher.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Rice Sale Voucher");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load Voucher Page: " + e.getMessage());
+        }
+    }
+
 
     @FXML
     private void handleAmount() {
@@ -584,18 +620,6 @@ public class riceSaleRegisterController {
         public String getStatus() { return status; }
     }
 
-    // JSON Mapping helpers
-//    private static class PriceRaw {
-//        String riceType;
-//        Double price;
-//    }
-//
-//    private static class OtherPriceRaw {
-//        // Backend (OtherPrice.java) မှာ String Type လို့ စာလုံးကြီးနဲ့ ပေးထားလို့ ဒီမှာလည်း တူရပါမယ်
-//        String Type;
-//        Double price;
-//    }
-
     private static class PriceRaw {
         @SerializedName("riceType")
         String riceType;
@@ -604,17 +628,12 @@ public class riceSaleRegisterController {
     }
 
     private static class OtherPriceRaw {
-        // Backend (OtherPrice.java) မှာ "Type" (T အကြီး) လို့ ပေးထားတဲ့အတွက်
-        // @SerializedName သုံးပြီး ညွှန်းပေးလိုက်တာ အသေချာဆုံးပါ
         @SerializedName("Type")
         String Type;
 
         @SerializedName("price")
         Double price;
     }
-
-
-
 }
 
 
