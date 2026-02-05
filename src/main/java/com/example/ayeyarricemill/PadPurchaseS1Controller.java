@@ -119,6 +119,22 @@ public class PadPurchaseS1Controller {
 
     @FXML
     public void initialize() {
+        datePicker.setValue(LocalDate.now());
+
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                // ဒီနေ့နဲ့ မတူတဲ့ ရက်မှန်သမျှကို Disable လုပ်ခြင်း
+                if (date != null && !date.equals(LocalDate.now())) {
+                    setDisable(true);
+                    // ပိတ်ထားတဲ့ ရက်တွေကို အရောင်မှိန်ပြချင်ရင် (Optional)
+                    setStyle("-fx-background-color: #f4f4f4; -fx-text-fill: #b0b0b0;");
+                }
+            }
+        });
+
         // ၁။ စစချင်းမှာ Box များကို ဖျောက်ထားမည်
         hideResultBoxes();
 
@@ -167,6 +183,12 @@ public class PadPurchaseS1Controller {
 
                         Platform.runLater(() -> {
                             paddyVarietyCombo.setItems(FXCollections.observableArrayList(varietyNames));
+
+                            // ✅ Default အနေနဲ့ ပထမ item ကိုရွေးထားမယ်
+                            if (!varietyNames.isEmpty()) {
+                                paddyVarietyCombo.getSelectionModel().selectFirst();
+                                handleVarietySelection(); // price auto set
+                            }
                         });
                     }
                 })
@@ -393,6 +415,16 @@ public class PadPurchaseS1Controller {
             return;
         }
 
+        // 🔴 SPACE CHECK (အရေးကြီးဆုံး)
+        if (!isWarehouseSpaceEnough()) {
+            showAlert(
+                    "Warehouse Full",
+                    "Warehouse space is not enough.\n" +
+                            "Available space is less than net weight."
+            );
+            return; // ❌ Backend မပို့
+        }
+
         // Backend PaddyPurchase Model နှင့် အတိအကျတူသော Record တစ်ခု တည်ဆောက်ခြင်း
         PaddyPurchaseRecord purchaseRecord = new PaddyPurchaseRecord();
 
@@ -466,6 +498,14 @@ public class PadPurchaseS1Controller {
                 });
     }
 
+    private boolean isWarehouseSpaceEnough() {
+        InventoryAddController.Warehouse wh = warehouseCombo.getValue();
+        if (wh == null) return false;
+
+        int available = wh.getCapacity() - wh.getCurrentStock();
+        return available >= finalNetWeight;
+    }
+
     private void prepareVoucherData() {
         PaddyVoucherController.PurchaseData.supplierName = supplierNameField.getText();
         PaddyVoucherController.PurchaseData.variety = paddyVarietyCombo.getValue();
@@ -529,6 +569,11 @@ public class PadPurchaseS1Controller {
                         Platform.runLater(() -> {
                             warehouseCombo.setItems(FXCollections.observableArrayList(rawWh));
                             setupWarehouseComboBoxDisplay();
+
+                            if (!rawWh.isEmpty()) {
+                                warehouseCombo.getSelectionModel().selectFirst();
+                                updateWarehouseInfo();
+                            }
                         });
                     }
                 });
@@ -560,7 +605,8 @@ public class PadPurchaseS1Controller {
             lblSpaceStatus.setText(available >= finalNetWeight ? "avaliable" : "Not avaliable");
             lblSpaceStatus.setStyle("-fx-text-fill: " + (available >= finalNetWeight ? "green" : "red") + ";");
 
-
+            // 🔒 Confirm Button control
+            ConPurchase.setDisable(!(available >= finalNetWeight));
         }
     }
 

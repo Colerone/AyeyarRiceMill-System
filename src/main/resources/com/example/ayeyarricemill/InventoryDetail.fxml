@@ -6,53 +6,41 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="770.0" prefWidth="1090.0" style="-fx-background-color: #ebf1f5;" stylesheets="InventoryDetailTable.css"
-            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.ayeyarricemill.InventoryDetailsController">
+<AnchorPane fx:id="warehouseName" prefHeight="770.0" prefWidth="1090.0" style="-fx-background-color: #ebf1f5;" stylesheets="InventoryDetailTable.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.InventoryDetailsController">
     <children>
-        <VBox alignment="CENTER" layoutX="113.0" layoutY="87.0" prefHeight="87.0" prefWidth="160.0"
-              style="-fx-border-radius: 5; -fx-background-color: #98FF5C; -fx-background-radius: 10;">
+        <VBox alignment="CENTER" layoutX="113.0" layoutY="87.0" prefHeight="87.0" prefWidth="160.0" style="-fx-border-radius: 5; -fx-background-color: #98FF5C; -fx-background-radius: 10;">
             <children>
-                <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="Total "/>
-                <Label fx:id="totalQtyLabel" style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: black;"
-                       text="1500 Bags"/>
+                <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="Total " />
+                <Label fx:id="totalQtyLabel" style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: black;" text="1500 Bags" />
             </children>
         </VBox>
-        <VBox alignment="CENTER" layoutX="346.0" layoutY="86.0" prefHeight="87.0" prefWidth="160.0"
-              style="-fx-background-color: #e8e337; -fx-background-radius: 10;">
+        <VBox alignment="CENTER" layoutX="346.0" layoutY="86.0" prefHeight="87.0" prefWidth="160.0" style="-fx-background-color: #e8e337; -fx-background-radius: 10;">
             <children>
-                <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="Varieties"/>
-                <Label fx:id="varietiesLabel" style="-fx-font-size: 15;  -fx-font-weight: bold; -fx-text-fill: black;"
-                       text="12 Types"/>
+                <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="Varieties" />
+                <Label fx:id="varietiesLabel" style="-fx-font-size: 15;  -fx-font-weight: bold; -fx-text-fill: black;" text="12 Types" />
             </children>
         </VBox>
-        <VBox alignment="CENTER" layoutX="581.0" layoutY="87.0" prefHeight="87.0" prefWidth="160.0"
-              style="-fx-background-color: FF5454; -fx-background-radius: 10;">
+        <VBox alignment="CENTER" layoutX="581.0" layoutY="87.0" prefHeight="87.0" prefWidth="160.0" style="-fx-background-color: FF5454; -fx-background-radius: 10;">
             <children>
-                <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="Used Space"/>
-                <Label fx:id="usedSpaceLabel" style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: black;"
-                       text="65%"/>
+                <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="Used Space" />
+                <Label fx:id="usedSpaceLabel" style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: black;" text="65%" />
             </children>
         </VBox>
-        <VBox alignment="CENTER" layoutX="815.0" layoutY="87.0" prefHeight="87.0" prefWidth="160.0"
-              style="-fx-background-color: FC70FF; -fx-background-radius: 10;">
+        <VBox alignment="CENTER" layoutX="815.0" layoutY="87.0" prefHeight="87.0" prefWidth="160.0" style="-fx-background-color: FC70FF; -fx-background-radius: 10;">
             <children>
-                <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="Available Space"/>
-                <Label fx:id="availableSpaceLabel"
-                       style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: black;" text="35%"/>
+                <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="Available Space" />
+                <Label fx:id="availableSpaceLabel" style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: black;" text="35%" />
             </children>
         </VBox>
-        <TableView fx:id="detailTable" focusTraversable="false" layoutX="113.0" layoutY="201.0" prefHeight="294.0"
-                   prefWidth="862.0" style="-fx-border-color: #BDD8E9;">
+        <TableView fx:id="detailTable" focusTraversable="false" layoutX="113.0" layoutY="201.0" prefHeight="294.0" prefWidth="862.0" style="-fx-border-color: #BDD8E9;">
             <columns>
-                <TableColumn fx:id="colNo" prefWidth="48.000003814697266" text="No"/>
-                <TableColumn fx:id="colType" prefWidth="299.9999542236328" text="Type"/>
-                <TableColumn fx:id="colQty" prefWidth="139.99993896484375" text="Qty"/>
-                <TableColumn fx:id="colDate" prefWidth="194.4000244140625" text="Last Updated"/>
-                <TableColumn fx:id="colStatus" prefWidth="180.0" text="Status"/>
+                <TableColumn fx:id="colNo" prefWidth="48.000003814697266" text="No" />
+                <TableColumn fx:id="colType" prefWidth="299.9999542236328" text="Type" />
+                <TableColumn fx:id="colQty" prefWidth="139.99993896484375" text="Qty" />
+                <TableColumn fx:id="colDate" prefWidth="194.4000244140625" text="Last Updated" />
+                <TableColumn fx:id="colStatus" prefWidth="180.0" text="Status" />
             </columns>
         </TableView>
-        <Label layoutX="113.0" layoutY="20.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: black;"
-               text="Inventory Details"/>
+      <Label fx:id="warehouse" layoutX="113.0" layoutY="14.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #660404;" text="Warehouse A" />
     </children>
 </AnchorPane>

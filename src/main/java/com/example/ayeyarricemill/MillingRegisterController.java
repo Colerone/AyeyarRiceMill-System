@@ -14,6 +14,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class MillingRegisterController {
         setupComboBoxes();
         loadInitialData();
 
+        datePicker.setValue(LocalDate.now());
         // Confirm Button ကို စစချင်း ဖျောက်ထားမယ်
         btnConfirmProduction.managedProperty().bind(btnConfirmProduction.visibleProperty());
         btnConfirmProduction.setVisible(false);
@@ -102,6 +104,12 @@ public class MillingRegisterController {
                 finalYield.setVisible(true);
                 // Calculate နှိပ်ပြီးမှ Confirm Button ကို ပြမယ်
                 btnConfirmProduction.setVisible(true);
+
+                // 🔄 Space status ကို ပြန်စစ်
+                Warehouse w = comboTargetWarehouse.getValue();
+                if (w != null) {
+                    updateSpaceStatus(w);
+                }
             }
         });
         btnConfirmProduction.setOnAction(e -> handleConfirmProduction());
@@ -183,6 +191,15 @@ public class MillingRegisterController {
                 return null;
             }
         });
+
+        comboVoucherNo.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                populateVoucherInfo(newVal);
+                // ဗောက်ချာရွေးလိုက်တာနဲ့ အဲ့ဒီဗောက်ချာရဲ့ ဝယ်တဲ့ရက်ကိုမူတည်ပြီး DatePicker ကို Limit လုပ်မယ်
+                restrictDatePicker(newVal.getPurchaseDate());
+            }
+        });
+
         comboTargetWarehouse.setConverter(new StringConverter<>() {
             @Override
             public String toString(Warehouse object) {
@@ -213,6 +230,66 @@ public class MillingRegisterController {
         });
     }
 
+//    private void restrictDatePicker(String purchaseDateStr) {
+//        if (purchaseDateStr == null || purchaseDateStr.isEmpty()) return;
+//
+//        // Backend ကလာတဲ့ ISO Date (2024-05-20T...) ကို LocalDate ပြောင်းခြင်း
+//        LocalDate purchaseDate = LocalDate.parse(purchaseDateStr.split("T")[0]);
+//
+//        datePicker.setDayCellFactory(picker -> new DateCell() {
+//            @Override
+//            public void updateItem(LocalDate date, boolean empty) {
+//                super.updateItem(date, empty);
+//                // စပါးဝယ်တဲ့ရက် (purchaseDate) ရဲ့ အရှေ့ကရက်တွေကို ပိတ်ထားမယ်
+//                setDisable(empty || date.isBefore(purchaseDate));
+//
+//                // ပိတ်ထားတဲ့ရက်တွေကို အရောင်မှိန်ပြချင်ရင်
+//                if (date.isBefore(purchaseDate)) {
+//                    setStyle("-fx-background-color: #eeeeee;");
+//                }
+//            }
+//        });
+//
+//        // လက်ရှိရွေးထားတဲ့ရက်က ဝယ်တဲ့ရက်ထက် စောနေရင် ဝယ်တဲ့ရက်ကို ပြန်ပြောင်းပေးမယ်
+//        if (datePicker.getValue() != null && datePicker.getValue().isBefore(purchaseDate)) {
+//            datePicker.setValue(purchaseDate);
+//        }
+//    }
+
+    private void restrictDatePicker(String purchaseDateStr) {
+        if (purchaseDateStr == null || purchaseDateStr.isEmpty()) {
+            // Date မရှိရင် ယနေ့ရက်စွဲမတိုင်ခင် ရက်တွေကို ပိတ်ထားမယ်
+            datePicker.setDayCellFactory(null);
+            return;
+        }
+
+        try {
+            // Backend က LocalDateTime format (2024-05-20T...) လာရင် T ရဲ့ အရှေ့က အပိုင်းပဲယူမယ်
+            LocalDate purchaseDate = LocalDate.parse(purchaseDateStr.split("T")[0]);
+
+            datePicker.setDayCellFactory(picker -> new DateCell() {
+                @Override
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    // ဝယ်တဲ့ရက် (Purchase Date) ထက် စောတဲ့ရက်မှန်သမျှကို Disable လုပ်မယ်
+                    setDisable(empty || date.isBefore(purchaseDate));
+
+                    if (date.isBefore(purchaseDate)) {
+                        setStyle("-fx-background-color: #f4f4f4; -fx-text-fill: #b0b0b0;");
+                    }
+                }
+            });
+
+            // လက်ရှိ DatePicker ထဲမှာ ရွေးထားတဲ့ရက်က ဝယ်တဲ့ရက်ထက် စောနေရင်
+            // အလိုအလျောက် ဝယ်တဲ့ရက်ကို ပြန်ပြောင်းပေးမယ်
+            if (datePicker.getValue() == null || datePicker.getValue().isBefore(purchaseDate)) {
+                datePicker.setValue(purchaseDate);
+            }
+        } catch (Exception e) {
+            System.err.println("Date format error: " + e.getMessage());
+        }
+    }
+
     private void handleConfirmProduction() {
         PaddyPurchase voucher = comboVoucherNo.getValue();
         Warehouse targetWarehouse = comboTargetWarehouse.getValue();
@@ -222,6 +299,12 @@ public class MillingRegisterController {
             return;
         }
 
+        // 🔴 FINAL SPACE CHECK
+        if (!isWarehouseSpaceEnough(targetWarehouse)) {
+            showError("Warehouse space is not enough. Cannot confirm production.");
+            return;
+        }
+        
 //        ကြိတ်ခွဲမှုမှတ်တမ်း သိမ်းဆည်းခြင်း (Milling Record)
         saveMillingRecord(voucher, targetWarehouse);
 
@@ -242,6 +325,18 @@ public class MillingRegisterController {
         showSuccess("Successfully milling process and has also been added to the warehouse.");
         resetForm();
     }
+
+    private boolean isWarehouseSpaceEnough(Warehouse w) {
+        if (w == null) return false;
+
+        int current = w.getCurrentStock() != null ? w.getCurrentStock() : 0;
+        int capacity = w.getCapacity() != null ? w.getCapacity() : 0;
+        int totalOutput = (int) parse(lblTotalOutputs.getText());
+
+        int availableSpace = capacity - current;
+        return totalOutput <= availableSpace;
+    }
+
 
     private void saveMillingRecord(PaddyPurchase voucher, Warehouse targetWarehouse) {
         Map<String, Object> record = new HashMap<>();
@@ -350,7 +445,21 @@ public class MillingRegisterController {
             List<PaddyPurchase> stockOnly = list.stream()
                     .filter(p -> "Stock".equalsIgnoreCase(p.getStatus()))
                     .collect(Collectors.toList());
-            Platform.runLater(() -> comboVoucherNo.setItems(FXCollections.observableArrayList(stockOnly)));
+
+            Platform.runLater(() -> {
+                if (!stockOnly.isEmpty()) {
+                    comboVoucherNo.setItems(FXCollections.observableArrayList(stockOnly));
+                    // ပထမဆုံး Item ကို Auto ရွေးခိုင်းမယ်
+                    comboVoucherNo.getSelectionModel().selectFirst();
+
+                    // အကယ်၍ listener က အလုပ်မလုပ်ခဲ့ရင်တောင် တိုက်ရိုက်ခေါ်ပေးထားမယ်
+                    PaddyPurchase first = stockOnly.get(0);
+                    populateVoucherInfo(first);
+                    restrictDatePicker(first.getPurchaseDate());
+                } else {
+                    System.out.println("No 'Stock' vouchers found in the database.");
+                }
+            });
         });
 
         fetchFromApi("/warehouses", new TypeToken<List<Warehouse>>() {
@@ -358,7 +467,22 @@ public class MillingRegisterController {
             List<Warehouse> goodOnly = list.stream()
                     .filter(w -> "Good".equalsIgnoreCase(w.getType()))
                     .collect(Collectors.toList());
-            Platform.runLater(() -> comboTargetWarehouse.setItems(FXCollections.observableArrayList(goodOnly)));
+//            Platform.runLater(() -> comboTargetWarehouse.setItems(FXCollections.observableArrayList(goodOnly)));
+            Platform.runLater(() -> {
+                if (!goodOnly.isEmpty()) {
+                    // Item တွေ ComboBox ထဲ ထည့်မယ်
+                    comboTargetWarehouse.setItems(FXCollections.observableArrayList(goodOnly));
+
+                    // ပထမဆုံး ဂိုဒေါင်ကို အလိုအလျောက် ရွေးခိုင်းမယ်
+                    comboTargetWarehouse.getSelectionModel().selectFirst();
+
+                    // ရွေးထားတဲ့ ဂိုဒေါင်ရဲ့ အချက်အလက် (Stock, Capacity) တွေကို Label မှာ ပေါ်အောင် ခေါ်ပေးမယ်
+                    updateSpaceStatus(goodOnly.get(0));
+                } else {
+                    System.out.println("No 'Good' type warehouses found.");
+                }
+            });
+
         });
     }
 
@@ -470,13 +594,32 @@ public class MillingRegisterController {
 
 
     private void updateSpaceStatus(Warehouse w) {
-        int current = w.currentStock != null ? w.currentStock : 0;
-        if (w.capacity != null && current >= w.capacity) {
+//        int current = w.currentStock != null ? w.currentStock : 0;
+//        if (w.capacity != null && current >= w.capacity) {
+//            lblSpaceStatus.setText("not available");
+//            lblSpaceStatus.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
+//        } else {
+//            lblSpaceStatus.setText("available");
+//            lblSpaceStatus.setStyle("-fx-text-fill: green; -fx-font-size: 14px;");
+//        }
+
+        int current = w.getCurrentStock() != null ? w.getCurrentStock() : 0;
+        int capacity = w.getCapacity() != null ? w.getCapacity() : 0;
+        int totalOutput = (int) parse(lblTotalOutputs.getText());
+
+        int availableSpace = capacity - current;
+
+        lblCurrentStock.setText(current + " Bags");
+        lblMaxCapacity.setText(capacity + " Bags");
+
+        if (totalOutput > availableSpace) {
             lblSpaceStatus.setText("not available");
-            lblSpaceStatus.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
+            lblSpaceStatus.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+            btnConfirmProduction.setDisable(true);   // ❌ မနှိပ်နိုင်
         } else {
             lblSpaceStatus.setText("available");
-            lblSpaceStatus.setStyle("-fx-text-fill: green; -fx-font-size: 14px;");
+            lblSpaceStatus.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+            btnConfirmProduction.setDisable(false);  // ✅ နှိပ်နိုင်
         }
     }
 
@@ -534,6 +677,7 @@ public class MillingRegisterController {
         private Double netWeight;
         private String status;
         private Double netPrice;
+        private String purchaseDate;
 
         public String getBatchNo() {
             return batchNo;
@@ -555,6 +699,7 @@ public class MillingRegisterController {
         public String getStatus() {
             return status;
         }
+        public String getPurchaseDate() { return purchaseDate; } // Getter ထည့်ပါ
     }
 
     public static class Warehouse {

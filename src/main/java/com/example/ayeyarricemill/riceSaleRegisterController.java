@@ -21,6 +21,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +77,23 @@ public class riceSaleRegisterController {
 
     @FXML
     public void initialize() {
+
+        datePicker.setValue(LocalDate.now());
+
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                // ဒီနေ့နဲ့ မတူတဲ့ ရက်မှန်သမျှကို Disable လုပ်ခြင်း
+                if (date != null && !date.equals(LocalDate.now())) {
+                    setDisable(true);
+                    // ပိတ်ထားတဲ့ ရက်တွေကို အရောင်မှိန်ပြချင်ရင် (Optional)
+                    setStyle("-fx-background-color: #f4f4f4; -fx-text-fill: #b0b0b0;");
+                }
+            }
+        });
+
         // ၁။ စစချင်းမှာ ညာဘက်အခြမ်းကို ဖျောက်ထားမယ်
         lblLabelSale.setVisible(false);
         tableSale.setVisible(false);
@@ -148,7 +166,16 @@ public class riceSaleRegisterController {
                             .collect(Collectors.toList());
                 })
                 .thenAccept(list -> Platform.runLater(() -> {
-                    comboWarehouse.setItems(FXCollections.observableArrayList(list));
+                    if (!list.isEmpty()) {
+                        comboWarehouse.setItems(FXCollections.observableArrayList(list));
+                        // --- ပထမဆုံး Warehouse ကို Auto ရွေးမည် ---
+                        comboWarehouse.getSelectionModel().selectFirst();
+
+                        // Item လည်း ရွေးထားပြီးသားဆိုရင် Stock Label တန်းပေါ်လာအောင် ခေါ်ပေးမယ်
+                        updateStockLabel();
+                    }
+
+
                     comboWarehouse.setConverter(new StringConverter<>() {
                         @Override
                         public String toString(Warehouse w) {
@@ -188,8 +215,17 @@ public class riceSaleRegisterController {
             allItems.addAll(otherFetch.join());
 
             Platform.runLater(() -> {
-                comboItem.setItems(FXCollections.observableArrayList(allItems));
-                // Display Name သတ်မှတ်ရန်
+                if (!allItems.isEmpty()) {
+                    comboItem.setItems(FXCollections.observableArrayList(allItems));
+                    // --- ပထမဆုံး Item ကို Auto ရွေးမည် ---
+                    comboItem.getSelectionModel().selectFirst();
+
+                    // ဈေးနှုန်း label ကို update လုပ်ပေးခြင်း
+                    MarketItem first = allItems.get(0);
+                    lblPricePerBag.setText(String.format("%,.0f", first.getPrice()) + " MMK");
+                }
+
+
                 comboItem.setConverter(new javafx.util.StringConverter<MarketItem>() {
                     @Override
                     public String toString(MarketItem item) {
@@ -486,6 +522,8 @@ public class riceSaleRegisterController {
         comboWarehouse.getSelectionModel().clearSelection();
         lblAvailableStock.setText("0 Bags");
         lblPricePerBag.setText("0");
+
+        datePicker.setValue(LocalDate.now());
     }
 
     private void showError(String msg) {

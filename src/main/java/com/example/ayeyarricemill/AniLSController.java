@@ -130,6 +130,13 @@ public class AniLSController implements Initializable {
     }
 
     private void registerUser() {
+
+        // 🔴 Validation အရင်စစ်
+        if (!validateRegisterInputs()) {
+            return; // ❌ API မပို့
+        }
+
+
         Map<String,String > data = new HashMap<>();
         data.put("username", userTextField.getText());
         data.put("email", userEmailField.getText());
@@ -139,12 +146,77 @@ public class AniLSController implements Initializable {
         sendRequest(BASE_URL,  data , "Registration");
     }
 
+    private boolean validateRegisterInputs() {
+        if (userTextField.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Username is required");
+            userTextField.requestFocus();
+            return false;
+        }
+
+        if (userEmailField.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Email is required");
+            userEmailField.requestFocus();
+            return false;
+        }
+
+        if (!userEmailField.getText().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Invalid email format");
+            userEmailField.requestFocus();
+            return false;
+        }
+
+        if (passField.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Password is required");
+            passField.requestFocus();
+            return false;
+        }
+
+        if (passField.getText().length() < 6) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Password must be at least 6 characters");
+            passField.requestFocus();
+            return false;
+        }
+
+        if (roleField.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Role is required (OWNER or MANAGER)");
+            roleField.requestFocus();
+            return false;
+        }
+
+        String role = roleField.getText().trim().toUpperCase();
+        if (!role.equals("OWNER") && !role.equals("MANAGER")) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Role must be OWNER or MANAGER");
+            roleField.requestFocus();
+            return false;
+        }
+
+        return true; // ✅ All OK
+
+    }
+
     private void loginUser() {
+        if (!validateLoginInputs()) {
+            return;
+        }
         Map<String, String > data = new HashMap<>();
         data.put("username" , userTextField.getText());
         data.put("password", passField.getText());
 
         sendRequest(BASE_URL1 , data, "Login");
+    }
+
+    private boolean validateLoginInputs() { if (userTextField.getText().trim().isEmpty()) {
+        showAlert(Alert.AlertType.WARNING, "Validation Error", "Username is required");
+        return false;
+    }
+
+        if (passField.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Password is required");
+            return false;
+        }
+
+        return true;
+
     }
 
     private void sendRequest(String url, Map<String, String> data, String type) {

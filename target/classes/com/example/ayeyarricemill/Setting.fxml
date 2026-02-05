@@ -6,80 +6,60 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1070.0" style="-fx-background-color: #ebf1f5;"
-            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.ayeyarricemill.SettingController">
+<AnchorPane prefHeight="700.0" prefWidth="1070.0" style="-fx-background-color: #ebf1f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.SettingController">
     <children>
-        <Label layoutX="354.0" layoutY="505.0" style="-fx-font-size: 17;" text="09-670513794" textFill="#291b94"/>
-        <Label layoutX="47.0" layoutY="503.0" style="-fx-font-size: 17;" text="ayeyar123@gmail.com" textFill="#291b94"/>
-        <ImageView fitHeight="273.0" fitWidth="293.0" layoutX="47.0" layoutY="130.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <Label layoutX="354.0" layoutY="505.0" style="-fx-font-size: 17;" text="09-670513794" textFill="#291b94" />
+        <Label layoutX="47.0" layoutY="503.0" style="-fx-font-size: 17;" text="ayeyar123@gmail.com" textFill="#291b94" />
+        <ImageView fitHeight="273.0" fitWidth="293.0" layoutX="47.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/RiceMill(1).jpg"/>
+                <Image url="@images/RiceMill(1).jpg" />
             </image>
         </ImageView>
-        <ImageView fitHeight="274.0" fitWidth="370.0" layoutX="340.0" layoutY="130.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="274.0" fitWidth="370.0" layoutX="340.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/RiceMill(2).jpg"/>
+                <Image url="@images/RiceMill(2).jpg" />
             </image>
         </ImageView>
-        <ImageView fitHeight="279.0" fitWidth="292.0" layoutX="723.0" layoutY="130.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="279.0" fitWidth="292.0" layoutX="723.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/RiceMill(3).jpg"/>
+                <Image url="@images/RiceMill(3).jpg" />
             </image>
         </ImageView>
-        <ImageView fitHeight="117.0" fitWidth="118.0" layoutX="469.0" layoutY="-14.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="117.0" fitWidth="118.0" layoutX="469.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/Logo3.png"/>
+                <Image url="@images/Logo3.png" />
             </image>
         </ImageView>
-        <Label layoutX="298.0" layoutY="81.0" style="-fx-font-size: 25; -fx-font-weight: bold;"
-               text="Ayeyar Rice Mill Management System" textFill="#291b94"/>
-        <Line endX="868.800048828125" endY="3.0517578125E-5" layoutX="148.0" layoutY="427.0" startX="-100.0"
-              style="-fx-stroke: #50b2e2;"/>
-        <Label layoutX="70.0" layoutY="481.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Email Address"
-               textFill="#291b94"/>
-        <Label layoutX="350.0" layoutY="481.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Phone Number"
-               textFill="#291b94"/>
-        <Label layoutX="354.0" layoutY="531.0" style="-fx-font-size: 17;" text="09-699363666" textFill="#291b94"/>
-        <Label layoutX="630.0" layoutY="481.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Location"
-               textFill="#291b94"/>
-        <Label layoutX="586.0" layoutY="503.0" style="-fx-font-size: 17;" text="Industrial Zone, Pathein"
-               textFill="#291b94"/>
-        <Label layoutX="594.0" layoutY="531.0" style="-fx-font-size: 17;" text="Ayeyarwaddy Region" textFill="#291b94"/>
-        <Label layoutX="890.0" layoutY="505.0" style="-fx-font-size: 17; -fx-text-fill: #291b94; -fx-cursor: hand;"
-               onMouseClicked="#projectInfo" text="Project Info"/>
-        <Label layoutX="864.0" layoutY="531.0" style="-fx-font-size: 17; -fx-text-fill: #291b94; -fx-cursor: hand;"
-               onMouseClicked="#termsConditions" text="Terms &amp; Conditions"/>
-        <Label layoutX="896.0" layoutY="558.0" style="-fx-font-size: 17; -fx-text-fill: #291b94; -fx-cursor: hand;"
-               onMouseClicked="#aboutUs" text="About Us"/>
-        <Label layoutX="870.0" layoutY="481.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="More Information"
-               textFill="#291b94"/>
-        <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="105.0" layoutY="441.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <Label layoutX="298.0" layoutY="81.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="Ayeyar Rice Mill Management System" textFill="#291b94" />
+        <Line endX="868.800048828125" endY="3.0517578125E-5" layoutX="148.0" layoutY="427.0" startX="-100.0" style="-fx-stroke: #50b2e2;" />
+        <Label layoutX="70.0" layoutY="481.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Email Address" textFill="#291b94" />
+        <Label layoutX="350.0" layoutY="481.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Phone Number" textFill="#291b94" />
+        <Label layoutX="354.0" layoutY="531.0" style="-fx-font-size: 17;" text="09-699363666" textFill="#291b94" />
+        <Label layoutX="630.0" layoutY="481.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Location" textFill="#291b94" />
+        <Label layoutX="586.0" layoutY="503.0" style="-fx-font-size: 17;" text="Industrial Zone, Pathein" textFill="#291b94" />
+        <Label layoutX="594.0" layoutY="531.0" style="-fx-font-size: 17;" text="Ayeyarwaddy Region" textFill="#291b94" />
+        <Label layoutX="890.0" layoutY="505.0" onMouseClicked="#projectInfo" style="-fx-font-size: 17; -fx-text-fill: #0091bb; -fx-cursor: hand;" text="Project Info" />
+        <Label layoutX="864.0" layoutY="531.0" onMouseClicked="#termsConditions" style="-fx-font-size: 17; -fx-text-fill: #0091bb; -fx-cursor: hand;" text="Terms &amp; Conditions" />
+        <Label layoutX="896.0" layoutY="558.0" onMouseClicked="#aboutUs" style="-fx-font-size: 17; -fx-text-fill: #0091bb; -fx-cursor: hand;" text="About Us" />
+        <Label layoutX="870.0" layoutY="481.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="More Information" textFill="#291b94" />
+        <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="105.0" layoutY="441.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/emailIcon.png"/>
+                <Image url="@images/emailIcon.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="394.0" layoutY="445.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="394.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/phoneIcon.png"/>
+                <Image url="@images/phoneIcon.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="648.0" layoutY="445.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="648.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/locationIcon.png"/>
+                <Image url="@images/locationIcon.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="922.0" layoutY="445.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="922.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/infoIcon.png"/>
+                <Image url="@images/infoIcon.png" />
             </image>
         </ImageView>
     </children>

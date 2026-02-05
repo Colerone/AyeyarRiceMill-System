@@ -29,6 +29,7 @@ public class InventoryDetailsController {
     @FXML private Label varietiesLabel;
     @FXML private Label usedSpaceLabel;
     @FXML private Label availableSpaceLabel;
+    @FXML private Label warehouse;
 
     @FXML private TableView<InventoryItem> detailTable;
     @FXML private TableColumn<InventoryItem, Number> colNo;
@@ -48,14 +49,18 @@ public class InventoryDetailsController {
     public void initialize(){
         if(selectedWarehouse != null){
             calculateDashboardStatus(); // Box 1 3 4 အတွက်
-
             setupTable(); // table setup
             loadInventoryItems();
+            if (warehouse != null) {
+                warehouse.setText(selectedWarehouse.getName());
+            }
 
         }else {
             System.out.println("Error: No warehouse selected for detail view.");
         }
     }
+
+
 
     private void calculateDashboardStatus(){
         // Box 1: Total Quantity & Units
@@ -89,16 +94,25 @@ public class InventoryDetailsController {
         colQty.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getQuantity()));
         colStatus.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getStatus()));
 
-        colDate.setCellValueFactory(cell -> {
-            if(cell.getValue().getArrivalDate() != null){
-                try{
-                    String formattedDate = cell.getValue().getArrivalDate().split("T")[0];
-                    return new SimpleStringProperty(formattedDate);
-                }catch(Exception e){
-                    return new SimpleStringProperty("-");
-                }
+//        colDate.setCellValueFactory(cell -> {
+//            if(cell.getValue().getArrivalDate() != null){
+//                try{
+//                    String formattedDate = cell.getValue().getArrivalDate().split("T")[0];
+//                    return new SimpleStringProperty(formattedDate);
+//                }catch(Exception e){
+//                    return new SimpleStringProperty("-");
+//                }
+//            }
+//            return new SimpleStringProperty("-");
+//        });
+
+        colDate.setCellValueFactory(cellData -> {
+            String dateStr = cellData.getValue().getArrivalDate();
+            if (dateStr != null && dateStr.contains("T")) {
+                // T ပါနေရင် (ISO Format) အလှပြင်မယ်
+                return new javafx.beans.property.SimpleStringProperty(dateStr.replace("T", " ").substring(0, 16));
             }
-            return new SimpleStringProperty("-");
+            return new javafx.beans.property.SimpleStringProperty(dateStr);
         });
         detailTable.setItems(itemList);
     }
