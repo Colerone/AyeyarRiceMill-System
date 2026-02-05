@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
@@ -145,6 +146,8 @@ public class riceSaleVoucherController {
             Parent root = loader.load();
 
             Stage stage = (Stage) btnBack.getScene().getWindow();
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/ayeyarricemill/images/AppImage (1).jpg")));
+            stage.setTitle("AyeyarRiceMill");
             stage.setScene(new Scene(root));
             stage.setMaximized(true);
             stage.show();

@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -240,6 +241,7 @@ public class PadBuyListController {
             // Create a Modal Stage (Popup Box Style)
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL); // Block interaction with parent window
+            popupStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/ayeyarricemill/images/AppImage (1).jpg")));
 //            popupStage.initStyle(StageStyle.UTILITY); // Minimal window decorations (closer to a box)
 //            popupStage.initStyle(StageStyle.UNDECORATED);      // ❌ Close button မပါ
 //            popupStage.initModality(Modality.APPLICATION_MODAL); // နောက်ခံ lock

@@ -285,6 +285,7 @@ public class sideBar1Controller {
 
     @FXML
     private void salesRecord(javafx.scene.input.MouseEvent event){
+        activePage = "activeRiceList";
         try{
             Node source =(Node) event.getSource();
             Scene scene = source.getScene();
@@ -294,9 +295,6 @@ public class sideBar1Controller {
             scene.setRoot(root);
             stage.setMaximized(true);
             stage.show();
-//            SceneController.switchCenter("/com/example/ayeyarricemill/saleRecord.fxml");
-//            // ဒီနေရာမှာ highlight ပြောင်းဖို့ manual ခေါ်ပေးရမယ်
-//            highlightActiveMenu();
         }catch(Exception e){
             System.err.println("Error loading to vital scene: " + e.getMessage());
             e.printStackTrace();
