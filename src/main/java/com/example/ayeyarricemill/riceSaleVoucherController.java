@@ -31,7 +31,7 @@ public class riceSaleVoucherController {
     @FXML private VBox vboxItems; // Dynamic rows တွေ ထည့်မယ့်နေရာ
     @FXML private AnchorPane footerPane;
 
-    public void setData(String customerName, String phone, List<riceSaleRegisterController.SaleItem> items, String sellerName) {
+    public void setData(String customerName, String phone, List<riceSaleRegisterController.SaleItem> items, String sellerName,String voucherNo) {
         // အခြေခံ အချက်အလက်များ ဖြည့်ခြင်း
         lblCustomerName.setText(customerName);
         lblCustomerName1.setText(customerName);
@@ -43,9 +43,12 @@ public class riceSaleVoucherController {
         }
         lblDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("d/M/yyyy")));
 
-        // Voucher No ကို ယာယီအားဖြင့် ယနေ့ရက်စွဲနဲ့ Time Stamp သုံးပြီး ထုတ်ပေးခြင်း
-        String vNo = "A-" + LocalDate.now().getYear() + "-" + (System.currentTimeMillis() % 10000);
-        lblVoucherNo.setText(vNo);
+        if (voucherNo != null && !voucherNo.isEmpty()) {
+            lblVoucherNo.setText(voucherNo);
+        } else {
+            // အကယ်၍ အကြောင်းတစ်ခုခုကြောင့် နံပါတ်မပါလာလျှင် Error မတက်အောင် Fallback တစ်ခုထားပေးခြင်း
+            lblVoucherNo.setText("A-" + LocalDate.now().getYear() + "-ERROR");
+        }
 
         // အရင်ရှိနေတဲ့ dynamic rows တွေကို ရှင်းထုတ်ပါ
         vboxItems.getChildren().clear();
@@ -109,7 +112,7 @@ public class riceSaleVoucherController {
         }
 
         // Total Amount ကို format လုပ်ပြီး ပြခြင်း
-        lblTotalAmount.setText(String.format("%,.0f", totalAmount));
+        lblTotalAmount.setText(String.format("%,.0f ", totalAmount));
 
         // Footer (Total Amount Section) ကို VBox ရဲ့ အောက်မှာ ကပ်နေအောင် နေရာညှိခြင်း
         // VBox ရဲ့ layout Y + အမြင့် ကို အခြေခံပြီး footer ကို ရွှေ့ပေးပါမယ်

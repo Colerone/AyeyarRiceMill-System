@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="1101.0" style="-fx-background-color: #ebf1f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.riceSaleDetailController">
+    <children>
+        <AnchorPane layoutX="41.0" layoutY="28.0" prefHeight="633.0" prefWidth="1019.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+            <children>
+                <TableView fx:id="tableItems" focusTraversable="false" layoutX="34.0" layoutY="134.0" prefHeight="306.0" prefWidth="902.0">
+                    <columns>
+                        <TableColumn fx:id="colNo" prefWidth="43.999969482421875" text="No" />
+                        <TableColumn fx:id="colItemName" prefWidth="224.0000457763672" text="Item Name" />
+                        <TableColumn fx:id="colWarehouse" prefWidth="151.20001220703125" text="Warehouse" />
+                        <TableColumn fx:id="colQty" prefWidth="78.4000244140625" text="Qty" />
+                        <TableColumn fx:id="colPrice" minWidth="9.60003662109375" prefWidth="211.20001220703125" text="Price(MMK)" />
+                        <TableColumn fx:id="colSubTotal" prefWidth="196.79998779296875" text="SubTotal(MMK)" />
+                    </columns>
+                </TableView>
+                <AnchorPane layoutX="34.0" layoutY="462.0" prefHeight="94.0" prefWidth="902.0" style="-fx-border-color: #498cec; -fx-border-radius: 5; -fx-background-color: #eff6ff;">
+                    <children>
+                        <ImageView fitHeight="94.0" fitWidth="95.0" layoutX="153.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/Logo3.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="268.0" layoutY="30.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="Total Ammount   =" />
+                        <Label fx:id="lblTotalAmount" layoutX="513.0" layoutY="30.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="100000000" />
+                        <Label layoutX="643.0" layoutY="30.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="MMK" />
+                    </children>
+                </AnchorPane>
+                <Label layoutX="34.0" layoutY="47.0" style="-fx-font-size: 16;" text="Customer Name:" />
+                <Label fx:id="lblCustomerName" layoutX="162.0" layoutY="47.0" style="-fx-font-size: 16;" text="Daw Htet Ehindra Lwin" />
+                <Label layoutX="34.0" layoutY="80.0" style="-fx-font-size: 16;" text="Phone Number:" />
+                <Label fx:id="lblPhone" layoutX="161.0" layoutY="81.0" style="-fx-font-size: 16;" text="09-6705713794" />
+                <Label layoutX="699.0" layoutY="47.0" style="-fx-font-size: 16;" text="Voucher No:" />
+                <Label fx:id="lblVoucherNo" layoutX="798.0" layoutY="47.0" style="-fx-font-size: 16;" text="A-2026-001" />
+                <Line endX="668.800048828125" layoutX="266.0" layoutY="113.0" startX="-230.8000030517578" style="-fx-stroke: #ebf1f5;" />
+                <Label layoutX="699.0" layoutY="80.0" style="-fx-font-size: 16;" text="Seller Name:" />
+                <Label fx:id="lblSellerName" layoutX="798.0" layoutY="80.0" style="-fx-font-size: 16;" text="Daw Hnin Thiri" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

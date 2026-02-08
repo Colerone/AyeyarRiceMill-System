@@ -9,19 +9,18 @@
 <AnchorPane prefHeight="603.0" prefWidth="1377.0" xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.riceSaleListController">
     <children>
-        <TableView  focusTraversable="false" layoutX="34.0" layoutY="80.0" prefHeight="400.0"
-                   prefWidth="989.0">
+        <TableView fx:id="tableSales" focusTraversable="false" layoutX="1.0" layoutY="31.0" prefHeight="587.0" prefWidth="1053.0">
             <columns>
-                <TableColumn  prefWidth="75.0" text="No"/>
-                <TableColumn  prefWidth="180.66666412353516" text="Date"/>
-                <TableColumn  prefWidth="400.6666564941406" text="Paddy Type"/>
-                <TableColumn  prefWidth="192.0" text="Total Milled"/>
-                <TableColumn  prefWidth="139.33333333333337" text="Action"/>
+                <TableColumn fx:id="colNo" prefWidth="75.0" text="No"/>
+                <TableColumn fx:id="colDate" prefWidth="180.66666412353516" text="Date"/>
+                <TableColumn fx:id="colCustomerName" prefWidth="412.66668701171875" text="Customer Name"/>
+                <TableColumn fx:id="colVoucherNo" prefWidth="204.0" text="Voucher No"/>
+                <TableColumn fx:id="colAction" prefWidth="178.6666463216145" text="Action"/>
             </columns>
         </TableView>
-        <DatePicker fx:id="filterDatePicker" focusTraversable="false" layoutX="832.0" layoutY="53.0" prefHeight="25.0"
+        <DatePicker fx:id="filterDatePicker" focusTraversable="false" layoutX="868.0" layoutY="3.0" prefHeight="25.0"
                     prefWidth="122.0" style="-fx-cursor: hand;"/>
-        <Button fx:id="btnResetFilter" focusTraversable="false" layoutX="963.0" layoutY="53.0" mnemonicParsing="false"
+        <Button fx:id="btnResetFilter" focusTraversable="false" layoutX="996.0" layoutY="3.0" mnemonicParsing="false"
                 style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-cursor: hand;" text="Refresh"/>
     </children>
 </AnchorPane>

@@ -12,6 +12,7 @@ module com.example.ayeyarricemill {
     requires java.desktop;
 
 
+
     opens com.example.ayeyarricemill to javafx.fxml, com.google.gson;
     exports com.example.ayeyarricemill;
 }

@@ -43,6 +43,8 @@ public class RawPriceController {
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final Gson gson = new Gson();
 
+
+
     // Backend API URL (src/test.http ရှိ path အတိုင်း ပြင်ဆင်ထားသည်)
     private final String BASE_URL = "http://localhost:9090/api/paddy_price";
     private final ObservableList<PaddyPrice> priceList = FXCollections.observableArrayList();
@@ -186,6 +188,12 @@ public class RawPriceController {
         });
     }
 
+    private String normalize(String input) {
+        if (input == null) return null;
+        return input.toLowerCase().replaceAll("\\s+", "");
+    }
+
+
     private void showPaddyPriceDialog(PaddyPrice existingData) {
         Dialog<PaddyPrice> dialog = new Dialog<>();
         dialog.setTitle(existingData == null ? "Add new Paddy" : "Update ");
@@ -216,7 +224,9 @@ public class RawPriceController {
             if (dialogButton == saveButtonType) {
                 try {
                     PaddyPrice p = (existingData == null) ? new PaddyPrice() : existingData;
-                    p.setPaddyType(typeField.getText());
+//                    p.setPaddyType(typeField.getText());
+                    p.setPaddyType(typeField.getText().trim());
+
                     p.setPrice(Double.parseDouble(priceField.getText()));
 
                     if (existingData == null) {

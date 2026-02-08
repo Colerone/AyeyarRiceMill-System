@@ -1,6 +1,7 @@
 package com.example.ayeyarricemill;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
@@ -74,6 +75,7 @@ public class riceSaleRegisterController {
     private final String WAREHOUSE_API = "http://localhost:9090/api/warehouses"; // Warehouse API
     private final String INVENTORY_ITEMS_API = "http://localhost:9090/api/inventory_items/warehouses/";
     private final String DEDUCT_STOCK_API = "http://localhost:9090/api/inventory-logic/deduct-stock";
+    private final String SALE_RECORD_API = "http://localhost:9090/api/sales";
 
     @FXML
     public void initialize() {
@@ -388,6 +390,67 @@ public class riceSaleRegisterController {
         clearInputs();
     }
 
+//    @FXML
+//    private void handleVoucher() {
+//        if (saleDataList.isEmpty()) {
+//            showError("No items to sale");
+//            return;
+//        }
+//
+//        String custName = txtCustomerName.getText().isEmpty() ? "Unknown Customer" : txtCustomerName.getText();
+//        String phone = txtPhone.getText().isEmpty() ? "-" : txtPhone.getText();
+//        // Voucher ထုတ်တဲ့အခါ Inventory ထဲက Stock နှုတ်မယ့် List
+//
+//        List<CompletableFuture<Void>> futures = new ArrayList<>();
+//
+//        for (SaleItem item : saleDataList) {
+//            // Backend Map structure: { "warehouseName": "", "itemName": "", "quantity": 0 }
+//            String warehouseNameEncoded = item.getWarehouse().replace(" ", "%20");
+//            String finalUrl = "http://localhost:9090/api/inventory-logic/deduct/" + warehouseNameEncoded;// Space ပါရင် error မတက်အောင် encode လုပ်ခြင်း
+//            Map<String, Object> payload = new HashMap<>();
+//            payload.put("warehouseName", item.getWarehouse()); // Name သုံးရမည် (Backend logic အရ)
+//            payload.put("itemName", item.getItemName());
+//            payload.put("quantity", (int) item.getQty());
+//
+//            HttpRequest request = HttpRequest.newBuilder()
+//                    .uri(URI.create(finalUrl))
+//                    .header("Content-Type", "application/json")
+//                    .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(payload)))
+//                    .build();
+//
+//            futures.add(httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+//                    .thenAccept(res -> {
+//                        if (res.statusCode() != 200) {
+//                            // Error message ကို ပိုသိသာအောင် ထုတ်ပြပါ
+//                            String errorMsg = res.body();
+//                            Platform.runLater(() -> showError("Failed to deduct stock for " + item.getItemName() + ": " + res.body()));
+//                            throw new RuntimeException("API Error");
+//
+//                        }
+//                    }));
+//        }
+//
+//        // အားလုံးပြီးစီးသွားမှ လုပ်ဆောင်မည့် အပိုင်း
+//        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+//                .thenRun(() -> Platform.runLater(() -> {
+//                    switchToVoucherScene(custName, phone, new ArrayList<>(saleDataList));
+//                    showInfo("Sale registered and stock updated!");
+//                    saleDataList.clear();
+//                    calculateTotal();
+//                    tableSale.setVisible(false);
+//                    totalAmountPane.setVisible(false);
+//                    btnVoucher.setVisible(false);
+//                    btnCalculate.setVisible(false);
+//                    txtCustomerName.clear();
+//                    txtPhone.clear();
+//                }))
+//                .exceptionally(ex -> {
+//                    // တစ်ခုခုမှားယွင်းခဲ့ရင် console မှာ ကြည့်နိုင်အောင်
+//                    ex.printStackTrace();
+//                    return null;
+//                });
+//    }
+
     @FXML
     private void handleVoucher() {
         if (saleDataList.isEmpty()) {
@@ -397,41 +460,77 @@ public class riceSaleRegisterController {
 
         String custName = txtCustomerName.getText().isEmpty() ? "Unknown Customer" : txtCustomerName.getText();
         String phone = txtPhone.getText().isEmpty() ? "-" : txtPhone.getText();
-        // Voucher ထုတ်တဲ့အခါ Inventory ထဲက Stock နှုတ်မယ့် List
-        List<CompletableFuture<Void>> futures = new ArrayList<>();
+        double totalAmount = saleDataList.stream().mapToDouble(SaleItem::getSubTotal).sum();
 
-        for (SaleItem item : saleDataList) {
-            // Backend Map structure: { "warehouseName": "", "itemName": "", "quantity": 0 }
-            String warehouseNameEncoded = item.getWarehouse().replace(" ", "%20");
-            String finalUrl = "http://localhost:9090/api/inventory-logic/deduct/" + warehouseNameEncoded;// Space ပါရင် error မတက်အောင် encode လုပ်ခြင်း
-            Map<String, Object> payload = new HashMap<>();
-            payload.put("warehouseName", item.getWarehouse()); // Name သုံးရမည် (Backend logic အရ)
-            payload.put("itemName", item.getItemName());
-            payload.put("quantity", (int) item.getQty());
+        // --- (၁) အရောင်းမှတ်တမ်း (Sale Record) အတွက် Data စုစည်းခြင်း ---
+        Map<String, Object> saleRecord = new HashMap<>();
+        saleRecord.put("customerName", custName);
+        saleRecord.put("phone", phone);
+        saleRecord.put("totalAmount", totalAmount);
+        saleRecord.put("employeeName", loggedInUsername);
+        saleRecord.put("voucherNo", "VCH-" + System.currentTimeMillis());
 
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(finalUrl))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(payload)))
-                    .build();
-
-            futures.add(httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenAccept(res -> {
-                        if (res.statusCode() != 200) {
-                            // Error message ကို ပိုသိသာအောင် ထုတ်ပြပါ
-                            String errorMsg = res.body();
-                            Platform.runLater(() -> showError("Failed to deduct stock for " + item.getItemName() + ": " + res.body()));
-                            throw new RuntimeException("API Error");
-
-                        }
-                    }));
+        List<Map<String, Object>> items = new ArrayList<>();
+        for (SaleItem si : saleDataList) {
+            Map<String, Object> itemMap = new HashMap<>();
+            itemMap.put("itemName", si.getItemName());
+            itemMap.put("warehouseName", si.getWarehouse());
+            itemMap.put("quantity", si.getQty());
+            itemMap.put("price", si.getPrice());
+            itemMap.put("subTotal", si.getSubTotal());
+            items.add(itemMap);
         }
+        saleRecord.put("items", items);
 
-        // အားလုံးပြီးစီးသွားမှ လုပ်ဆောင်မည့် အပိုင်း
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                .thenRun(() -> Platform.runLater(() -> {
-                    switchToVoucherScene(custName, phone, new ArrayList<>(saleDataList));
-                    showInfo("Sale registered and stock updated!");
+        // --- (၂) Backend ဆီသို့ Sale Record အရင်သိမ်းရန် ပို့ခြင်း ---
+        HttpRequest saleRequest = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/api/sales")) // သင်၏ Sale API URL
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(saleRecord)))
+                .build();
+
+        httpClient.sendAsync(saleRequest, HttpResponse.BodyHandlers.ofString())
+                .thenCompose(response -> {
+                    if (response.statusCode() != 200 && response.statusCode() != 201) {
+                        throw new RuntimeException("Failed to save sale record: " + response.body());
+                    }
+                    // Backend က ပြန်ပေးလိုက်တဲ့ Sale Object ထဲက Voucher No ကို ယူခြင်း
+                    JsonObject responseObj = gson.fromJson(response.body(), JsonObject.class);
+                    String realVoucherNo = responseObj.get("voucherNo").getAsString();
+
+                    // --- (၃) အရောင်းသိမ်းတာ အောင်မြင်မှ သင်ရေးထားတဲ့ Stock နှုတ်တဲ့ logic ကို Run မယ် ---
+                    List<CompletableFuture<Void>> stockFutures = new ArrayList<>();
+                    for (SaleItem item : saleDataList) {
+                        String warehouseNameEncoded = item.getWarehouse().replace(" ", "%20");
+                        String finalUrl = "http://localhost:9090/api/inventory-logic/deduct/" + warehouseNameEncoded;
+
+                        Map<String, Object> payload = new HashMap<>();
+                        payload.put("warehouseName", item.getWarehouse());
+                        payload.put("itemName", item.getItemName());
+                        payload.put("quantity", (int) item.getQty());
+
+                        HttpRequest request = HttpRequest.newBuilder()
+                                .uri(URI.create(finalUrl))
+                                .header("Content-Type", "application/json")
+                                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(payload)))
+                                .build();
+
+                        stockFutures.add(httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                                .thenAccept(res -> {
+                                    if (res.statusCode() != 200) {
+                                        Platform.runLater(() -> showError("Failed to deduct stock for " + item.getItemName()));
+                                        throw new RuntimeException("Stock API Error");
+                                    }
+                                }));
+                    }
+                    return CompletableFuture.allOf(stockFutures.toArray(new CompletableFuture[0]))
+                            .thenApply(v -> realVoucherNo); // VoucherNo ကို နောက်အဆင့်သို့ ပေးလိုက်ခြင်း
+                })
+                .thenAccept(voucherNo-> Platform.runLater(() -> {
+                    // --- (၄) အားလုံးပြီးစီးမှ Voucher Scene သို့ ပြောင်းခြင်း ---
+                    switchToVoucherScene(custName, phone, new ArrayList<>(saleDataList), voucherNo);
+                    showInfo("Save Record");
+
                     saleDataList.clear();
                     calculateTotal();
                     tableSale.setVisible(false);
@@ -442,20 +541,20 @@ public class riceSaleRegisterController {
                     txtPhone.clear();
                 }))
                 .exceptionally(ex -> {
-                    // တစ်ခုခုမှားယွင်းခဲ့ရင် console မှာ ကြည့်နိုင်အောင်
+                    Platform.runLater(() -> showError("Error: " + ex.getMessage()));
                     ex.printStackTrace();
                     return null;
                 });
     }
 
-    private void switchToVoucherScene(String customerName, String phone, List<SaleItem> items) {
+    private void switchToVoucherScene(String customerName, String phone, List<SaleItem> items, String voucherNo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("riceSaleVocher.fxml"));
             Parent root = loader.load();
 
             // Voucher Controller ကို ရယူပြီး data ပို့ပေးခြင်း
             riceSaleVoucherController controller = loader.getController();
-            controller.setData(customerName, phone, items, loggedInUsername);
+            controller.setData(customerName, phone, items, loggedInUsername, voucherNo);
 
             // လက်ရှိ Window (Stage) ကို ယူပြီး Scene အသစ် ပြောင်းခြင်း
             Stage stage = (Stage) btnVoucher.getScene().getWindow();
