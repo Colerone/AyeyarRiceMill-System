@@ -13,7 +13,7 @@ public class AyeyarRiceMill extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AyeyarRiceMill.class.getResource("AniLogSign.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/ayeyarricemill/images/AppImage (1).jpg")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/ayeyarricemill/images/Logo3.png")));
         stage.setTitle("AyeyarRiceMill");
         stage.setScene(scene);
         stage.setMaximized(true);

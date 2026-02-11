@@ -10,7 +10,8 @@ module com.example.ayeyarricemill {
     requires com.google.gson;
     requires mysql.connector.j;
     requires java.desktop;
-
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
 
 
     opens com.example.ayeyarricemill to javafx.fxml, com.google.gson;
