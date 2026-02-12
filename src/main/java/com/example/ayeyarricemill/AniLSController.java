@@ -65,9 +65,7 @@ public class AniLSController implements Initializable {
     private final Gson gson = new Gson();
     private final String BASE_URL = "http://localhost:9090/api/users/register";
     private final String BASE_URL1 = "http://localhost:9090/api/users/login";
-    private final String FINANCE_CHECK_URL = "http://localhost:9090/api/finance/check-setup/";
-//private final String BASE_URL = "http://127.0.0.1:9090/api/users";
-    // သွားပေါ်ချင်တဲ့ နေရာရဲ့ Width
+
     private static final double Panel_Width1 = 525;
     private static final double Panel_Width2 = 336;
 
@@ -252,12 +250,12 @@ public class AniLSController implements Initializable {
                                 sideBar1Controller.currentUserRole = role;
                                 MillingRegisterController.loggedInUsername = userName;
                                 riceSaleRegisterController.loggedInUsername = userName;
-                                OpeningBalanceController.loggedInUsername = userName;
                                 FinanceController.loggedInUsername = userName;
+                                FinanceController.currentUserRole = role;
 
-                                // *** FINANCE SETUP ရှိမရှိ အရင်စစ်ဆေးမည် ***
-                                checkFinanceAndNavigate(userName, role);
-//                                navigateToDashboard(role,);
+                                // Login success ဖြစ်တိုင်း Home ကို default highlight လုပ်မယ်
+                                sideBar1Controller.setActivePage("Home");
+                                navigateToDashboard(role);
                             }else{
                                 // Registration ဆိုလျှင် Alert ပြပြီး Login သို့ပြောင်းရန် တိုက်တွန်းမည်
                                 showAlert(Alert.AlertType.INFORMATION, "Registration Success", "Your registration successful.Please Log in again");
@@ -276,28 +274,6 @@ public class AniLSController implements Initializable {
                 });
     }
 
-    private void checkFinanceAndNavigate(String userName, String role) {
-        HttpRequest checkRequest = HttpRequest.newBuilder()
-                .uri(URI.create(FINANCE_CHECK_URL + userName))
-                .GET()
-                .build();
-
-        httpClient.sendAsync(checkRequest, HttpResponse.BodyHandlers.ofString())
-                .thenAccept(response -> {
-                    Platform.runLater(() -> {
-                        if (response.statusCode() == 200) {
-                            // Setup ရှိပြီးသားဖြစ်လို့ Dashboard (Finance Dashboard ပါဝင်တဲ့စာမျက်နှာ) ကိုသွားမယ်
-                            System.out.println("Finance setup exists for " + userName);
-                            navigateToDashboard(role, false);
-                        } else {
-                            // Setup မရှိသေးရင် Opening Balance Page ကို အရင်သွားခိုင်းမယ်
-                            System.out.println("No finance setup. Redirecting to Opening Balance.");
-                            navigateToDashboard(role, true);
-                        }
-                    });
-                });
-    }
-
     private void clearFields() {
         userEmailField.clear();
         userTextField.clear();
@@ -305,54 +281,49 @@ public class AniLSController implements Initializable {
         roleField.clear();
     }
 
-//    private void navigateToDashboard(String role, boolean forceOpeningBalance) {
-//        try{
-//            String fxmlFile = "";
-//            String title = "";
-//
-//            if(role.equalsIgnoreCase("OWNER")){
-//                fxmlFile = "MainDashboard.fxml";
-//                title = "OwnerDashBoard - Ayeyar Rice Mill";
-//            }else{
-//                fxmlFile = "HomePage.fxml";
-//                title = "ManagerDashBoard - Ayeyar Rice Mill";
-//            }
-//
-//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
-//            Scene scene = new Scene(fxmlLoader.load());
-//            Stage stage = (Stage) SignUPButton.getScene().getWindow();
-//            stage.setScene(scene);
-//            stage.setMaximized(true);
-//            stage.show();
-//
-//        }catch (IOException e) {
-//            e.printStackTrace();
-//            showAlert(Alert.AlertType.ERROR, "Navigation Error", "couldn't find dashboard file");
-//        }
-//    }
+    private void navigateToDashboard(String role) {
+        try{
 
-    private void navigateToDashboard(String role, boolean forceOpeningBalance) {
-        try {
-            String fxmlFile;
-            if (forceOpeningBalance) {
-                // Setup မရှိသေးရင် Opening Balance စာမျက်နှာကို တန်းပြမယ်
-                fxmlFile = "OpeningBalance.fxml";
-            } else {
-                // Setup ရှိပြီးသားဆိုရင် Dashboard ကိုသွားမယ်
-                fxmlFile = role.equalsIgnoreCase("OWNER") ? "MainDashboard.fxml" : "HomePage.fxml";
+
+            String fxmlFile = "";
+            String title = "";
+
+            if(role.equalsIgnoreCase("OWNER")){
+                fxmlFile = "MainDashboard.fxml";
+                title = "OwnerDashBoard - Ayeyar Rice Mill";
+            }else{
+                fxmlFile = "HomePage.fxml";
+                title = "ManagerDashBoard - Ayeyar Rice Mill";
             }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent root = loader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Scene scene = new Scene(fxmlLoader.load());
             Stage stage = (Stage) SignUPButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setScene(scene);
             stage.setMaximized(true);
             stage.show();
-        } catch (IOException e) {
+
+        }catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load: " + (forceOpeningBalance ? "OpeningBalance.fxml" : "Dashboard"));
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", "couldn't find dashboard file");
         }
     }
+
+//    private void navigateToDashboard(String role) {
+//        try {
+//            String fxmlFile;
+//
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+//            Parent root = loader.load();
+//            Stage stage = (Stage) SignUPButton.getScene().getWindow();
+//            stage.setScene(new Scene(root));
+//            stage.setMaximized(true);
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load: " + (forceOpeningBalance ? "OpeningBalance.fxml" : "Dashboard"));
+//        }
+//    }
 
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);

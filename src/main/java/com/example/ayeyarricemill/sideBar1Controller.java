@@ -36,11 +36,10 @@ public class sideBar1Controller {
     @FXML private VBox millingSubMenu2; // Rice Sales Submenu
     @FXML private VBox millingSubMenu3; // MarketPrice Submenu
 
-    private final HttpClient httpClient = HttpClient.newHttpClient();
-
-    public static void setActivePage(String pageName) {
-        activePage = pageName;
+    public static void setActivePage(String page) {
+        activePage = page;
     }
+
 
     @FXML
     public void initialize() {
@@ -190,9 +189,6 @@ public class sideBar1Controller {
             System.err.println("Error loading to vital scene: " + e.getMessage());
             e.printStackTrace();
         }
-////        SceneController.switchCenter("/com/example/ayeyarricemill/HomeContent.fxml");
-////        // ဒီနေရာမှာ highlight ပြောင်းဖို့ manual ခေါ်ပေးရမယ်
-//        highlightActiveMenu();
     }
 
     @FXML
@@ -434,52 +430,19 @@ public class sideBar1Controller {
     @FXML
     private void activeFinanceClicked(javafx.scene.input.MouseEvent event) {
         activePage = "activeFinance";
-        highlightActiveMenu();
+        try{
+            Node source =(Node) event.getSource();
+            Scene scene = source.getScene();
+            Stage stage = (Stage) scene.getWindow();
 
-        // 1. ဘယ် User လဲဆိုတာကို ယူမယ် (AniLSController ကနေ assign လုပ်ထားတဲ့ username)
-        String username = OpeningBalanceController.loggedInUsername;
-
-        if (username == null || username.isEmpty()) {
-            System.err.println("User not logged in!");
-            return;
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/FinancePage1.fxml"));
+            scene.setRoot(root);
+            stage.setMaximized(true);
+            stage.show();
+        }catch(Exception e){
+            System.err.println("Error loading to vital scene: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        // 2. Backend ကို Setup ရှိမရှိ အရင်စစ်မယ်
-        String checkUrl = "http://localhost:9090/api/finance/check-setup/" + username;
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(checkUrl))
-                .GET()
-                .build();
-
-        httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenAccept(response -> {
-                    Platform.runLater(() -> {
-                        try {
-                            String fxmlFile;
-                            if (response.statusCode() == 200) {
-                                // Setup ရှိပြီးသားဆိုရင် Dashboard ကိုသွား
-                                fxmlFile = "/com/example/ayeyarricemill/FinancePage1.fxml";
-                                // Dashboard Controller အတွက် username ထည့်ပေးခဲ့မယ်
-                                FinanceController.loggedInUsername = username;
-                            } else {
-                                // Setup မရှိသေးရင် Setup စလုပ်ရမယ့် Page ကိုသွား
-                                fxmlFile = "/com/example/ayeyarricemill/FinancePage.fxml";
-                                OpeningBalanceController.loggedInUsername = username;
-                            }
-
-                            // Page ပြောင်းလဲခြင်း
-                            switchPage(event, fxmlFile);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-                })
-                .exceptionally(ex -> {
-                    ex.printStackTrace();
-                    return null;
-                });
     }
 
 
