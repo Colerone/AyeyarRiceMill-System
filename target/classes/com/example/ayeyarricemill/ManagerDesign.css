@@ -1,0 +1,54 @@
+/* 1. Table တစ်ခုလုံးရဲ့ Background နဲ့ Border ကို ဖျောက်ခြင်း */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+
+}
+
+/* 2. Header ပိုင်းကို သန့်သွားအောင် ပြင်ခြင်း */
+.table-view .column-header-background {
+    -fx-background-color: #f8f9fa; /* Header ကို မီးခိုးနုရောင် အဖျော့လေး ပေးထားပါတယ် */
+    -fx-background-radius: 5 5 0 0;
+    -fx-background-insets: 0 0 1 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 40px; /* Header အမြင့် */
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: black; /* စာသားအရောင်ကို ခပ်မှိန်မှိန်လေး ထားပါ */
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+/* 3. Rows တွေကြားက Border တွေကို ဖျောက်ပြီး Horizontal Line ပဲ ထားခြင်း */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #f1f1f1; /* Row တစ်ခုချင်းစီရဲ့ အောက်က မျဉ်းအရောင် */
+    -fx-border-width: 0 0 1 0; /* အောက်ခြေမှာပဲ မျဉ်းတစ်ကြောင်း ထားမယ် */
+}
+
+/* Mouse ထောက်လိုက်ရင် အရောင်ပြောင်းတာ (Selection) ကို နုနုလေး ပြောင်းခြင်း */
+.table-row-cell:selected {
+    -fx-background-color: #e9ecef;
+    -fx-text-background-color: black;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+/* 4. Cells တွေထဲက စာသားတွေကို သပ်ရပ်အောင် လုပ်ခြင်း */
+.table-cell {
+    -fx-padding: 12px;
+    -fx-border-color: transparent; /* ဒေါင်လိုက်မျဉ်းတွေ မပေါ်အောင် */
+    -fx-text-fill: #495057;
+}
+
+/* 5. Scrollbar ကိုပါ ကျဉ်းကျဉ်းလေးနဲ့ သပ်ရပ်အောင် လုပ်ချင်ရင် */
+.table-view .virtual-flow .scroll-bar:vertical,
+.table-view .virtual-flow .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}

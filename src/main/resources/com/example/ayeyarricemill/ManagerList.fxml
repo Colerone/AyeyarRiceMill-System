@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="541.0" prefWidth="1242.0" stylesheets="@MListTableDesign.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.ManagerListController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
+            prefWidth="1051.0" stylesheets="@ManagerDesign.css" xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.ManagerListController">
     <children>
-        <TableView focusTraversable="false" layoutX="-1.0" layoutY="6.0" prefHeight="591.0" prefWidth="1071.0">
+        <TableView fx:id="managerTable" focusTraversable="false" layoutX="-2.0" layoutY="32.0" prefHeight="670.0" prefWidth="1051.0">
             <columns>
-                <TableColumn prefWidth="122.00000250339508" text="No" />
-                <TableColumn prefWidth="400.0" text="Username" />
-                <TableColumn prefWidth="400.0" text="Email" />
-                <TableColumn prefWidth="146.6666259765625" text="Action" />
+                <TableColumn fx:id="col_no" prefWidth="73.33334612846375" text="No"/>
+                <TableColumn fx:id="col_username" prefWidth="212.00000762939453" text="Username"/>
+                <TableColumn fx:id="col_email" prefWidth="259.3332824707031" text="Email"/>
+                <TableColumn fx:id="col_password" prefWidth="174.66668701171875" text="Password"/>
+                <TableColumn fx:id="col_code" prefWidth="187.3333740234375" text="Code"/>
+                <TableColumn fx:id="col_action" prefWidth="142.0" text="Action"/>
             </columns>
         </TableView>
+        <Button onAction="#handleAddNewManager" focusTraversable="false" layoutX="918.0" layoutY="4.0" mnemonicParsing="false"
+                style="-fx-background-color: blue; -fx-font-weight: bold; -fx-cursor: hand; -fx-background-radius: 7; -fx-text-fill: white;"
+                text="+Add New Manager"/>
     </children>
 </AnchorPane>

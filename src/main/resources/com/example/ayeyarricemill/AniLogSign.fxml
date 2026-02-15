@@ -13,130 +13,159 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AniLog" stylesheets="@design.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.AniLSController">
-    <AnchorPane fx:id="AniModal" prefHeight="541.0" prefWidth="857.0" style="-fx-border-width: 2; -fx-border-color: #3e6a8d;">
+<AnchorPane fx:id="AniLog" stylesheets="@design.css" xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.AniLSController">
+    <AnchorPane fx:id="AniModal" prefHeight="541.0" prefWidth="857.0"
+                style="-fx-border-width: 2; -fx-border-color: #3e6a8d;">
         <children>
 
             <!--             Sign Up form အတွက် -->
-            <VBox fx:id="SignUpContainer" alignment="CENTER" layoutX="3.0" layoutY="4.0" prefHeight="541.0" prefWidth="525.0" style="-fx-background-color: #fefaff;">
+            <VBox fx:id="SignUpContainer" alignment="CENTER" layoutX="3.0" layoutY="4.0" prefHeight="541.0"
+                  prefWidth="525.0" style="-fx-background-color: #fefaff;">
                 <children>
                     <ImageView fitHeight="129.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@images/Logo3.png" />
+                            <Image url="@images/Logo3.png"/>
                         </image>
                         <VBox.margin>
-                            <Insets bottom="-20.0" top="-35.0" />
+                            <Insets bottom="-20.0" top="-35.0"/>
                         </VBox.margin>
                     </ImageView>
-                    <Label fx:id="LabelSignUp" alignment="CENTER" contentDisplay="TEXT_ONLY" prefHeight="36.0" prefWidth="530.0" style="-fx-text-fill: black; -fx-font-size: 30; -fx-font-weight: bold; -fx-font-family: Arial Black;" text="Sign Up to Ayeyar Rice Mill" textAlignment="CENTER">
+                    <Label fx:id="LabelSignUp" alignment="CENTER" contentDisplay="TEXT_ONLY" prefHeight="36.0"
+                           prefWidth="530.0"
+                           style="-fx-text-fill: black; -fx-font-size: 30; -fx-font-weight: bold; -fx-font-family: Arial Black;"
+                           text="Sign Up to Ayeyar Rice Mill" textAlignment="CENTER">
                         <VBox.margin>
-                            <Insets />
+                            <Insets/>
                         </VBox.margin>
                         <font>
-                            <Font name="Arial Black" size="12.0" />
+                            <Font name="Arial Black" size="12.0"/>
                         </font>
                     </Label>
-                    <Label fx:id="smallLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="533.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 13;" text="create account and manage ayeyar rice mill" textAlignment="CENTER">
+                    <Label fx:id="smallLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0"
+                           prefWidth="533.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 13;"
+                           text="create account and manage ayeyar rice mill" textAlignment="CENTER">
                         <VBox.margin>
-                            <Insets top="3.0" />
+                            <Insets top="3.0"/>
                         </VBox.margin>
                     </Label>
                     <FontAwesomeIconView fill="#1b7cef" glyphName="USER" size="15" text="">
                         <VBox.margin>
-                            <Insets right="305.0" top="25.0" />
+                            <Insets right="305.0" top="25.0"/>
                         </VBox.margin>
                     </FontAwesomeIconView>
-                    <Label fx:id="userLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="username">
+                    <Label fx:id="userLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;"
+                           text="username">
                         <VBox.margin>
-                            <Insets right="222.0" top="-18.0" />
+                            <Insets right="222.0" top="-18.0"/>
                         </VBox.margin>
                     </Label>
-                    <TextField fx:id="userTextField" focusTraversable="false" prefHeight="28.0" prefWidth="383.0" promptText="HninHsuLwinKyaw" style="-fx-background-color: transparent; -fx-border-color: #1b7cef; -fx-border-radius: 10px; -fx-border-width: 1px;">
+                    <TextField fx:id="userTextField" focusTraversable="false" prefHeight="28.0" prefWidth="383.0"
+                               promptText="HninHsuLwinKyaw"
+                               style="-fx-background-color: transparent; -fx-border-color: #1b7cef; -fx-border-radius: 10px; -fx-border-width: 1px;">
                         <VBox.margin>
-                            <Insets left="100.0" right="100.0" top="2.0" />
+                            <Insets left="100.0" right="100.0" top="2.0"/>
                         </VBox.margin>
                     </TextField>
-                    <Label fx:id="userEmailLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="email">
+                    <Label fx:id="userEmailLabel"
+                           style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="email">
                         <VBox.margin>
-                            <Insets right="245.0" top="18.0" />
+                            <Insets right="245.0" top="18.0"/>
                         </VBox.margin>
                     </Label>
-               <FontAwesomeIconView fx:id="emailIcon" fill="#1b7cef" glyphName="ENVELOPE" size="15">
-                  <VBox.margin>
-                     <Insets right="305.0" top="-17.0" />
-                  </VBox.margin>
-               </FontAwesomeIconView>
-                    <TextField fx:id="userEmailField" focusTraversable="false" prefHeight="28.0" prefWidth="383.0" promptText="mhhh@gmail.com" style="-fx-background-color: transparent; -fx-border-color: #1b7cef; -fx-border-radius: 10px; -fx-border-width: 1px;">
+                    <FontAwesomeIconView fx:id="emailIcon" fill="#1b7cef" glyphName="ENVELOPE" size="15">
                         <VBox.margin>
-                            <Insets left="100.0" right="100.0" top="2.0" />
+                            <Insets right="305.0" top="-17.0"/>
+                        </VBox.margin>
+                    </FontAwesomeIconView>
+                    <TextField fx:id="userEmailField" focusTraversable="false" prefHeight="28.0" prefWidth="383.0"
+                               promptText="mhhh@gmail.com"
+                               style="-fx-background-color: transparent; -fx-border-color: #1b7cef; -fx-border-radius: 10px; -fx-border-width: 1px;">
+                        <VBox.margin>
+                            <Insets left="100.0" right="100.0" top="2.0"/>
                         </VBox.margin>
                     </TextField>
 
                     <FontAwesomeIconView fill="#1b7cef" glyphName="LOCK" size="15" text="">
                         <VBox.margin>
-                            <Insets right="305.0" top="20.0" />
+                            <Insets right="305.0" top="20.0"/>
                         </VBox.margin>
                     </FontAwesomeIconView>
-                    <Label fx:id="passLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: b;" text="password">
+                    <Label fx:id="passLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: b;"
+                           text="password">
                         <VBox.margin>
-                            <Insets right="223.0" top="-18.5" />
+                            <Insets right="223.0" top="-18.5"/>
                         </VBox.margin>
                     </Label>
-                    <PasswordField fx:id="passField" focusTraversable="false" promptText="***********" style="-fx-background-color: transparent; -fx-border-color: #1b7cef; -fx-border-width: 1px; -fx-border-radius: 10px;">
+                    <PasswordField fx:id="passField" focusTraversable="false" promptText="***********"
+                                   style="-fx-background-color: transparent; -fx-border-color: #1b7cef; -fx-border-width: 1px; -fx-border-radius: 10px;">
                         <VBox.margin>
-                            <Insets left="100.0" right="100.0" top="2.0" />
+                            <Insets left="100.0" right="100.0" top="2.0"/>
                         </VBox.margin>
                     </PasswordField>
                     <FontAwesomeIconView fx:id="roleIcon" fill="#1b7cef" glyphName="BRIEFCASE" size="15" text="">
                         <VBox.margin>
-                            <Insets right="305.0" top="20.0" />
+                            <Insets right="305.0" top="20.0"/>
                         </VBox.margin>
                     </FontAwesomeIconView>
-                    <Label fx:id="roleLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;" text="role">
+                    <Label fx:id="roleLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: black;"
+                           text="role">
                         <VBox.margin>
-                            <Insets right="255.0" top="-18.5" />
+                            <Insets right="255.0" top="-18.5"/>
                         </VBox.margin>
                     </Label>
-                    <TextField fx:id="roleField" focusTraversable="false" promptText="'owner' or 'manager'" style="-fx-background-color: transparent; -fx-border-color: #1b7cef; -fx-border-radius: 10px; -fx-border-width: 1px;">
+                    <TextField fx:id="roleField" editable="false" focusTraversable="false" promptText="OWNER"
+                               style="-fx-background-color: transparent; -fx-border-color: #1b7cef; -fx-border-radius: 10px; -fx-border-width: 1px;-fx-text-fill: #555555;">
                         <VBox.margin>
-                            <Insets left="100.0" right="100.0" top="2.0" />
+                            <Insets left="100.0" right="100.0" top="2.0"/>
                         </VBox.margin>
                     </TextField>
-                    <Label fx:id="ForgotPassLabel" managed="false" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Forgot your password?" visible="false">
+                    <Label fx:id="ForgotPassLabel" managed="false" style="-fx-font-size: 15; -fx-font-weight: bold;"
+                           text="Forgot your password?" visible="false">
                         <VBox.margin>
-                            <Insets top="25.0" />
+                            <Insets top="25.0"/>
                         </VBox.margin>
                     </Label>
                     <Line fx:id="line1" endX="57.5" managed="false" opacity="0.21" startX="-100.0" visible="false">
                         <VBox.margin>
-                            <Insets top="3.0" />
+                            <Insets top="3.0"/>
                         </VBox.margin>
                     </Line>
-                    <Button fx:id="SignUPButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false" prefHeight="39.0" prefWidth="108.0" style="-fx-text-fill: white; -fx-background-color: blue; -fx-font-weight: bold; -fx-background-radius: 20px;" text="SIGN UP">
+                    <Button fx:id="SignUPButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false"
+                            mnemonicParsing="false" prefHeight="39.0" prefWidth="108.0"
+                            style="-fx-text-fill: white; -fx-background-color: blue; -fx-font-weight: bold; -fx-background-radius: 20px;"
+                            text="SIGN UP">
                         <VBox.margin>
-                            <Insets top="15.0" />
+                            <Insets top="15.0"/>
                         </VBox.margin>
                     </Button>
                 </children>
             </VBox>
 
             <!--            Login page ကိုပြောင်းနိုင်ရန် -->
-            <VBox fx:id="VBox_Blue" alignment="CENTER" layoutX="530.0" layoutY="3.0" prefHeight="541.0" prefWidth="336.0" style="-fx-background-color: #3e6a8d;">
+            <VBox fx:id="VBox_Blue" alignment="CENTER" layoutX="530.0" layoutY="3.0" prefHeight="541.0"
+                  prefWidth="336.0" style="-fx-background-color: #3e6a8d;">
                 <children>
-                    <Label fx:id="WelLabel1" alignment="CENTER" contentDisplay="CENTER" style="-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;" text="Welcome, friend">
+                    <Label fx:id="WelLabel1" alignment="CENTER" contentDisplay="CENTER"
+                           style="-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;"
+                           text="Welcome, friend">
                         <VBox.margin>
-                            <Insets bottom="50.0" />
+                            <Insets bottom="50.0"/>
                         </VBox.margin>
                     </Label>
-                    <Label fx:id="WelLabel2" alignment="CENTER" contentDisplay="CENTER" style="-fx-text-fill: white; -fx-font-weight: bold;" text="you have already account?">
+                    <Label fx:id="WelLabel2" alignment="CENTER" contentDisplay="CENTER"
+                           style="-fx-text-fill: white; -fx-font-weight: bold;" text="you have already account?">
                         <VBox.margin>
-                            <Insets top="-45.0" />
+                            <Insets top="-45.0"/>
                         </VBox.margin>
                     </Label>
 
-                    <Button fx:id="WelLabel3" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSlideAction" prefHeight="39.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 20;" text="SIGN IN">
+                    <Button fx:id="WelLabel3" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                            onAction="#handleSlideAction" prefHeight="39.0" prefWidth="115.0"
+                            style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 20;"
+                            text="SIGN IN">
                         <VBox.margin>
-                            <Insets left="20.0" top="20.0" />
+                            <Insets left="20.0" top="20.0"/>
                         </VBox.margin>
                     </Button>
                 </children>

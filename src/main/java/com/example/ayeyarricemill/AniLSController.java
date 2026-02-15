@@ -79,6 +79,7 @@ public class AniLSController implements Initializable {
         WelLabel2.setText("you have already account?");
         WelLabel3.setText("SIGN IN");
         LabelSignUp.setText("Sign Up to Ayeyar Rice Mill");
+        roleField.setText("OWNER"); // စစချင်း OWNER လို့ သတ်မှတ်ထားမယ်
 
         Platform.runLater(()->{
             SignUPButton.getScene().setOnKeyPressed(event->{
@@ -136,7 +137,6 @@ public class AniLSController implements Initializable {
             return; // ❌ API မပို့
         }
 
-
         Map<String,String > data = new HashMap<>();
         data.put("username", userTextField.getText());
         data.put("email", userEmailField.getText());
@@ -184,8 +184,16 @@ public class AniLSController implements Initializable {
         }
 
         String role = roleField.getText().trim().toUpperCase();
-        if (!role.equals("OWNER") && !role.equals("MANAGER")) {
-            showAlert(Alert.AlertType.WARNING, "Validation Error", "Role must be OWNER or MANAGER");
+
+        //  Manager Role နဲ့ Register လုပ်ခွင့်ကို ပိတ်လိုက်ခြင်း
+//        if (role.equals("MANAGER")) {
+//            showAlert(Alert.AlertType.ERROR, "Access Denied",
+//                    "Managers cannot create accounts themselves. Please contact the Owner.");
+//            return false;
+//        }
+
+        if (!role.equals("OWNER")) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Only OWNER registration is allowed here.");
             roleField.requestFocus();
             return false;
         }
@@ -238,24 +246,62 @@ public class AniLSController implements Initializable {
                                 // login success ဆို json မှ role ကို ယူပြီး dashboard ကိုသွား
                                 JsonObject userJson = gson.fromJson(response.body(), JsonObject.class);
                                 String role = userJson.get("role").getAsString();
-
                                 //Login ဝင်ထားတဲ့သူကို username နဲ့ ယူထားမယ်
                                 String userName = userJson.get("username").getAsString();
-                                RawPriceController.loggedInUsername = userName;
-                                GoodPriceController.loggedInUsername = userName;
-                                naviBarController.loggedInUsername = userName;
-                                naviBarController.loggedInRole = role;
-                                InventoryAddController.loggedInUserRole = role;
-                                PadPurchaseS1Controller.loggedInUsername = userName;
-                                sideBar1Controller.currentUserRole = role;
-                                MillingRegisterController.loggedInUsername = userName;
-                                riceSaleRegisterController.loggedInUsername = userName;
-                                FinanceController.loggedInUsername = userName;
-                                FinanceController.currentUserRole = role;
 
-                                // Login success ဖြစ်တိုင်း Home ကို default highlight လုပ်မယ်
-                                sideBar1Controller.setActivePage("Home");
-                                navigateToDashboard(role);
+                                boolean canAccess = false;
+
+                                // ၁။ Role ကို စစ်ဆေးခြင်း
+                                if (role.equalsIgnoreCase("OWNER")) {
+                                    // Owner ဖြစ်ပါက Security Code တောင်းသည့် Dialog Box ပြမည်
+                                    javafx.scene.control.TextInputDialog dialog = new javafx.scene.control.TextInputDialog();
+                                    dialog.setTitle("Security Verification");
+                                    dialog.setHeaderText("Owner Verification Required");
+                                    dialog.setContentText("Please enter the security code:");
+
+                                    java.util.Optional<String> result = dialog.showAndWait();
+
+                                    // User ရိုက်လိုက်သော code သည် 'MH3@23610' နှင့် တူ၊ မတူ စစ်ဆေးခြင်း
+                                    if (result.isPresent() && result.get().equals("MH3@23610")) {
+                                        canAccess = true;
+                                    } else {
+                                        showAlert(Alert.AlertType.ERROR, "Access Denied", "Incorrect Security Code!");
+                                    }
+                                } else if (role.equalsIgnoreCase("MANAGER")) {
+                                    // ✅ Manager အတွက် Owner ပေးထားတဲ့ Security Code ကို တောင်းမယ်
+                                    TextInputDialog dialog = new TextInputDialog();
+                                    dialog.setTitle("Manager Verification");
+                                    dialog.setHeaderText("Security Code Required");
+                                    dialog.setContentText("Please enter your assigned Security Code:");
+
+                                    java.util.Optional<String> result = dialog.showAndWait();
+
+                                    // Backend က ပြန်ပို့ပေးတဲ့ JSON ထဲမှာ securityCode ပါလာရပါမယ်
+                                    String dbSecurityCode = userJson.has("securityCode") ? userJson.get("securityCode").getAsString() : "";
+
+                                    if (result.isPresent() && result.get().equals(dbSecurityCode)) {
+                                        canAccess = true;
+                                    } else {
+                                        showAlert(Alert.AlertType.ERROR, "Access Denied", "Incorrect Manager Security Code!");
+                                    }
+                                }
+                                if(canAccess) {
+                                    RawPriceController.loggedInUsername = userName;
+                                    GoodPriceController.loggedInUsername = userName;
+                                    naviBarController.loggedInUsername = userName;
+                                    naviBarController.loggedInRole = role;
+                                    InventoryAddController.loggedInUserRole = role;
+                                    PadPurchaseS1Controller.loggedInUsername = userName;
+                                    sideBar1Controller.currentUserRole = role;
+                                    MillingRegisterController.loggedInUsername = userName;
+                                    riceSaleRegisterController.loggedInUsername = userName;
+                                    FinanceController.loggedInUsername = userName;
+                                    FinanceController.currentUserRole = role;
+
+                                    // Login success ဖြစ်တိုင်း Home ကို default highlight လုပ်မယ်
+                                    sideBar1Controller.setActivePage("Home");
+                                    navigateToDashboard(role);
+                                }
                             }else{
                                 // Registration ဆိုလျှင် Alert ပြပြီး Login သို့ပြောင်းရန် တိုက်တွန်းမည်
                                 showAlert(Alert.AlertType.INFORMATION, "Registration Success", "Your registration successful.Please Log in again");
@@ -391,6 +437,8 @@ public class AniLSController implements Initializable {
             }));
 
             transition2.setOnFinished((e -> {
+                roleField.setText("OWNER"); // OWNER ဖြစ်နေဖို့ သေချာအောင်လုပ်မယ်
+                roleField.setEditable(false); // ပြင်လို့မရအောင် ထပ်ပိတ်ထားမယ်
                 LabelSignUp.setText("Sign Up to Ayeyar Rice Mill");
                 LabelSignUp.setTextFill(Color.BLACK);
                 LabelSignUp.setStyle("-fx-font-size: 30; -fx-font-weight: bold; -fx-font-family: Arial Black");
