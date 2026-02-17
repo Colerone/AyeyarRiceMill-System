@@ -1,13 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.ayeyarricemill.HomeContentController">
+<AnchorPane prefHeight="650.0" prefWidth="1070.0" style="-fx-background-color: #ebf1f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.HomeContentController">
     <children>
+        <AnchorPane layoutX="67.0" layoutY="42.0" prefHeight="118.0" prefWidth="284.0" style="-fx-background-color: #4CAD8A; -fx-background-radius: 5;">
+            <children>
+                <FontAwesomeIconView glyphName="INDUSTRY" layoutX="20.0" layoutY="42.0" style="-glyph-size: 28; -fx-fill: white;" />
+                <Line endX="100.0" layoutX="171.0" layoutY="53.0" startX="-100.0" style="-fx-stroke: #057051;" />
+                <Label layoutX="69.0" layoutY="16.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Today's Milling" />
+                <Label fx:id="todayMillingLabel" layoutX="96.0" layoutY="64.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="1000" />
+                <Label layoutX="61.0" layoutY="71.0" style="-fx-font-size: 17; -fx-font-weight: bold;" text="Tins" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="383.0" layoutY="42.0" prefHeight="118.0" prefWidth="284.0" style="-fx-background-color: #5F9CD4; -fx-background-radius: 5;">
+            <children>
+                <Line endX="105.79998779296875" layoutX="160.0" layoutY="53.0" startX="-100.0" style="-fx-stroke: #004fa0;" />
+                <Label layoutX="58.0" layoutY="16.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Today's Sales" />
+                <Label fx:id="todaySalesLabel" layoutX="101.0" layoutY="64.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="22222222" />
+                <Label layoutX="50.0" layoutY="71.0" style="-fx-font-size: 17; -fx-font-weight: bold;" text="MMK" />
+                <FontAwesomeIconView glyphName="DOLLAR" layoutX="20.0" layoutY="42.0" style="-glyph-size: 28; -fx-fill: white;" />
+            </children>
+        </AnchorPane>
 
+        <AnchorPane layoutX="697.0" layoutY="42.0" prefHeight="118.0" prefWidth="284.0" style="-fx-background-color: #FAA74E; -fx-background-radius: 5;">
+            <children>
+                <Line endX="100.0" layoutX="171.0" layoutY="53.0" startX="-100.0" style="-fx-stroke: #e45a00;" />
+                <Label layoutX="69.0" layoutY="16.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Today's Purchases" />
+                <Label fx:id="todayPurchaseCountLabel" layoutX="116.0" layoutY="66.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="20" />
+                <Label layoutX="61.0" layoutY="71.0" style="-fx-font-size: 17; -fx-font-weight: bold;" text="Count" />
+                <FontAwesomeIconView glyphName="SHOPPING_CART" layoutX="20.0" layoutY="42.0" style="-glyph-size: 28; -fx-fill: white;" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="69.0" layoutY="186.0" prefHeight="391.0" prefWidth="440.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+            <children>
+                <Label layoutX="23.0" layoutY="18.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Stock Status" />
+                <PieChart fx:id="inventoryPieChart" layoutX="24.0" layoutY="56.0" prefHeight="285.0" prefWidth="383.0"  style="-fx-background-color: #FBD9FF;"/>
+            </children>
+        </AnchorPane>
+
+        <AnchorPane layoutX="541.0" layoutY="186.0" prefHeight="391.0" prefWidth="440.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+            <children>
+                <Label layoutX="17.0" layoutY="12.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Top 5 Selling Rice" />
+                <Label layoutX="17.0" layoutY="48.0" style="-fx-font-size: 18;" text="1." />
+                <Label fx:id="name1" layoutX="35.0" layoutY="48.0" style="-fx-font-size: 18;" text="Shwe Bo Paw San" />
+                <HBox fx:id="bar1" layoutX="24.0" layoutY="75.0" prefHeight="28.0" prefWidth="383.0" style="-fx-background-color: blue;" />
+                <Label layoutX="17.0" layoutY="113.0" style="-fx-font-size: 18;" text="2." />
+                <Label fx:id="name2" layoutX="35.0" layoutY="113.0" style="-fx-font-size: 18;" text="Ayeyar Min" />
+                <HBox fx:id="bar2" layoutX="21.0" layoutY="140.0" prefHeight="28.0" prefWidth="355.0" style="-fx-background-color: green;" />
+                <Label  layoutX="17.0" layoutY="178.0" style="-fx-font-size: 18;" text="3." />
+                <Label fx:id="name3" layoutX="35.0" layoutY="178.0" style="-fx-font-size: 18;" text="Ma Naw Thu Kha" />
+                <HBox fx:id="bar3" layoutX="24.0" layoutY="205.0" prefHeight="28.0" prefWidth="324.0" style="-fx-background-color: yellow;" />
+                <Label layoutX="17.0" layoutY="243.0" style="-fx-font-size: 18;" text="4." />
+                <Label fx:id="name4" layoutX="35.0" layoutY="243.0" style="-fx-font-size: 18;" text="Ayeyar Min" />
+                <HBox fx:id="bar4" layoutX="21.0" layoutY="271.0" prefHeight="28.0" prefWidth="273.0" style="-fx-background-color: orange;" />
+                <Label layoutX="19.0" layoutY="312.0" style="-fx-font-size: 18;" text="5." />
+                <Label fx:id="name5" layoutX="37.0" layoutY="312.0" style="-fx-font-size: 18;" text="Nga Sein" />
+                <HBox fx:id="bar5" layoutX="23.0" layoutY="340.0" prefHeight="28.0" prefWidth="266.0" style="-fx-background-color: red;" />
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>

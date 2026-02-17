@@ -64,6 +64,7 @@ public class MillingRegisterController {
         setupStepVisibility();
         setupComboBoxes();
         loadInitialData();
+        checkAndResumeActiveMilling();
 
         datePicker.setValue(LocalDate.now());
         // Confirm Button ကို စစချင်း ဖျောက်ထားမယ်
@@ -71,24 +72,55 @@ public class MillingRegisterController {
         btnConfirmProduction.setVisible(false);
 
         // --- Button Events ---
+//        btnOkay.setOnAction(e -> {
+//            PaddyPurchase selected = comboVoucherNo.getValue();
+//            if (selected != null) {
+//                // Data တွေကို Label ထဲ ထည့်ပေးတဲ့ function ကို ဒီမှာ ခေါ်ရပါမယ်
+//                populateVoucherInfo(selected);
+//                step2Container.setVisible(true);
+//                btnStartMilling.setVisible(true);
+//                btnFinishMilling.setVisible(false);
+//            } else {
+//                showError("Please choose voucher.");
+//            }
+//        });
+
         btnOkay.setOnAction(e -> {
             PaddyPurchase selected = comboVoucherNo.getValue();
             if (selected != null) {
-                // Data တွေကို Label ထဲ ထည့်ပေးတဲ့ function ကို ဒီမှာ ခေါ်ရပါမယ်
                 populateVoucherInfo(selected);
-                step2Container.setVisible(true);
-                btnStartMilling.setVisible(true);
-                btnFinishMilling.setVisible(false);
-            } else {
-                showError("Please choose voucher.");
+                checkCurrentMillingStatus(selected.getBatchNo()); // Status စစ်တဲ့ function
             }
         });
 
+//        btnStartMilling.setOnAction(e -> {
+//            lblStatus.setText("Milling in progress..."); // Status ပြောင်းမယ်
+//            lblStatus.setStyle("-fx-text-fill: #e67e22; -fx-font-weight: bold; -fx-font-size: 14px;"); // လိမ္မော်ရောင်လေးပြောင်းမယ်
+//            btnStartMilling.setVisible(false);           // Start ခလုတ် ဖျောက်မယ်
+//            btnFinishMilling.setVisible(true);          // Finish ခလုတ် ဖော်မယ်
+//        });
+
         btnStartMilling.setOnAction(e -> {
-            lblStatus.setText("Milling in progress..."); // Status ပြောင်းမယ်
-            lblStatus.setStyle("-fx-text-fill: #e67e22; -fx-font-weight: bold; -fx-font-size: 14px;"); // လိမ္မော်ရောင်လေးပြောင်းမယ်
-            btnStartMilling.setVisible(false);           // Start ခလုတ် ဖျောက်မယ်
-            btnFinishMilling.setVisible(true);          // Finish ခလုတ် ဖော်မယ်
+            PaddyPurchase selected = comboVoucherNo.getValue();
+            if (selected == null) return;
+
+            // Backend ကို Status သွားသိမ်းမယ်
+            Map<String, String> body = new HashMap<>();
+            body.put("voucherNo", selected.getBatchNo());
+            body.put("status", "In Progress");
+
+            HttpRequest req = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/milling/start"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(body)))
+                    .build();
+
+            httpClient.sendAsync(req, HttpResponse.BodyHandlers.ofString())
+                    .thenAccept(res -> {
+                        Platform.runLater(() -> {
+                            updateUIToInProgress();
+                        });
+                    });
         });
 
         // --- 3. Finish Milling Button Logic ---
@@ -115,6 +147,77 @@ public class MillingRegisterController {
         btnConfirmProduction.setOnAction(e -> handleConfirmProduction());
     }
 
+    private void checkAndResumeActiveMilling() {
+        // Backend မှာ လက်ရှိ 'In Progress' ဖြစ်နေတဲ့ MillingProcess ကို လှမ်းတောင်းမယ်
+        // မှတ်ချက် - backend မှာ /api/milling/active ဆိုတဲ့ endpoint ရှိရပါမယ် (အောက်မှာ backend code ပေးထားပါတယ်)
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/milling/active"))
+                .GET().build();
+
+        httpClient.sendAsync(req, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(res -> {
+                    if (res.statusCode() == 200) {
+                        Map<String, Object> process = gson.fromJson(res.body(), Map.class);
+                        String voucherNo = (String) process.get("voucherNo");
+                        String status = (String) process.get("status");
+                        
+                        Platform.runLater(() -> {
+                            // ၁။ ComboBox မှာ အဲ့ဒီ Voucher ကို အလိုအလျောက် ရွေးပေးမယ်
+                            for (PaddyPurchase p : comboVoucherNo.getItems()) {
+                                if (p.getBatchNo().equals(voucherNo)) {
+                                    comboVoucherNo.getSelectionModel().select(p);
+                                    populateVoucherInfo(p);
+                                    break;
+                                }
+                            }
+
+                            // ၂။ Status အလိုက် UI ကို ဖော်ပေးမယ်
+                            if ("In Progress".equalsIgnoreCase(status)) {
+                                updateUIToInProgress();
+                            } else if ("Completed".equalsIgnoreCase(status)) {
+                                updateUIToCompleted();
+                            }
+                        });
+                    }
+                });
+    }
+
+    private void checkCurrentMillingStatus(String voucherNo) {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/milling/status/" + voucherNo))
+                .GET().build();
+
+        httpClient.sendAsync(req, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(res -> {
+                    if (res.statusCode() == 200) {
+                        // MillingProcess model ထဲက status ကို ကြည့်မယ်
+                        Map<String, Object> process = gson.fromJson(res.body(), Map.class);
+                        String status = (String) process.get("status");
+
+                        Platform.runLater(() -> {
+                            if ("In Progress".equalsIgnoreCase(status)) {
+                                updateUIToInProgress();
+                            } else if ("Completed".equalsIgnoreCase(status)) {
+                                updateUIToCompleted();
+                            } else {
+                                // Pending ဆိုရင် default အတိုင်းပြ
+                                step2Container.setVisible(true);
+                                btnStartMilling.setVisible(true);
+                                btnFinishMilling.setVisible(false);
+                            }
+                        });
+                    } else {
+                        // Database မှာ milling မစရသေးရင် (Pending)
+                        Platform.runLater(() -> {
+                            step2Container.setVisible(true);
+                            btnStartMilling.setVisible(true);
+                            btnFinishMilling.setVisible(false);
+                            lblStatus.setText("Pending");
+                        });
+                    }
+                });
+    }
+
     private void handleFinishConfirmation(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Milling process confirmation");
@@ -128,16 +231,51 @@ public class MillingRegisterController {
 
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == buttonYes) {
-            lblStatus.setText("Completed");   // Status ပြောင်းမယ်
-            lblStatus.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold; -fx-font-size: 14px;"); // အစိမ်းရောင်ပြောင်းမယ်
-            step3Container.setVisible(true);  // ညာဘက်အကွက်ကြီးကို ဖော်မယ်
+//        if (result.isPresent() && result.get() == buttonYes) {
+//            lblStatus.setText("Completed");   // Status ပြောင်းမယ်
+//            lblStatus.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold; -fx-font-size: 14px;"); // အစိမ်းရောင်ပြောင်းမယ်
+//            step3Container.setVisible(true);  // ညာဘက်အကွက်ကြီးကို ဖော်မယ်
+//
+//            btnFinishMilling.setVisible(false);
+//            wareHouseGroup.setVisible(false);
+//            TotalOutput.setVisible(false);
+//            finalYield.setVisible(false);
+//        }
 
-            btnFinishMilling.setVisible(false);
-            wareHouseGroup.setVisible(false);
-            TotalOutput.setVisible(false);
-            finalYield.setVisible(false);
+        if (result.isPresent() && result.get() == buttonYes) {
+            PaddyPurchase selected = comboVoucherNo.getValue();
+
+            HttpRequest req = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/milling/finish/" + selected.getBatchNo()))
+                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            httpClient.sendAsync(req, HttpResponse.BodyHandlers.ofString())
+                    .thenAccept(res -> {
+                        Platform.runLater(() -> {
+                            updateUIToCompleted();
+                        });
+                    });
         }
+    }
+
+    private void updateUIToInProgress() {
+        step2Container.setVisible(true);
+        lblStatus.setText("Milling in progress...");
+        lblStatus.setStyle("-fx-text-fill: #e67e22; -fx-font-weight: bold;-fx-font-size: 14px;");
+        btnStartMilling.setVisible(false);
+        btnFinishMilling.setVisible(true);
+    }
+
+    private void updateUIToCompleted() {
+        step2Container.setVisible(true);
+        step3Container.setVisible(true);
+        lblStatus.setText("Completed");
+        lblStatus.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");
+        btnFinishMilling.setVisible(false);
+        wareHouseGroup.setVisible(false);
+        TotalOutput.setVisible(false);
+        finalYield.setVisible(false);
     }
 
     private void populateVoucherInfo(PaddyPurchase selected) {
@@ -145,7 +283,7 @@ public class MillingRegisterController {
         lblSourceWarehouse.setText(selected.getWarehouseName());
         lblPaddyType.setText(selected.getPaddyType());
         lblQtyMilled.setText(selected.getNetWeight() + " Tins");
-        lblStatus.setText("Pending");
+//        lblStatus.setText("Pending");
     }
 
 
@@ -452,10 +590,12 @@ public class MillingRegisterController {
                     // ပထမဆုံး Item ကို Auto ရွေးခိုင်းမယ်
                     comboVoucherNo.getSelectionModel().selectFirst();
 
+
                     // အကယ်၍ listener က အလုပ်မလုပ်ခဲ့ရင်တောင် တိုက်ရိုက်ခေါ်ပေးထားမယ်
                     PaddyPurchase first = stockOnly.get(0);
                     populateVoucherInfo(first);
                     restrictDatePicker(first.getPurchaseDate());
+                    checkAndResumeActiveMilling();
                 } else {
                     System.out.println("No 'Stock' vouchers found in the database.");
                 }

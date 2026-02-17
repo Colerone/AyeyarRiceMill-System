@@ -55,12 +55,19 @@ public class reportController {
         // ၃။ Button နှိပ်ရင် Data ပြောင်းဖို့ ချိတ်ဆက်ခြင်း
         btnGenerate.setOnAction(event -> handleGenerateReport());
 
+        String chartStyle =
+                ".default-color0.chart-series-line { -fx-stroke: #1a7eca; } " +
+                        ".default-color0.chart-line-symbol { -fx-background-color: #1a7eca, white; } " +
+                        ".default-color1.chart-series-line { -fx-stroke: #FF0000; } " +
+                        ".default-color1.chart-line-symbol { -fx-background-color: #FF0000, white; } " +
+                        ".chart-legend-item-symbol.series0 { -fx-background-color: #1a7eca, white; } " +
+                        ".chart-legend-item-symbol.series1 { -fx-background-color: #FF0000, white; }";
+
+        lineChart.setStyle(chartStyle);
 
         // Chart ရဲ့ Animation ကို ပိတ်ထားရင် data update ဖြစ်တာ ပိုမြန်တယ်
-        lineChart.setAnimated(false);
-
-        lineChart.setAnimated(false);
-        barChartMilling.setAnimated(false); // BarChart ကိုပါ Animation ပိတ်ထားပါ
+        lineChart.setAnimated(true);
+        barChartMilling.setAnimated(true); // BarChart ကိုပါ Animation ပိတ်ထားပါ
 
         // အစဦး Data ဆွဲတင်ခြင်း
         handleGenerateReport();
@@ -173,21 +180,21 @@ public class reportController {
 
         if (percentChange > 0) {
             lblProfitStatus.setText("higher");
-            lblProfitSign.setText("+");
+//            lblProfitSign.setText("+");
         } else if (percentChange < 0) {
             lblProfitStatus.setText("lower");
-            lblProfitSign.setText("-");
+//            lblProfitSign.setText("-");
         } else {
             lblProfitStatus.setText("same");
-            lblProfitSign.setText("");
+//            lblProfitSign.setText("");
         }
 
         // Profit ရှိမရှိပေါ်မူတည်ပြီး Sign သတ်မှတ်ခြင်း
-//        if (profit == 0) {
-//            lblProfitSign.setText("");
-//        } else {
-//            lblProfitSign.setText(profit > 0 ? "+" : "-");
-//        }
+        if (profit == 0) {
+            lblProfitSign.setText("");
+        } else {
+            lblProfitSign.setText(profit > 0 ? "+" : "-");
+        }
 
 
 //        if (currentIncome > 0 || currentExpense > 0) {

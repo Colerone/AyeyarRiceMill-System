@@ -130,3 +130,8 @@
     -fx-scale-x: 1; /* နည်းနည်းလေး ချိုင့်သွားတဲ့ပုံစံ */
     -fx-scale-y: 1;
 }
+
+.chart-pie-label {
+     -fx-font-weight: bold;
+     -fx-font-size: 14px;
+ }
