@@ -30,7 +30,7 @@ public class sideBar1Controller {
     @FXML private HBox activeGoodPrice;
     @FXML private HBox activeRawPrice;
     @FXML private HBox activeInventory;
-    @FXML private HBox activeSettings, activeManagerList,activeFinance;
+    @FXML private HBox activeSettings, activeManagerList,activeFinance,activeReport;
     @FXML private VBox millingSubMenu;  // Paddy Purchase Submenu
     @FXML private VBox millingSubMenu1; // Milling Submenu
     @FXML private VBox millingSubMenu2; // Rice Sales Submenu
@@ -86,6 +86,7 @@ public class sideBar1Controller {
         activeSettings.getStyleClass().remove("active-menu");
         activeManagerList.getStyleClass().remove("active-menu");
         activeFinance.getStyleClass().remove("active-menu");
+        activeReport.getStyleClass().remove("active-menu");
 
         if (activePage.equals("Home")) hbHome.getStyleClass().add("active-menu");
         else if (activePage.equals("hdPaddyReg")) hdPaddyReg.getStyleClass().add("active-menu");
@@ -100,6 +101,7 @@ public class sideBar1Controller {
         else if (activePage.equals("activeSettings")) activeSettings.getStyleClass().add("active-menu");
         else if (activePage.equals("activeManagerList")) activeManagerList.getStyleClass().add("active-menu");
         else if (activePage.equals("activeFinance")) activeFinance.getStyleClass().add("active-menu");
+        else if (activePage.equals("activeReport")) activeReport.getStyleClass().add("active-menu");
 
     }
 
@@ -436,6 +438,24 @@ public class sideBar1Controller {
             Stage stage = (Stage) scene.getWindow();
 
             Parent root = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/FinancePage1.fxml"));
+            scene.setRoot(root);
+            stage.setMaximized(true);
+            stage.show();
+        }catch(Exception e){
+            System.err.println("Error loading to vital scene: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void activeReportClicked(javafx.scene.input.MouseEvent event) {
+        activePage = "activeReport";
+        try{
+            Node source =(Node) event.getSource();
+            Scene scene = source.getScene();
+            Stage stage = (Stage) scene.getWindow();
+
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/ayeyarricemill/ReportPage.fxml"));
             scene.setRoot(root);
             stage.setMaximized(true);
             stage.show();

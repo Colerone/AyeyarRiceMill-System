@@ -288,7 +288,7 @@
                     </children>
                 </HBox>
 
-                <HBox prefHeight="40.0" prefWidth="222.0" styleClass="sideBarItem">
+                <HBox fx:id="activeReport" onMouseClicked="#activeReportClicked" prefHeight="40.0" prefWidth="222.0" styleClass="sideBarItem">
                     <children>
                         <FontAwesomeIconView glyphName="BAR_CHART" size="20" styleClass="glyphIcon">
                             <HBox.margin>

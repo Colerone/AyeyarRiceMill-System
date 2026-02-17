@@ -261,8 +261,8 @@ public class AniLSController implements Initializable {
 
                                     java.util.Optional<String> result = dialog.showAndWait();
 
-                                    // User ရိုက်လိုက်သော code သည် 'MH3@23610' နှင့် တူ၊ မတူ စစ်ဆေးခြင်း
-                                    if (result.isPresent() && result.get().equals("MH3@23610")) {
+                                    // User ရိုက်လိုက်သော code သည် 'MH3@10236' နှင့် တူ၊ မတူ စစ်ဆေးခြင်း
+                                    if (result.isPresent() && result.get().equals("MH3@10236")) {
                                         canAccess = true;
                                     } else {
                                         showAlert(Alert.AlertType.ERROR, "Access Denied", "Incorrect Security Code!");

@@ -75,7 +75,7 @@ public class FinanceController {
 
         // ComboBox Data
         comboType.setItems(FXCollections.observableArrayList("Income", "Expense"));
-        comboCategory.setItems(FXCollections.observableArrayList("Business", "Personal"));
+        comboCategory.setItems(FXCollections.observableArrayList("Business", "Personal", "Investment"));
 
         setDefaultValues();
         // Load Data
