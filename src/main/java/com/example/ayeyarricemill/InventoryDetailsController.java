@@ -64,7 +64,7 @@ public class InventoryDetailsController {
 
     private void calculateDashboardStatus(){
         // Box 1: Total Quantity & Units
-        boolean isRaw = "Raw".equalsIgnoreCase(selectedWarehouse.getType());
+        boolean isRaw = "Paddy".equalsIgnoreCase(selectedWarehouse.getType());
         String unit = isRaw ? "Tins" : "Bags";
         int currentStock = selectedWarehouse.getCurrentStock() != null ? selectedWarehouse.getCurrentStock() : 0;
 

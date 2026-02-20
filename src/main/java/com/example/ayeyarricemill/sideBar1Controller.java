@@ -52,11 +52,11 @@ public class sideBar1Controller {
             activeManagerList.setManaged(isOwner);
         }
 
-//        if (activeFinance != null) {
-//            boolean isOwner = "OWNER".equalsIgnoreCase(currentUserRole);
-//            activeFinance.setVisible(isOwner);
-//            activeFinance.setManaged(isOwner);
-//        }
+        if (activeReport != null) {
+            boolean isOwner = "OWNER".equalsIgnoreCase(currentUserRole);
+            activeReport.setVisible(isOwner);
+            activeReport.setManaged(isOwner);
+        }
 
         if (activePage.equals("hdPaddyReg") || activePage.equals("activePaddyList")) {
             openMenu(millingSubMenu);

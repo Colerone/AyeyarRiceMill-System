@@ -75,12 +75,39 @@ public class FinanceController {
 
         // ComboBox Data
         comboType.setItems(FXCollections.observableArrayList("Income", "Expense"));
-        comboCategory.setItems(FXCollections.observableArrayList("Business", "Personal", "Investment"));
+        if ("MANAGER".equalsIgnoreCase(currentUserRole)) {
+            // Manager ဆိုရင် Business တစ်ခုပဲ ပြမယ်
+            comboCategory.setItems(FXCollections.observableArrayList("Business"));
+        } else {
+            // Owner ဆိုမှ အကုန်ပြမယ်
+            comboCategory.setItems(FXCollections.observableArrayList("Business", "Personal", "Investment"));
+        }
+
+        setupCategoryLogic();
 
         setDefaultValues();
-        // Load Data
         fetchTransactions();
         setupFilterLogic();
+    }
+
+    private void setupCategoryLogic() {
+        // Category ပြောင်းလိုက်တဲ့အခါ
+        comboCategory.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if ("Investment".equals(newVal)) {
+                comboType.setValue("Income"); // Investment ဆိုရင် Income လို့ အလိုအလျောက်ပြောင်းမယ်
+            }
+        });
+
+        // Type ကို Expense လို့ လက်နဲ့သွားပြောင်းရင် Investment ဖြစ်နေလား ပြန်စစ်မယ်
+        comboType.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if ("Expense".equals(newVal) && "Investment".equals(comboCategory.getValue())) {
+                // Investment ရွေးထားလျက်နဲ့ Expense ပြောင်းဖို့ကြိုးစားရင် Income ကို ပြန်ပို့မယ်
+                Platform.runLater(() -> {
+                    comboType.setValue("Income");
+                    showSimpleAlert("Information", "Investment transactions can only be recorded as Income.");
+                });
+            }
+        });
     }
 
     private void setupFilterLogic() {
@@ -143,6 +170,7 @@ public class FinanceController {
                             masterData.clear();
                             double totalIncome = 0;
                             double totalExpense = 0;
+                            LocalDate today = LocalDate.now(); // ဒီနေ့ရက်စွဲကို ယူထားမယ်
 
                             for (Map<String, Object> item : list) {
                                 String type = (String) item.get("type");
@@ -155,8 +183,21 @@ public class FinanceController {
 
                                 masterData.add(new TransactionModel(time, type, category, amount, note, recordedBy, role));
 
-                                if ("Income".equalsIgnoreCase(type)) totalIncome += amount;
-                                else totalExpense += amount;
+                                try {
+                                    if (time != null) {
+                                        // timestamp ကို LocalDate အဖြစ်ပြောင်းပြီး ဒီနေ့နဲ့ တူ၊ မတူ စစ်ခြင်း
+                                        LocalDateTime ldt = LocalDateTime.parse(time);
+                                        if (ldt.toLocalDate().equals(today)) {
+                                            if ("Income".equalsIgnoreCase(type)) {
+                                                totalIncome += amount;
+                                            } else {
+                                                totalExpense += amount;
+                                            }
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    System.err.println("Skip parsing for summary: " + time);
+                                }
 
 
                             }

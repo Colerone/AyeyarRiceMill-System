@@ -452,7 +452,7 @@ public class MillingRegisterController {
 
         // ၂။ ထွက်လာသည့် ဆန်အမျိုးအစားများကို Inventory ထဲ သိမ်းခြင်း
         saveToInventory(targetWarehouse.id, voucher.getPaddyType() + "( Head Rice )", parse(txtHeadRice.getText()));
-        saveToInventory(targetWarehouse.id, voucher.getPaddyType() + " (Broken Rice )", parse(txtBrokenRice.getText()));
+        saveToInventory(targetWarehouse.id, voucher.getPaddyType() + "(Broken Rice )", parse(txtBrokenRice.getText()));
         saveToInventory(targetWarehouse.id, "Broken Rice + Bran", parse(txtBrokenBran.getText()));
         saveToInventory(targetWarehouse.id, "Bran", parse(txtBran.getText()));
 

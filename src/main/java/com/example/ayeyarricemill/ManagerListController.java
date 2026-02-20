@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -148,10 +149,48 @@ public class ManagerListController implements Initializable {
     }
 
     private void handleBanManager(User user) {
-        // ဒီနေရာမှာ Backend က Delete API ကို လှမ်းခေါ်တဲ့ logic ရေးလို့ရပါတယ်
-        System.out.println("Banning Manager: " + user.getUsername());
-        // အခုလောလောဆယ် list ထဲကပဲ ဖြုတ်ပြထားမယ်
-//        managerList.remove(user);
+        // 🔴 အရင်ဆုံး တကယ်ဖျက်မှာလားဆိုပြီး Confirm လုပ်ခိုင်းမယ် (Good Practice)
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Ban Manager");
+        alert.setHeaderText("Are you sure you want to ban this manager?");
+        alert.setContentText("Manager: " + user.getUsername());
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            // Backend Delete API ကို လှမ်းခေါ်မယ်
+            // သတိပြုရန်- သင့် Backend မှာ username နဲ့ delete လုပ်တဲ့ API ရှိရပါမယ်
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:9090/api/users/" + user.getUsername()))
+                    .DELETE() // DELETE Method ကို သုံးမယ်
+                    .build();
+
+            httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                    .thenAccept(response -> {
+                        Platform.runLater(() -> {
+                            if (response.statusCode() == 200) {
+                                // ✅ Database မှာ ပျက်သွားပြီဆိုမှ Table ထဲကပါ ဖြုတ်မယ်
+                                managerList.remove(user);
+
+                                // အောင်မြင်ကြောင်း Alert ပြမယ်
+                                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                                success.setTitle("Success");
+                                success.setHeaderText(null);
+                                success.setContentText("Manager has been banned successfully.");
+                                success.show();
+                            } else {
+                                // ❌ Error တစ်ခုခုရှိရင် ပြမယ်
+                                showAlert(Alert.AlertType.ERROR, "Delete Failed", "Could not delete user: " + response.body());
+                            }
+                        });
+                    })
+                    .exceptionally(ex -> {
+                        Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Network Error", "Cannot connect to server."));
+                        return null;
+                    });
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String deleteFailed, String s) {
+
     }
 
 

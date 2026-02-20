@@ -59,7 +59,7 @@ public class InventoryAddController {
         Platform.runLater(this::setupPermissions);
 
         // ComboBox Setup
-        typeCombo.setItems(FXCollections.observableArrayList("Good", "Raw"));
+        typeCombo.setItems(FXCollections.observableArrayList("Good", "Paddy"));
         typeCombo.setValue("Good");
 
         // Table Columns Setup
@@ -141,7 +141,7 @@ public class InventoryAddController {
         String capacityStr = capacityField.getText();
 
         if (name.isEmpty() || capacityStr.isEmpty()) {
-            showAlert("Error", "အချက်အလက်အားလုံး ပြည့်စုံစွာ ဖြည့်စွက်ပါ။");
+            showAlert("Error", "Please fill all inputs");
             return;
         }
 

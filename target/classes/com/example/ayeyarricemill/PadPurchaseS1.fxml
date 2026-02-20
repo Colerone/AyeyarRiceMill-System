@@ -10,14 +10,14 @@
 
 <AnchorPane prefHeight="770.0" prefWidth="1090.0" style="-fx-background-color: #ebf1f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ayeyarricemill.PadPurchaseS1Controller">
     <children>
-        <AnchorPane layoutX="23.0" layoutY="10.0" prefHeight="615.0" prefWidth="660.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+        <AnchorPane layoutX="23.0" layoutY="10.0" prefHeight="596.0" prefWidth="660.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
             <children>
                 <TextField fx:id="supplierNameField" focusTraversable="false" layoutX="34.0" layoutY="75.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 0.5;" />
                 <Label layoutX="34.0" layoutY="55.0" style="-fx-font-size: 13.5;" text="Supplier Name:" />
                 <ComboBox fx:id="paddyVarietyCombo" focusTraversable="false" layoutX="34.0" layoutY="191.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0 .5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-                <Label layoutX="34.0" layoutY="171.0" style="-fx-font-size: 13.5;" text="Paddy Variety" />
+                <Label layoutX="34.0" layoutY="171.0" style="-fx-font-size: 13.5;" text="Paddy Variety:" />
                 <TextField fx:id="totalWeightField" focusTraversable="false" layoutX="34.0" layoutY="249.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 0.5;" />
-                <Label layoutX="34.0" layoutY="229.0" style="-fx-font-size: 13.5;" text="Total weight" />
+                <Label layoutX="34.0" layoutY="229.0" style="-fx-font-size: 13.5;" text="Total weight (Tins):" />
                 <TextField fx:id="moistureField" focusTraversable="false" layoutX="370.0" layoutY="134.0" prefHeight="28.0" prefWidth="246.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-background-radius: 5; -fx-border-radius: 5;" />
                 <Label layoutX="370.0" layoutY="114.0" prefHeight="17.0" prefWidth="254.0" style="-fx-font-size: 13.5;" text="Moisture Content (%) : ( Standard: 14% )" />
                 <Label layoutX="370.0" layoutY="171.0" prefHeight="17.0" prefWidth="254.0" style="-fx-font-size: 13.5;" text="Impurity/Waste (%) : ( Standard: 1% )" />
@@ -76,7 +76,7 @@
                 <Label fx:id="vNetWeight" layoutX="150.0" layoutY="101.0" style="-fx-font-weight: bold;" text="975 Tins" />
                 <Label layoutX="20.0" layoutY="140.0" style="-fx-font-size: 13.5;" text="Final Unit Price:" />
                 <Label fx:id="vUnitPrice" layoutX="150.0" layoutY="141.0" style="-fx-font-weight: bold;" text="9500 MMK" />
-                <Label layoutX="210.0" layoutY="12.0" style="-fx-font-size: 13.5;" text="Batch No:" />
+                <Label layoutX="197.0" layoutY="12.0" style="-fx-font-size: 13.5;" text="Voucher No:" />
                 <Label fx:id="vBatchNo" layoutX="275.0" layoutY="14.0" style="-fx-font-weight: bold;" text="001" />
                 <Label layoutX="20.0" layoutY="60.0" style="-fx-font-size: 13.5;" text="Paddy Variety:" />
                 <Label fx:id="vVariety" layoutX="150.0" layoutY="61.0" style="-fx-font-weight: bold;" text="Paw San(Shwe Bo)" />

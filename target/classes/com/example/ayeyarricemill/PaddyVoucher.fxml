@@ -48,7 +48,7 @@
                 <Line endX="616.0000610351562" layoutX="140.0" layoutY="307.0" startX="-140.00001525878906" style="-fx-stroke: #e2e9f1;" />
                 <Label layoutX="67.0" layoutY="451.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Grand Total = Net Weight x Net Price" />
                 <Label fx:id="lblGrandTotal" layoutX="437.0" layoutY="448.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #197e3b;" text="9262500 " />
-                <Label layoutX="521.0" layoutY="449.0" style="-fx-font-size: 19; -fx-font-weight: bold; -fx-text-fill: #197e3b;" text="MMK" />
+                <Label layoutX="541.0" layoutY="449.0" style="-fx-font-size: 19; -fx-font-weight: bold; -fx-text-fill: #197e3b;" text="MMK" />
                 <Line endX="616.0000610351562" layoutX="140.0" layoutY="335.0" startX="-140.00001525878906" style="-fx-stroke: #e2e9f1;" />
                 <Line endX="616.0000610351562" layoutX="140.0" layoutY="421.0" startX="-140.00001525878906" style="-fx-stroke: #e2e9f1;" />
                 <Line endX="616.0000610351562" layoutX="139.0" layoutY="450.0" startX="-140.00001525878906" style="-fx-stroke: #e2e9f1;" />

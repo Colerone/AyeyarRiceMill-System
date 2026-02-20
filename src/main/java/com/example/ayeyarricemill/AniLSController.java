@@ -75,7 +75,7 @@ public class AniLSController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        WelLabel1.setText("Welcome, friend");
+        WelLabel1.setText("Welcome");
         WelLabel2.setText("you have already account?");
         WelLabel3.setText("SIGN IN");
         LabelSignUp.setText("Sign Up to Ayeyar Rice Mill");
@@ -394,7 +394,7 @@ public class AniLSController implements Initializable {
             transition2.setToX(Panel_Width2);
 
             transition1.setOnFinished((e -> {
-                WelLabel1.setText("Hello, Friend");
+                WelLabel1.setText("Hello");
                 WelLabel2.setText("If you don't have account, create one");
                 WelLabel3.setText("SIGN UP");
                 isOverLayOnRight = false;
@@ -419,10 +419,10 @@ public class AniLSController implements Initializable {
                 roleField.setManaged(false);
                 roleIcon.setVisible(false);
                 roleIcon.setManaged(false);
-                ForgotPassLabel.setVisible(true);
-                ForgotPassLabel.setManaged(true);
-                line1.setVisible(true);
-                line1.setManaged(true);
+                ForgotPassLabel.setVisible(false);
+                ForgotPassLabel.setManaged(false);
+                line1.setVisible(false);
+                line1.setManaged(false);
                 isOverLayOnRight = false;
             }));
         } else {
@@ -430,7 +430,7 @@ public class AniLSController implements Initializable {
             transition1.setToX(0);
             transition2.setToX(0);
             transition1.setOnFinished((e -> {
-                WelLabel1.setText("Welcome, friend");
+                WelLabel1.setText("Welcome");
                 WelLabel2.setText("you have already account?");
                 WelLabel3.setText("SIGN IN");
                 isOverLayOnRight = true;

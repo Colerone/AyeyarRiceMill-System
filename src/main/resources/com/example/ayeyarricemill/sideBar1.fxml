@@ -246,7 +246,7 @@
                                                 <Insets left="60.0" top="8.0" />
                                             </HBox.margin>
                                         </FontAwesomeIconView>
-                                        <Label style="-fx-font-size: 15;" styleClass="sideText" text="Raw">
+                                        <Label style="-fx-font-size: 15;" styleClass="sideText" text="Paddy">
                                             <HBox.margin>
                                                 <Insets left="10.0" top="5.0" />
                                             </HBox.margin>

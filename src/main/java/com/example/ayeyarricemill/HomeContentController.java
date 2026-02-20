@@ -187,7 +187,7 @@ public class HomeContentController {
             if (index >= 5) break;
 
             // Label မှာ နာမည်နဲ့ အရေအတွက်ပြမယ်
-            names[index].setText(String.format("%s (%,.0f bags)", entry.getKey(), entry.getValue()));
+            names[index].setText(String.format( entry.getKey(), entry.getValue()));
 
             // Bar အရှည်ကို တွက်မယ် (အရေအတွက်များလေ Bar ရှည်လေ)
             double calculatedWidth = (entry.getValue() / maxQty) * maxWidth;

@@ -157,45 +157,47 @@ public class reportController {
         }
 
         // UI Labels Update
+        // --- UI Labels Update ---
         lblIncome.setText(df.format(currentIncome));
         lblExpense.setText(df.format(currentExpense));
-        double profit = currentIncome - currentExpense;
-        lblProfit.setText(df.format(Math.abs(profit)));
-        double lastProfit = lastIncome - lastExpense;
 
+        double profit = currentIncome - currentExpense;
+        lblProfit.setText(df.format(Math.abs(profit))); // ပမာဏကိုပဲပြမယ်
+
+        double lastProfit = lastIncome - lastExpense;
         double percentChange = 0;
 
+// ၁။ Percentage Change ကိုတွက်ခြင်း
         if (lastProfit != 0) {
+            // ပုံသေနည်း: ((လက်ရှိ - အရင်) / အရင်၏ absolute value) * 100
             percentChange = ((profit - lastProfit) / Math.abs(lastProfit)) * 100;
         } else {
-            // Last month data မရှိရင်
+            // အရင်လက 0 ဖြစ်နေရင်
             if (profit == 0) {
                 percentChange = 0;
             } else {
-                percentChange = 100; // new change
+                percentChange = 100; // အသစ်တိုးလာတာ သို့မဟုတ် အသစ်လျော့သွားတာ (100% လို့ပဲ သတ်မှတ်မယ်)
             }
         }
 
         lblProfitPercentage.setText(String.format("%.1f%%", Math.abs(percentChange)));
 
-        if (percentChange > 0) {
+// ၂။ 🔴 အရေးကြီးဆုံးအပိုင်း- Status (higher/lower) သတ်မှတ်ခြင်း
+// တွက်ချက်ထားတဲ့ percentChange ပေါ်မှာမမူတည်ဘဲ လက်ရှိ Profit နဲ့ အရင်လ Profit ကို တိုက်ရိုက်နှိုင်းယှဉ်ရပါမယ်
+        if (profit > lastProfit) {
             lblProfitStatus.setText("higher");
-//            lblProfitSign.setText("+");
-        } else if (percentChange < 0) {
+        } else if (profit < lastProfit) {
             lblProfitStatus.setText("lower");
-//            lblProfitSign.setText("-");
         } else {
             lblProfitStatus.setText("same");
-//            lblProfitSign.setText("");
         }
 
-        // Profit ရှိမရှိပေါ်မူတည်ပြီး Sign သတ်မှတ်ခြင်း
+// ၃။ Sign (+ သို့မဟုတ် -) သတ်မှတ်ခြင်း
         if (profit == 0) {
             lblProfitSign.setText("");
         } else {
             lblProfitSign.setText(profit > 0 ? "+" : "-");
         }
-
 
 //        if (currentIncome > 0 || currentExpense > 0) {
 //            // Income ရှိမှ ရာခိုင်နှုန်းတွက်လို့ရမှာမို့လို့ပါ (Division by zero error မတက်အောင်)

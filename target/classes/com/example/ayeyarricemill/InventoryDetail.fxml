@@ -35,12 +35,12 @@
         <TableView fx:id="detailTable" focusTraversable="false" layoutX="113.0" layoutY="201.0" prefHeight="294.0" prefWidth="862.0" style="-fx-border-color: #BDD8E9;">
             <columns>
                 <TableColumn fx:id="colNo" prefWidth="48.000003814697266" text="No" />
-                <TableColumn fx:id="colType" prefWidth="299.9999542236328" text="Type" />
-                <TableColumn fx:id="colQty" prefWidth="139.99993896484375" text="Qty" />
-                <TableColumn fx:id="colDate" prefWidth="194.4000244140625" text="Last Updated" />
-                <TableColumn fx:id="colStatus" prefWidth="180.0" text="Status" />
+                <TableColumn fx:id="colType" prefWidth="263.3332977294922" text="Type" />
+                <TableColumn fx:id="colQty" prefWidth="131.33340454101562" text="Qty" />
+                <TableColumn fx:id="colDate" prefWidth="223.3333740234375" text="Last Updated" />
+                <TableColumn fx:id="colStatus" minWidth="1.33331298828125" prefWidth="190.66668701171875" text="Status" />
             </columns>
         </TableView>
-      <Label fx:id="warehouse" layoutX="113.0" layoutY="14.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #660404;" text="Warehouse A" />
+        <Label fx:id="warehouse" layoutX="113.0" layoutY="14.0" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #660404;" text="Warehouse A" />
     </children>
 </AnchorPane>
