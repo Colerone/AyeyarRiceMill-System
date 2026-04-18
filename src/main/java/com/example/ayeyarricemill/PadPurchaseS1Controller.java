@@ -463,7 +463,7 @@ public class PadPurchaseS1Controller {
             purchaseRecord.setTotalAmount(finalNetWeight * qualityCutPrice);
 
         } catch (Exception e) {
-            showAlert("Error", "ကိန်းဂဏန်းများ မှားယွင်းနေပါသည်။");
+            showAlert("Error", "wrong calculation.");
             return;
         }
 
@@ -564,8 +564,9 @@ public class PadPurchaseS1Controller {
                     if (response.statusCode() == 200) {
                         List<InventoryAddController.Warehouse> allWh = gson.fromJson(response.body(), new TypeToken<List<InventoryAddController.Warehouse>>() {
                         }.getType());
+
                         List<InventoryAddController.Warehouse> rawWh = allWh.stream()
-                                .filter(w -> "Raw".equalsIgnoreCase(w.getType()))
+                                .filter(w -> "Raw".equalsIgnoreCase(w.getType()) || "Paddy".equalsIgnoreCase(w.getType()))
                                 .collect(Collectors.toList());
 
                         Platform.runLater(() -> {

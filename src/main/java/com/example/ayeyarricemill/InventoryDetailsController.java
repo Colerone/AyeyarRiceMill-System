@@ -62,17 +62,43 @@ public class InventoryDetailsController {
 
 
 
+//    private void calculateDashboardStatus(){
+//        // Box 1: Total Quantity & Units
+//        boolean isRaw = "Paddy".equalsIgnoreCase(selectedWarehouse.getType());
+//        String unit = isRaw ? "Tins" : "Bags";
+//        int currentStock = selectedWarehouse.getCurrentStock() != null ? selectedWarehouse.getCurrentStock() : 0;
+//
+//        if (totalQtyLabel != null) {
+//            totalQtyLabel.setText(currentStock + unit);
+//        }
+//
+//        // box 3 4 space percentages
+//        int capacity = selectedWarehouse.getCapacity() != null ? selectedWarehouse.getCapacity() : 1;
+//        double usedPercentage = ((double) currentStock / capacity) * 100;
+//        double availablePercentage = 100 - usedPercentage;
+//
+//        if(usedSpaceLabel != null){
+//            usedSpaceLabel.setText(String.format("%.0f%%", usedPercentage));
+//        }
+//
+//        if(availableSpaceLabel != null){
+//            availableSpaceLabel.setText(String.format("%.0f%%", availablePercentage));
+//        }
+//    }
+
     private void calculateDashboardStatus(){
-        // Box 1: Total Quantity & Units
-        boolean isRaw = "Paddy".equalsIgnoreCase(selectedWarehouse.getType());
-        String unit = isRaw ? "Tins" : "Bags";
+        // Warehouse type က Paddy သို့မဟုတ် Raw ဖြစ်နေရင် Tins လို့ သတ်မှတ်မယ်
+        String warehouseType = selectedWarehouse.getType();
+        boolean isTinsUnit = "Paddy".equalsIgnoreCase(warehouseType) || "Raw".equalsIgnoreCase(warehouseType);
+
+        String unit = isTinsUnit ? " Tins" : " Bags"; // ရှေ့မှာ space လေးပါ တစ်ခါတည်းထည့်ထားရင် ပိုလှပါတယ်
         int currentStock = selectedWarehouse.getCurrentStock() != null ? selectedWarehouse.getCurrentStock() : 0;
 
         if (totalQtyLabel != null) {
             totalQtyLabel.setText(currentStock + unit);
         }
 
-        // box 3 4 space percentages
+        // box 3 4 space percentages (ကျန်တဲ့အပိုင်းက အတူတူပါပဲ)
         int capacity = selectedWarehouse.getCapacity() != null ? selectedWarehouse.getCapacity() : 1;
         double usedPercentage = ((double) currentStock / capacity) * 100;
         double availablePercentage = 100 - usedPercentage;

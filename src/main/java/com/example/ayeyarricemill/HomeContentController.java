@@ -126,8 +126,37 @@ public class HomeContentController {
                 });
     }
 
+//    private void updatePieChart(Map<String, Double> summary) {
+//        double raw = summary.getOrDefault("Raw", 0.0);
+//        double good = summary.getOrDefault("Good", 0.0);
+//        double total = raw + good;
+//
+//        if (total == 0) {
+//            inventoryPieChart.setTitle("No Inventory Data");
+//            return;
+//        }
+//
+//        // Percentage တွက်ချက်ခြင်း
+//        double rawPercent = (raw / total) * 100;
+//        double goodPercent = (good / total) * 100;
+//
+//        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+//                new PieChart.Data(String.format("Raw (%.1f%%)", rawPercent), raw),
+//                new PieChart.Data(String.format("Good (%.1f%%)", goodPercent), good)
+//        );
+//
+//        inventoryPieChart.setData(pieChartData);
+//        inventoryPieChart.setTitle("Inventory Ratio");
+//        inventoryPieChart.getStylesheets().add(
+//                getClass().getResource("/design.css").toExternalForm()
+//        );
+//    }
+
     private void updatePieChart(Map<String, Double> summary) {
-        double raw = summary.getOrDefault("Raw", 0.0);
+        // ✅ Paddy နဲ့ Raw နှစ်ခုလုံးရဲ့ တန်ဖိုးကိုပေါင်းပြီး 'raw' variable ထဲ ထည့်လိုက်မယ်
+        // Backend ကနေ "Paddy" ရော "Raw" ရော ပို့ပေးနေတယ်ဆိုရင် ဒီနှစ်ခုလုံးကို ပေါင်းယူသွားမှာပါ
+        double raw = summary.getOrDefault("Raw", 0.0) + summary.getOrDefault("Paddy", 0.0);
+
         double good = summary.getOrDefault("Good", 0.0);
         double total = raw + good;
 
@@ -136,12 +165,13 @@ public class HomeContentController {
             return;
         }
 
-        // Percentage တွက်ချက်ခြင်း
+        // Percentage တွက်ချက်ခြင်း (raw ထဲမှာ Paddy ရော Raw ရော ပါပြီးသားဖြစ်မယ်)
         double rawPercent = (raw / total) * 100;
         double goodPercent = (good / total) * 100;
 
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data(String.format("Raw (%.1f%%)", rawPercent), raw),
+                // နာမည်ကို "Raw" လို့ပဲ ပေးထားတဲ့အတွက် Pie Chart မှာ 'Raw' လို့ပဲ ပေါ်နေမှာပါ
+                new PieChart.Data(String.format("Paddy (%.1f%%)", rawPercent), raw),
                 new PieChart.Data(String.format("Good (%.1f%%)", goodPercent), good)
         );
 

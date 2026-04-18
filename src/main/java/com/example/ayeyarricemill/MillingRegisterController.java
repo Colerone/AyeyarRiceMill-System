@@ -455,7 +455,7 @@ public class MillingRegisterController {
         saveToInventory(targetWarehouse.id, voucher.getPaddyType() + "(Broken Rice )", parse(txtBrokenRice.getText()));
         saveToInventory(targetWarehouse.id, "Broken Rice + Bran", parse(txtBrokenBran.getText()));
         saveToInventory(targetWarehouse.id, "Bran", parse(txtBran.getText()));
-
+    
         // ၄။ Good Warehouse ၏ လက်ရှိ Stock ကိုလည်း ပေါင်းထည့်ပေးရန် (Warehouse Table Update)
         double totalNewBags = parse(lblTotalOutputs.getText());
         updateWarehouseStock(targetWarehouse.getName(), (int) totalNewBags, "/add-stock");

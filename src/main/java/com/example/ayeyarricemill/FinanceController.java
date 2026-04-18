@@ -90,24 +90,92 @@ public class FinanceController {
         setupFilterLogic();
     }
 
+//    private void setupCategoryLogic() {
+//        // Category ပြောင်းလိုက်တဲ့အခါ
+//        comboCategory.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+//            if ("Investment".equals(newVal)) {
+//                comboType.setValue("Income"); // Investment ဆိုရင် Income လို့ အလိုအလျောက်ပြောင်းမယ်
+//            }
+//        });
+//
+//        // Type ကို Expense လို့ လက်နဲ့သွားပြောင်းရင် Investment ဖြစ်နေလား ပြန်စစ်မယ်
+//        comboType.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+//            if ("Expense".equals(newVal) && "Investment".equals(comboCategory.getValue())) {
+//                // Investment ရွေးထားလျက်နဲ့ Expense ပြောင်းဖို့ကြိုးစားရင် Income ကို ပြန်ပို့မယ်
+//                Platform.runLater(() -> {
+//                    comboType.setValue("Income");
+//                    showSimpleAlert("Information", "Investment transactions can only be recorded as Income.");
+//                });
+//            }
+//        });
+//    }
+
     private void setupCategoryLogic() {
-        // Category ပြောင်းလိုက်တဲ့အခါ
-        comboCategory.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if ("Investment".equals(newVal)) {
-                comboType.setValue("Income"); // Investment ဆိုရင် Income လို့ အလိုအလျောက်ပြောင်းမယ်
+        // ၁။ Type ပြောင်းရင် Category options ကို update လုပ်မယ်
+        comboType.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                updateCategoryOptions(newVal);
             }
         });
 
-        // Type ကို Expense လို့ လက်နဲ့သွားပြောင်းရင် Investment ဖြစ်နေလား ပြန်စစ်မယ်
-        comboType.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if ("Expense".equals(newVal) && "Investment".equals(comboCategory.getValue())) {
-                // Investment ရွေးထားလျက်နဲ့ Expense ပြောင်းဖို့ကြိုးစားရင် Income ကို ပြန်ပို့မယ်
-                Platform.runLater(() -> {
-                    comboType.setValue("Income");
-                    showSimpleAlert("Information", "Investment transactions can only be recorded as Income.");
-                });
+        // ၂။ Category ပြောင်းရင် Type options ကို update လုပ်မယ် (မင်းအခုတောင်းဆိုတဲ့အပိုင်း)
+        comboCategory.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                updateTypeOptions(newVal);
             }
         });
+
+        // စစချင်း default အနေနဲ့ တစ်ခါ run ပေးထားမယ်
+        updateCategoryOptions(comboType.getValue());
+    }
+
+    // ✅ Category ပြောင်းလဲမှုအပေါ်မူတည်ပြီး Type options ကို filter လုပ်ပေးမယ်
+    private void updateTypeOptions(String selectedCategory) {
+        ObservableList<String> types = FXCollections.observableArrayList();
+
+        if ("Investment".equals(selectedCategory)) {
+            // Investment ရွေးထားရင် Income တစ်ခုပဲ ပြမယ်
+            types.addAll("Income");
+            // Type က Expense ဖြစ်နေခဲ့ရင် Income ကို auto ပြောင်းပေးမယ်
+            if ("Expense".equals(comboType.getValue())) {
+                comboType.setValue("Income");
+            }
+        } else {
+            // တခြား category ဆိုရင် Income ရော Expense ရော ပြမယ်
+            types.addAll("Income", "Expense");
+        }
+
+        // comboType ရဲ့ dropdown စာရင်းကို update လုပ်မယ်
+        String currentType = comboType.getValue();
+        comboType.setItems(types);
+        comboType.setValue(currentType);
+    }
+
+    // ✅ Type ပြောင်းလဲမှုအပေါ်မူတည်ပြီး Category options ကို filter လုပ်ပေးမယ်
+    private void updateCategoryOptions(String selectedType) {
+        ObservableList<String> categories = FXCollections.observableArrayList();
+
+        if ("MANAGER".equalsIgnoreCase(currentUserRole)) {
+            categories.add("Business");
+        } else {
+            if ("Expense".equals(selectedType)) {
+                // Expense ဆိုရင် Investment ကို ဖျက်ထားမယ်
+                categories.addAll("Business", "Personal");
+            } else {
+                // Income ဆိုရင် အကုန်ပြမယ်
+                categories.addAll("Business", "Personal", "Investment");
+            }
+        }
+
+        String currentCategory = comboCategory.getValue();
+        comboCategory.setItems(categories);
+
+        // လက်ရှိရွေးထားတဲ့ category က အသစ်ဖြစ်လာတဲ့ list ထဲမှာ မပါတော့ရင် Business ကို ပြန်ရွေးပေးမယ်
+        if (!categories.contains(currentCategory)) {
+            comboCategory.setValue("Business");
+        } else {
+            comboCategory.setValue(currentCategory);
+        }
     }
 
     private void setupFilterLogic() {
